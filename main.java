@@ -238,13 +238,15 @@ class Main {
             for (int i = 0; i < matriz.length; i++) {
                 for (int j = 0; j < matriz.length; j++) {
                     if (matriz[i][j] != 0) {
+                      if(ePonderado == 'n'){
                         count++;
-                    }
-                    ;
-                }
-                ;
-            }
-            ;
+                      }  
+                      else if (ePonderado == 's'){
+                        count += matriz[i][j];
+                      }
+                    };
+                };
+            };
             System.out.printf("\nO Grafo tem grau %d\n\n", count * 2);
         }
     };
