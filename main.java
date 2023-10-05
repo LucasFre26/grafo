@@ -84,7 +84,7 @@ class Main {
                     if (ePonderado == 's' || op == 'S') {
                         int pond;
 
-                        System.out.printf("Entre com o valor da Aresta E(%d, %d)", v1, v2);
+                        System.out.printf("Entre com o valor da Aresta E(%d, %d): ", v1, v2);
                         pond = sc.nextInt();
 
                         if (eDirecionado == 's' || eDirecionado == 'S') {
@@ -169,30 +169,13 @@ class Main {
             menu(matriz, ePonderado, backup);
         }
         else if (op == 'r'){
-          boolean reg = true;
-          int count = 0;
-          int grau [] = new int[matriz.length + 1];
 
-          for (int i = 0; i < matriz.length; i++) {
-            count = 0; 
-        
-            for (int j = 0; j < matriz.length; j++) {
-                if (matriz[i][j] != 0) {
-                    count++;
-                }
-            }
-            grau[i] = count;  
-         }
-          
-          for(int i=0; i<matriz.length; i++){
-            if(grau[1] != grau[i]){
-              reg = false;
-              break;
-            }
-          };
-      
-          System.out.print("\nO Grafo é regular: " +reg);
-          System.out.println("\n");
+          if(eDirecionado == 'n'){
+            eRegular(matriz, ePonderado);
+          }
+          else if(eDirecionado == 'n'){
+            // eRegularDirecionado(matriz);
+          }
           
           menu(matriz, ePonderado, eDirecionado);
         };
@@ -263,4 +246,36 @@ class Main {
         }
         ;
     };
+  
+  public static void eRegular(int matriz [][], char ePonderado){
+    boolean reg = true;
+          int count = 0;
+          int grau [] = new int[matriz.length + 1];
+
+          for (int i = 0; i < matriz.length; i++) {
+            count = 0; 
+        
+            for (int j = 0; j < matriz.length; j++) {
+              if (matriz[i][j] != 0) {
+                if(ePonderado == 'n') { 
+                  count++;
+                } else if(ePonderado == 's') {
+                   count += matriz[i][j];
+                };
+              };
+            };
+            
+            grau[i] = count;  
+         }
+          
+          for(int i=0; i<matriz.length; i++){
+            if(grau[1] != grau[i]){
+              reg = false;
+              break;
+            }
+          };
+      
+          System.out.print("\nO Grafo é regular: " +reg);
+          System.out.println("\n");
+  };
 }
