@@ -28,7 +28,7 @@ class Main {
 
         System.out.print("\nO que deseja fazer, entre com sua opção\n"
                + "Para inserir arestas entre os vertice entre com 'i'\n"
-               + "Para remover arestas entre com 'r'\n"
+               + "Para remover arestas entre com 'd'\n"
                + "Para consultar o grau de um vertice entre com 'v'\n"
                + "Para consultar o grau do Grafo entre com 'g'\n"
                + "Para os vizinhos de um vertice entre com 't'\n"
@@ -62,9 +62,11 @@ class Main {
                 System.out.println();
             }
             System.out.print("\n\n\n");
+
+          menu(matriz, ePonderado, eDirecionado);
         }
 
-        if (op == 'i' || op == 'r') {
+        if (op == 'i' || op == 'd') {
             int v1, v2;
 
             if (op == 'i') {
@@ -108,13 +110,10 @@ class Main {
 
                         menu(matriz, ePonderado, backup);
                     }
-                }
-                ;
+                };
 
-                menu(matriz, ePonderado, backup);
-            }
-            ;
-            if (op == 'r') {
+            };
+            if (op == 'd') {
                 int r1, r2;
 
                 System.out.print("\nEntre com o primeiro vertice que estara ligado: ");
@@ -169,12 +168,32 @@ class Main {
 
             menu(matriz, ePonderado, backup);
         }
-        // else if (op == 'x'){
-          
-        // };
         else if (op == 'r'){
-          eRegular(matriz);
+          boolean reg = true;
+          int count = 0;
+          int grau [] = new int[matriz.length + 1];
 
+          for (int i = 0; i < matriz.length; i++) {
+            count = 0; 
+        
+            for (int j = 0; j < matriz.length; j++) {
+                if (matriz[i][j] != 0) {
+                    count++;
+                }
+            }
+            grau[i] = count;  
+         }
+          
+          for(int i=0; i<matriz.length; i++){
+            if(grau[1] != grau[i]){
+              reg = false;
+              break;
+            }
+          };
+      
+          System.out.print("\nO Grafo é regular: " +reg);
+          System.out.println("\n");
+          
           menu(matriz, ePonderado, eDirecionado);
         };
         // else if (op == 'p' || op == 'l'){
@@ -244,30 +263,4 @@ class Main {
         }
         ;
     };
-  public static void eRegular(int matriz [][]){
-    boolean reg = false;
-    int j = 0, count = 0;
-    int grau [] = new int[matriz.length];
-
-    for(int i=0; i<matriz.length; i++){
-      count = 0;
-      if(matriz[i][j] != 0){
-        count++;
-        grau[j] = count;
-      }
-      j++;
-    };
-
-    for(int i=0; i<matriz.length; i++){
-      if(grau[0] == grau[i+1]){
-        reg = true;
-      }
-      else{
-        reg = false;
-      };
-    };
-
-    System.out.print("O Grafo é regular: " +reg);
-    
-  };
 }
