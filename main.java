@@ -155,7 +155,7 @@ class Main {
                 v = sc.nextInt();
             }
             ;
-            consultarGrau(matriz, v, op, eDirecionado);
+            consultarGrau(matriz, v, op, eDirecionado, ePonderado);
 
             menu(matriz, ePonderado, backup);
         } else if (op == 't') {
@@ -187,7 +187,7 @@ class Main {
         // };
     };
 
-    public static void consultarGrau(int matriz[][], int v, char op, char eDirecionado) {
+    public static void consultarGrau(int matriz[][], int v, char op, char eDirecionado, char ePonderado) {
         int count = 0, gIn = 0, gOut = 0;
 
         if (op == 'v') {
@@ -204,12 +204,22 @@ class Main {
                 System.out.printf("\n\nO vertice V(%d) tem grau de entrada igual a %d\n\n", v, gIn);
                 System.out.printf("\nO vertice V(%d) tem grau de saida igual a %d\n\n\n", v, gOut);
             } else {
+              if(ePonderado == 'n'){
                 for (int i = 0; i < matriz.length; i++) {
                     if (matriz[i][v] != 0) {
-                        count++;
+                      count++;
                     };
                 };
-                System.out.printf("\n\nO vertice V(%d) tem grau %d\n\n", v, count);
+              }
+              else if(ePonderado == 's'){
+                for(int i = 0; i < matriz.length; i++){
+                  if(matriz[i][v] != 0){
+                    count += matriz[i][v];
+                  };
+                };
+              };
+              
+              System.out.printf("\n\nO vertice V(%d) tem grau %d\n\n", v, count);
             }
         } else if (op == 'g') {
             count = 0;
