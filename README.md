@@ -7,6 +7,7 @@
 
 O projeto consiste em desenvolver uma biblioteca de grafos, em JAVA. Permitindo o usuário 
 
+```bash
 1. Criar o grafo com N vértices;
 2. Inserir e remover arestas;
   a. Permitindo arestas ser direcionadas ou não;
@@ -22,3 +23,4 @@ O projeto consiste em desenvolver uma biblioteca de grafos, em JAVA. Permitindo 
 11. Verificar a existência de caminho entre dois vértices;
   a. Caso exista, exibir o caminho;
 12. Permitir a visualização do grafo na ferramenta Gephi.
+```
