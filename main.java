@@ -81,7 +81,7 @@ class Main {
 
                     menu(matriz, ePonderado, backup);
                 } else {
-                    if (ePonderado == 's' || op == 'S') {
+                    if (ePonderado == 's' || ePonderado == 'S') {
                         int pond;
 
                         System.out.printf("Entre com o valor da Aresta E(%d, %d): ", v1, v2);
@@ -103,8 +103,7 @@ class Main {
                         } else {
                             matriz[v1][v2] = 1;
                             matriz[v2][v1] = 1;
-                        }
-                        ;
+                        };
 
                         System.out.printf("\nAresta E(%d,%d) incluida com sucesso\n\n", v1, v2);
 
@@ -173,7 +172,8 @@ class Main {
           if(eDirecionado == 'n'){
             eRegular(matriz, ePonderado);
           }
-          else if(eDirecionado == 'n'){
+          else if(eDirecionado == 's'){
+            System.out.print("Nao implementei ainda");
             // eRegularDirecionado(matriz);
           }
           
@@ -192,15 +192,26 @@ class Main {
 
         if (op == 'v') {
             if (eDirecionado == 's' || eDirecionado == 'S') {
+              if(ePonderado ==  'n'){
                 for (int i = 0; i < matriz.length; i++) {
-                    if (matriz[i][v] != 0) {
-                        gIn++;
-                    }
-                    if (matriz[v][i] != 0) {
-                        gOut++;
-                    }
-                }
-                ;
+                  if (matriz[i][v] != 0) {
+                    gIn++;
+                  }
+                  if (matriz[v][i] != 0) {
+                    gOut++;
+                  }
+                };
+              }
+              else if (ePonderado == 's'){
+                for (int i = 0; i < matriz.length; i++) {
+                  if (matriz[i][v] != 0) {
+                    gIn += matriz[i][v];
+                  }
+                  if (matriz[v][i] != 0) {
+                    gOut += matriz[v][i];
+                  }
+                };
+              };
                 System.out.printf("\n\nO vertice V(%d) tem grau de entrada igual a %d\n\n", v, gIn);
                 System.out.printf("\nO vertice V(%d) tem grau de saida igual a %d\n\n\n", v, gOut);
             } else {
