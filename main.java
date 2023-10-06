@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Arrays;
+
 
 class Main {
     public static void main(String[] args) {
@@ -27,17 +29,17 @@ class Main {
         ePonderado = sc.next().charAt(0);
 
         System.out.print("\nO que deseja fazer, entre com sua opção\n"
-               + "Para inserir arestas entre os vertice entre com 'i'\n"
-               + "Para remover arestas entre com 'd'\n"
-               + "Para consultar o grau de um vertice entre com 'v'\n"
-               + "Para consultar o grau do Grafo entre com 'g'\n"
-               + "Para os vizinhos de um vertice entre com 't'\n"
-               + "Para verificar se o grafo e conexo entre com 'x'\n"
-               + "Para verificar se o grafo é regular entre com 'r'\n"
-               + "Para fazer a busca em profundidade entre com 'p'\n"
-               + "Para fazer a busca em largura entre com 'l'\n"
-               + "Para verificar a existencia de caminho entre dois vertices entre com 'c'\n"
-               + "Para exibir a matriz de adjacencia entre com 'a'. ");
+                + "Para inserir arestas entre os vertice entre com 'i'\n"
+                + "Para remover arestas entre com 'd'\n"
+                + "Para consultar o grau de um vertice entre com 'v'\n"
+                + "Para consultar o grau do Grafo entre com 'g'\n"
+                + "Para os vizinhos de um vertice entre com 't'\n"
+                + "Para verificar se o grafo e conexo entre com 'x'\n"
+                + "Para verificar se o grafo é regular entre com 'r'\n"
+                + "Para fazer a busca em profundidade entre com 'p'\n"
+                + "Para fazer a busca em largura entre com 'l'\n"
+                + "Para verificar a existencia de caminho entre dois vertices entre com 'c'\n"
+                + "Para exibir a matriz de adjacencia entre com 'a'. ");
 
         menu(matrizAdjacencia, ePonderado, eDirecionado);
 
@@ -63,7 +65,7 @@ class Main {
             }
             System.out.print("\n\n\n");
 
-          menu(matriz, ePonderado, eDirecionado);
+            menu(matriz, ePonderado, eDirecionado);
         }
 
         if (op == 'i' || op == 'd') {
@@ -92,7 +94,8 @@ class Main {
                         } else {
                             matriz[v1][v2] = pond;
                             matriz[v2][v1] = pond;
-                        };
+                        }
+                        ;
 
                         System.out.printf("\nAresta %d(%d,%d) incluida com sucesso\n\n", pond, v1, v2);
 
@@ -103,15 +106,18 @@ class Main {
                         } else {
                             matriz[v1][v2] = 1;
                             matriz[v2][v1] = 1;
-                        };
+                        }
+                        ;
 
                         System.out.printf("\nAresta E(%d,%d) incluida com sucesso\n\n", v1, v2);
 
                         menu(matriz, ePonderado, backup);
                     }
-                };
+                }
+                ;
 
-            };
+            }
+            ;
             if (op == 'd') {
                 int r1, r2;
 
@@ -157,6 +163,8 @@ class Main {
             consultarGrau(matriz, v, op, eDirecionado, ePonderado);
 
             menu(matriz, ePonderado, backup);
+
+            // FAZER PARA GRAFOS DIRECIONADOS
         } else if (op == 't') {
             int no;
 
@@ -166,19 +174,17 @@ class Main {
             vizinhoVertice(matriz, no, backup);
 
             menu(matriz, ePonderado, backup);
-        }
-        else if (op == 'r'){
+        } else if (op == 'r') {
 
-          if(eDirecionado == 'n'){
-            eRegular(matriz, ePonderado);
-          }
-          else if(eDirecionado == 's'){
-            System.out.print("Nao implementei ainda");
-            // eRegularDirecionado(matriz);
-          }
-          
-          menu(matriz, ePonderado, eDirecionado);
-        };
+            if (eDirecionado == 'n') {
+                eRegular(matriz, ePonderado);
+            } else if (eDirecionado == 's') {
+                eRegularDirecionado(matriz, ePonderado);
+            }
+
+            menu(matriz, ePonderado, eDirecionado);
+        }
+        ;
         // else if (op == 'p' || op == 'l'){
         // executaBuscas();
         // };
@@ -192,45 +198,46 @@ class Main {
 
         if (op == 'v') {
             if (eDirecionado == 's' || eDirecionado == 'S') {
-              if(ePonderado ==  'n'){
-                for (int i = 0; i < matriz.length; i++) {
-                  if (matriz[i][v] != 0) {
-                    gIn++;
-                  }
-                  if (matriz[v][i] != 0) {
-                    gOut++;
-                  }
-                };
-              }
-              else if (ePonderado == 's'){
-                for (int i = 0; i < matriz.length; i++) {
-                  if (matriz[i][v] != 0) {
-                    gIn += matriz[i][v];
-                  }
-                  if (matriz[v][i] != 0) {
-                    gOut += matriz[v][i];
-                  }
-                };
-              };
+                if (ePonderado == 'n') {
+                    for (int i = 0; i < matriz.length; i++) {
+                        if (matriz[i][v] != 0) {
+                            gIn++;
+                        }
+                        if (matriz[v][i] != 0) {
+                            gOut++;
+                        }
+                    }
+                    ;
+                } else if (ePonderado == 's') {
+                    for (int i = 0; i < matriz.length; i++) {
+                        if (matriz[i][v] != 0) {
+                            gIn += matriz[i][v];
+                        }
+                        if (matriz[v][i] != 0) {
+                            gOut += matriz[v][i];
+                        }
+                    }
+                    ;
+                }
+                ;
                 System.out.printf("\n\nO vertice V(%d) tem grau de entrada igual a %d\n\n", v, gIn);
                 System.out.printf("\nO vertice V(%d) tem grau de saida igual a %d\n\n\n", v, gOut);
             } else {
-              if(ePonderado == 'n'){
-                for (int i = 0; i < matriz.length; i++) {
-                    if (matriz[i][v] != 0) {
-                      count++;
+                if (ePonderado == 'n') {
+                    for (int i = 0; i < matriz.length; i++) {
+                        if (matriz[i][v] != 0) {
+                            count++;
+                        };
+                    };
+                } else if (ePonderado == 's') {
+                    for (int i = 0; i < matriz.length; i++) {
+                        if (matriz[i][v] != 0) {
+                            count += matriz[i][v];
+                        };
                     };
                 };
-              }
-              else if(ePonderado == 's'){
-                for(int i = 0; i < matriz.length; i++){
-                  if(matriz[i][v] != 0){
-                    count += matriz[i][v];
-                  };
-                };
-              };
-              
-              System.out.printf("\n\nO vertice V(%d) tem grau %d\n\n", v, count);
+
+                System.out.printf("\n\nO vertice V(%d) tem grau %d\n\n", v, count);
             }
         } else if (op == 'g') {
             count = 0;
@@ -238,12 +245,11 @@ class Main {
             for (int i = 0; i < matriz.length; i++) {
                 for (int j = 0; j < matriz.length; j++) {
                     if (matriz[i][j] != 0) {
-                      if(ePonderado == 'n'){
-                        count++;
-                      }  
-                      else if (ePonderado == 's'){
-                        count += matriz[i][j];
-                      }
+                        if (ePonderado == 'n') {
+                            count++;
+                        } else if (ePonderado == 's') {
+                            count += matriz[i][j];
+                        }
                     };
                 };
             };
@@ -269,36 +275,71 @@ class Main {
         }
         ;
     };
-  
-  public static void eRegular(int matriz [][], char ePonderado){
-    boolean reg = true;
-          int count = 0;
-          int grau [] = new int[matriz.length + 1];
 
-          for (int i = 0; i < matriz.length; i++) {
-            count = 0; 
-        
+    public static void eRegular(int matriz[][], char ePonderado) {
+        boolean reg = true;
+        int count = 0;
+        int grau[] = new int[matriz.length + 1];
+
+        for (int i = 0; i < matriz.length; i++) {
+            count = 0;
+
             for (int j = 0; j < matriz.length; j++) {
-              if (matriz[i][j] != 0) {
-                if(ePonderado == 'n') { 
-                  count++;
-                } else if(ePonderado == 's') {
-                   count += matriz[i][j];
+                if (matriz[i][j] != 0) {
+                    if (ePonderado == 'n') {
+                        count++;
+                    } else if (ePonderado == 's') {
+                        count += matriz[i][j];
+                    };
                 };
-              };
             };
-            
-            grau[i] = count;  
-         }
-          
-          for(int i=0; i<matriz.length; i++){
-            if(grau[1] != grau[i]){
-              reg = false;
-              break;
+
+            grau[i] = count;
+        }
+
+        for (int i = 0; i < matriz.length; i++) {
+            if (grau[1] != grau[i]) {
+                reg = false;
+                break;
             }
-          };
-      
-          System.out.print("\nO Grafo é regular: " +reg);
-          System.out.println("\n");
-  };
+        };
+
+        System.out.print("\nO Grafo é regular: " + reg);
+        System.out.println("\n");
+    };
+
+    public static void eRegularDirecionado(int matriz[][], int ePonderado) {
+        boolean reg = true;
+        int countIn, countOut;
+        int gIn[] = new int[matriz.length];
+        int gOut[] = new int[matriz.length];
+
+        for (int i = 0; i < matriz.length; i++) {
+            countIn = 0;
+            countOut = 0;
+
+            for (int j = 0; j < matriz.length; j++) {
+                if (matriz[i][j] != 0) {
+                    countOut++;
+                }
+
+                if (matriz[j][i] != 0) {
+                    countIn++;
+                }
+            }
+
+            gOut[i] = countOut;
+            gIn[i] = countIn;
+        }
+
+        for (int i = 1; i < matriz.length; i++) {
+            if (gIn[0] != gIn[i] || gOut[0] != gOut[i]) {
+                reg = false;
+                break;
+            }
+        }
+
+        System.out.println("\n\nO Grafo é regular: " + reg + " para grafo direcionado");
+        System.out.println();
+    };
 }
