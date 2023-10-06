@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
-
 class Main {
     public static void main(String[] args) {
 
@@ -227,15 +226,20 @@ class Main {
                     for (int i = 0; i < matriz.length; i++) {
                         if (matriz[i][v] != 0) {
                             count++;
-                        };
-                    };
+                        }
+                        ;
+                    }
+                    ;
                 } else if (ePonderado == 's') {
                     for (int i = 0; i < matriz.length; i++) {
                         if (matriz[i][v] != 0) {
                             count += matriz[i][v];
-                        };
-                    };
-                };
+                        }
+                        ;
+                    }
+                    ;
+                }
+                ;
 
                 System.out.printf("\n\nO vertice V(%d) tem grau %d\n\n", v, count);
             }
@@ -250,9 +254,12 @@ class Main {
                         } else if (ePonderado == 's') {
                             count += matriz[i][j];
                         }
-                    };
-                };
-            };
+                    }
+                    ;
+                }
+                ;
+            }
+            ;
             System.out.printf("\nO Grafo tem grau %d\n\n", count * 2);
         }
     };
@@ -290,9 +297,12 @@ class Main {
                         count++;
                     } else if (ePonderado == 's') {
                         count += matriz[i][j];
-                    };
-                };
-            };
+                    }
+                    ;
+                }
+                ;
+            }
+            ;
 
             grau[i] = count;
         }
@@ -302,7 +312,8 @@ class Main {
                 reg = false;
                 break;
             }
-        };
+        }
+        ;
 
         System.out.print("\nO Grafo é regular: " + reg);
         System.out.println("\n");
@@ -320,11 +331,21 @@ class Main {
 
             for (int j = 0; j < matriz.length; j++) {
                 if (matriz[i][j] != 0) {
-                    countOut++;
+                    if(ePonderado == 'n'){
+                        countOut++;
+                    }
+                    else if (ePonderado == 's'){
+                        countOut += matriz[i][j];
+                    };
                 }
 
                 if (matriz[j][i] != 0) {
-                    countIn++;
+                    if(ePonderado == 'n'){
+                        countIn++;
+                    }
+                    else if (ePonderado == 's'){
+                        countIn += matriz[i][j];
+                    };
                 }
             }
 
@@ -339,7 +360,7 @@ class Main {
             }
         }
 
-        System.out.println("\n\nO Grafo é regular: " + reg + " para grafo direcionado");
+        System.out.println("\n\nO Grafo é regular: " + reg);
         System.out.println();
     };
 }
