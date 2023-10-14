@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import java.io.FileWriter;
+import java.io.IOException;
 
 class Main {
     public static void main(String[] args) {
@@ -38,6 +40,7 @@ class Main {
                 + "Para fazer a busca em profundidade entre com 'p'\n"
                 + "Para fazer a busca em largura entre com 'l'\n"
                 + "Para verificar a existencia de caminho entre dois vertices entre com 'c'\n"
+                + "Para exportar o grafo entre com 'e'\n"
                 + "Para exibir a matriz de adjacencia entre com 'a'. ");
 
         menu(matrizAdjacencia, ePonderado, eDirecionado);
@@ -183,7 +186,11 @@ class Main {
 
             menu(matriz, ePonderado, eDirecionado);
         }
-        ;
+        else if(op == 'e'){
+            exportarParaCSV(matriz);
+
+            menu(matriz, ePonderado, eDirecionado);
+        }
         // else if (op == 'p' || op == 'l'){
         // executaBuscas();
         // };
@@ -360,7 +367,40 @@ class Main {
             }
         }
 
-        System.out.println("\n\nO Grafo é regular:  " + reg);
+        System.out.println("\n\nO Grafo é regular: " + reg);
         System.out.println();
+    };
+
+     public static void exportarParaCSV(int matriz[][]) {
+        try {
+            String nomeArquivo;
+
+            Scanner sc = new Scanner(System.in);
+            System.out.print("\nQual o nome do arquivo: ");
+            nomeArquivo = sc.nextLine();
+
+            FileWriter writer = new FileWriter(nomeArquivo + ".csv");
+
+            writer.append(";");
+            for (char c = 'A'; c < 'A' + matriz.length; c++) {
+                writer.append(c + ";");
+            }
+            writer.append("\n");
+
+            for (int i = 0; i < matriz.length; i++) {
+                writer.append((char) ('A' + i) + ";");
+                for (int j = 0; j < matriz[i].length; j++) {
+                    writer.append(matriz[i][j] + ";");
+                }
+                writer.append("\n");
+            }
+
+            writer.close();
+            System.out.println("\nMatriz de adjacência exportada para " + nomeArquivo + ".csv com sucesso!\n");
+
+        } catch (IOException e) {
+            System.err.println("Erro ao exportar a matriz de adjacência para CSV: " + e.getMessage());
+            System.out.println();
+        }
     };
 }
