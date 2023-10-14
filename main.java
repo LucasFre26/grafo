@@ -360,7 +360,7 @@ class Main {
             }
         }
 
-        System.out.println("\n\nO Grafo é regular: " + reg);
+        System.out.println("\n\nO Grafo é regular:  " + reg);
         System.out.println();
     };
 }
