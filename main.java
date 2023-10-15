@@ -206,10 +206,13 @@ class Main {
         }
         // else if (op == 'p' || op == 'l'){
         // executaBuscas();
-        // };
-        // else if (op == 'c'){
+        // }
+        // else if (op == 'l'){
         // temCaminho();
-        // };
+        // // }
+        // else if(op == 'c'){
+        //     eCompleto();
+        // }
     };
 
     public static void consultarGrau(int matriz[][], int v, char op, char eDirecionado, char ePonderado) {
