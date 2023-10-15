@@ -31,6 +31,7 @@ class Main {
         System.out.print("\nO que deseja fazer, entre com sua opção\n"
                 + "Para inserir arestas entre os vertice entre com 'i'\n"
                 + "Para remover arestas entre com 'd'\n"
+                + "Para verificar se o grafo e completo entre com 'c'\n"
                 + "Para consultar o grau de um vertice entre com 'v'\n"
                 + "Para consultar o grau do Grafo entre com 'g'\n"
                 + "Para os vizinhos de um vertice entre com 't'\n"
@@ -176,7 +177,7 @@ class Main {
                 vizinhoVertice(matriz, no, backup);
             } else if (eDirecionado == 's') {
                 List<List<Integer>> listaSucessores = matrizParaListaSucessores(matriz);
-             
+
                 System.out.print("Entre com o índice do vértice (de 0 a " + (matriz.length - 1) + "): ");
                 int indiceVertice = sc.nextInt();
 
@@ -204,15 +205,18 @@ class Main {
 
             menu(matriz, ePonderado, eDirecionado);
         }
+        else if(op == 'c'){
+            boolean verificaSe = eCompleto(matriz, ePonderado, eDirecionado);
+            System.out.printf("\nO Grafo e completo: %b", verificaSe);
+            System.out.println("\n");
+            menu(matriz, ePonderado, eDirecionado);
+        }
         // else if (op == 'p' || op == 'l'){
         // executaBuscas();
         // }
         // else if (op == 'l'){
         // temCaminho();
         // // }
-        // else if(op == 'c'){
-        //     eCompleto();
-        // }
     };
 
     public static void consultarGrau(int matriz[][], int v, char op, char eDirecionado, char ePonderado) {
@@ -498,7 +502,7 @@ class Main {
         }
 
         return listaSucessores;
-    }
+    };
 
     public static void exibirListaSucessores(List<List<Integer>> listaSucessores, int indiceVertice) {
         System.out.print("\nV(" + indiceVertice + ") -> {");
@@ -509,5 +513,44 @@ class Main {
         }
 
         System.out.println("}\n");
+    };
+
+    public static boolean eCompleto(int matriz[][], char ePonderado, char eDirecionado) {
+        int n = matriz.length;
+
+        if (eDirecionado == 'n') {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (i != j) {
+                        if (ePonderado == 'n') {
+                            if (matriz[i][j] == 0) {
+                                return false;
+                            }
+                        } else if (ePonderado == 's') {
+                            if (matriz[i][j] == 0) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (eDirecionado == 's') {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (i != j) {
+                        if (ePonderado == 'n') {
+                            if (matriz[i][j] == 0 && matriz[j][i] == 0) {
+                                return false;
+                            }
+                        } else if (ePonderado == 's') {
+                            if (matriz[i][j] == 0 && matriz[j][i] == 0) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     };
 };
