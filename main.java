@@ -331,7 +331,7 @@ class Main {
     public static void vizinhoVertice(int matriz[][], int no, char eDirecionado) {
 
         if (no >= 0 && no < matriz.length) {
-            System.out.printf("\nOs vizinhos do %d sao: {", no);
+            System.out.printf("\nV(%d) -> {", no);
 
             for (int i = 0; i < matriz.length; i++) {
                 if (matriz[no][i] != 0) {
