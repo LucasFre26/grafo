@@ -24,3 +24,16 @@ O projeto consiste em desenvolver uma biblioteca de grafos, em JAVA. Permitindo 
 #   a. Caso exista, exibir o caminho;
 # 12. Permitir a visualização do grafo na ferramenta Gephi.
 ```
+
+O QUE FALTA IMPLEMENTAR
+
+ECONEXO()
+
+ECOMPLETO()
+
+CAMINHO ENTRE VERTICES()
+
+BUSCAPROFUNDIDADE()
+
+BUSCALARGURA()
+

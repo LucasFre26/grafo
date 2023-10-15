@@ -1,5 +1,6 @@
-import java.util.Scanner;
-import java.util.Arrays;
+import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 class Main {
     public static void main(String[] args) {
@@ -38,6 +39,7 @@ class Main {
                 + "Para fazer a busca em profundidade entre com 'p'\n"
                 + "Para fazer a busca em largura entre com 'l'\n"
                 + "Para verificar a existencia de caminho entre dois vertices entre com 'c'\n"
+                + "Para exportar o grafo entre com 'e'\n"
                 + "Para exibir a matriz de adjacencia entre com 'a'. ");
 
         menu(matrizAdjacencia, ePonderado, eDirecionado);
@@ -167,10 +169,25 @@ class Main {
         } else if (op == 't') {
             int no;
 
-            System.out.print("\nEntre com o no que queria verificar os seus vizinhos: ");
-            no = sc.nextInt();
+            if (eDirecionado == 'n') {
+                System.out.print("\nEntre com o no que queria verificar os seus vizinhos: ");
+                no = sc.nextInt();
 
-            vizinhoVertice(matriz, no, backup);
+                vizinhoVertice(matriz, no, backup);
+            } else if (eDirecionado == 's') {
+                List<List<Integer>> listaSucessores = matrizParaListaSucessores(matriz);
+             
+                System.out.print("Entre com o índice do vértice (de 0 a " + (matriz.length - 1) + "): ");
+                int indiceVertice = sc.nextInt();
+
+                if (indiceVertice >= 0 && indiceVertice < matriz.length) {
+                    exibirListaSucessores(listaSucessores, indiceVertice);
+                } else {
+                    System.out.println(
+                            "Índice inválido. Certifique-se de que está entre 0 e " + (matriz.length - 1));
+                }
+
+            }
 
             menu(matriz, ePonderado, backup);
         } else if (op == 'r') {
@@ -182,8 +199,11 @@ class Main {
             }
 
             menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'e') {
+            exportarGrafo(matriz, ePonderado);
+
+            menu(matriz, ePonderado, eDirecionado);
         }
-        ;
         // else if (op == 'p' || op == 'l'){
         // executaBuscas();
         // };
@@ -219,7 +239,7 @@ class Main {
                     ;
                 }
                 ;
-                System.out.printf("\n\nO vertice V(%d) tem grau de entrada igual a %d\n\n", v, gIn);
+                System.out.printf("\nO vertice V(%d) tem grau de entrada igual a %d\n\n", v, gIn);
                 System.out.printf("\nO vertice V(%d) tem grau de saida igual a %d\n\n\n", v, gOut);
             } else {
                 if (ePonderado == 'n') {
@@ -241,33 +261,77 @@ class Main {
                 }
                 ;
 
-                System.out.printf("\n\nO vertice V(%d) tem grau %d\n\n", v, count);
+                System.out.printf("\nO vertice V(%d) tem grau %d\n\n", v, count);
             }
         } else if (op == 'g') {
-            count = 0;
+            gIn = 0;
+            gOut = 0;
 
-            for (int i = 0; i < matriz.length; i++) {
-                for (int j = 0; j < matriz.length; j++) {
-                    if (matriz[i][j] != 0) {
-                        if (ePonderado == 'n') {
-                            count++;
-                        } else if (ePonderado == 's') {
-                            count += matriz[i][j];
+            if (eDirecionado == 's' || eDirecionado == 'S') {
+                if (ePonderado == 'n') {
+                    for (int i = 0; i < matriz.length; i++) {
+                        for (int j = 0; j < matriz.length; j++) {
+                            if (matriz[i][j] != 0) {
+                                gOut++;
+                            }
                         }
+                    }
+
+                    for (int i = 0; i < matriz.length; i++) {
+                        for (int j = 0; j < matriz.length; j++) {
+                            if (matriz[j][i] != 0) {
+                                gIn++;
+                            }
+                        }
+                    }
+                } else if (ePonderado == 's') {
+                    for (int i = 0; i < matriz.length; i++) {
+                        for (int j = 0; j < matriz.length; j++) {
+                            if (matriz[i][j] != 0) {
+                                gOut += matriz[i][j];
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < matriz.length; i++) {
+                        for (int j = 0; j < matriz.length; j++) {
+                            if (matriz[j][i] != 0) {
+                                gIn += matriz[j][i];
+                            }
+                        }
+                    }
+                }
+
+                System.out.printf("\nO Grafo tem grau de saída igual a %d\n", gOut);
+                System.out.printf("O Grafo tem grau de entrada igual a %d\n\n", gIn);
+
+            } else {
+                count = 0;
+
+                for (int i = 0; i < matriz.length; i++) {
+                    for (int j = 0; j < matriz.length; j++) {
+                        if (matriz[i][j] != 0) {
+                            if (ePonderado == 'n') {
+                                count++;
+                            } else if (ePonderado == 's') {
+                                count += matriz[i][j];
+                            }
+                        }
+                        ;
                     }
                     ;
                 }
                 ;
+
+                System.out.printf("\nO Grafo tem grau %d\n\n", count * 2);
             }
-            ;
-            System.out.printf("\nO Grafo tem grau %d\n\n", count * 2);
         }
     };
 
     public static void vizinhoVertice(int matriz[][], int no, char eDirecionado) {
 
         if (no >= 0 && no < matriz.length) {
-            System.out.printf("\nOs vizinhos do %d sao: {", no);
+            System.out.printf("\nV(%d) -> {", no);
 
             for (int i = 0; i < matriz.length; i++) {
                 if (matriz[no][i] != 0) {
@@ -331,21 +395,21 @@ class Main {
 
             for (int j = 0; j < matriz.length; j++) {
                 if (matriz[i][j] != 0) {
-                    if(ePonderado == 'n'){
+                    if (ePonderado == 'n') {
                         countOut++;
-                    }
-                    else if (ePonderado == 's'){
+                    } else if (ePonderado == 's') {
                         countOut += matriz[i][j];
-                    };
+                    }
+                    ;
                 }
 
                 if (matriz[j][i] != 0) {
-                    if(ePonderado == 'n'){
+                    if (ePonderado == 'n') {
                         countIn++;
-                    }
-                    else if (ePonderado == 's'){
+                    } else if (ePonderado == 's') {
                         countIn += matriz[i][j];
-                    };
+                    }
+                    ;
                 }
             }
 
@@ -363,4 +427,84 @@ class Main {
         System.out.println("\n\nO Grafo é regular: " + reg);
         System.out.println();
     };
-}
+
+    public static void exportarGrafo(int matriz[][], char ePonderado) {
+        try {
+            String nomeArquivo;
+
+            Scanner sc = new Scanner(System.in);
+            System.out.print("\nQual o nome do arquivo GEXF: ");
+            nomeArquivo = sc.nextLine();
+
+            FileWriter writer = new FileWriter(nomeArquivo + ".gexf");
+
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            writer.write("<gexf xmlns=\"http://www.gexf.net/1.3draft\" version=\"1.3\">\n");
+            writer.write("  <meta lastmodifieddate=\"2023-10-14\">\n");
+            writer.write("    <creator>YourAppName</creator>\n");
+            writer.write("    <description>A graph exported from your application</description>\n");
+            writer.write("  </meta>\n");
+            writer.write("  <graph defaultedgetype=\"directed\">\n");
+
+            writer.write("    <nodes>\n");
+            for (int i = 0; i < matriz.length; i++) {
+                writer.write("      <node id=\"" + i + "\" label=\"" + (char) ('A' + i) + "\" />\n");
+            }
+            writer.write("    </nodes>\n");
+
+            writer.write("    <edges>\n");
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < matriz[i].length; j++) {
+                    if (matriz[i][j] != 0) {
+                        String weightAttribute = (ePonderado == 's' || ePonderado == 'S')
+                                ? " weight=\"" + matriz[i][j] + "\""
+                                : "";
+
+                        writer.write("      <edge id=\"" + i + "_" + j + "\" source=\"" + i + "\" target=\"" + j +
+                                "\"" + weightAttribute + " />\n");
+                    }
+                }
+            }
+            writer.write("    </edges>\n");
+
+            writer.write("  </graph>\n");
+            writer.write("</gexf>");
+
+            writer.close();
+            System.out.println("\nGrafo exportado para " + nomeArquivo + ".gexf com sucesso!\n");
+
+        } catch (IOException e) {
+            System.err.println("Erro ao exportar o grafo para GEXF: " + e.getMessage());
+            System.out.println();
+        }
+    };
+
+    public static List<List<Integer>> matrizParaListaSucessores(int[][] matriz) {
+        List<List<Integer>> listaSucessores = new ArrayList<>();
+
+        int numVertices = matriz.length;
+
+        for (int i = 0; i < numVertices; i++) {
+            listaSucessores.add(new ArrayList<>());
+
+            for (int j = 0; j < numVertices; j++) {
+                if (matriz[i][j] != 0) {
+                    listaSucessores.get(i).add(j);
+                }
+            }
+        }
+
+        return listaSucessores;
+    }
+
+    public static void exibirListaSucessores(List<List<Integer>> listaSucessores, int indiceVertice) {
+        System.out.print("\nV(" + indiceVertice + ") -> {");
+        List<Integer> sucessores = listaSucessores.get(indiceVertice);
+
+        for (int j = 0; j < sucessores.size(); j++) {
+            System.out.print(" - " + sucessores.get(j) + " -");
+        }
+
+        System.out.println("}\n");
+    };
+};
