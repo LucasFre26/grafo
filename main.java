@@ -39,7 +39,7 @@ class Main {
                 + "Para verificar se o grafo é regular entre com 'r'\n"
                 + "Para fazer a busca em profundidade entre com 'p'\n"
                 + "Para fazer a busca em largura entre com 'l'\n"
-                + "Para verificar a existencia de caminho entre dois vertices entre com 'c'\n"
+                + "Para verificar a existencia de caminho entre dois vertices entre com 'w'\n"
                 + "Para exportar o grafo entre com 'e'\n"
                 + "Para exibir a matriz de adjacencia entre com 'a'. ");
 
@@ -166,7 +166,6 @@ class Main {
 
             menu(matriz, ePonderado, backup);
 
-            // FAZER PARA GRAFOS DIRECIONADOS
         } else if (op == 't') {
             int no;
 
@@ -204,18 +203,49 @@ class Main {
             exportarGrafo(matriz, ePonderado);
 
             menu(matriz, ePonderado, eDirecionado);
-        }
-        else if(op == 'c'){
+        } else if (op == 'c') {
             boolean verificaSe = eCompleto(matriz, ePonderado, eDirecionado);
             System.out.printf("\nO Grafo e completo: %b", verificaSe);
             System.out.println("\n");
             menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'p') {
+            int origem = 0;
+
+            if (ePonderado == 'n' || ePonderado == 'N') {
+                System.out.print("\nEntre com o vertice de origem: ");
+                origem = sc.nextInt();
+                // buscaProfundidade(matriz, origem);
+            } else if (ePonderado == 's' || ePonderado == 'S') {
+                System.out.print("\nEntre com o vertice de origem: ");
+                origem = sc.nextInt();
+                // buscaProfundidadePonderada(matriz, origem);
+            }
+
+            menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'x') {
+            if (eDirecionado == 'n') {
+                System.out.println("\nO Grafo e conexo: " + eConexo(matriz));
+            } else if (eDirecionado == 's') {
+                System.out.println("\nO Grafo e conexo: " + eConexoDirecionado(matriz));
+            }
+            System.out.println();
+
+            menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'w') {
+            int origem, destino;
+
+            System.out.print("\nEntre com o vértice de origem: ");
+            origem = sc.nextInt();
+            System.out.print("Entre com o vértice de destino: ");
+            destino = sc.nextInt();
+
+            temCaminho(matriz, origem, destino, eDirecionado);
+
+            menu(matriz, ePonderado, eDirecionado);
         }
-        // else if (op == 'p' || op == 'l'){
-        // executaBuscas();
-        // }
-        // else if (op == 'l'){
-        // temCaminho();
+
+        // else if (op == 'p'){
+        // buscaEmProfundidade();
         // // }
     };
 
@@ -553,4 +583,122 @@ class Main {
         }
         return true;
     };
+
+    private static void dfsRecursivo(int matriz[][], int vertice, boolean[] visitado) {
+        visitado[vertice] = true;
+
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[vertice][i] != 0 && !visitado[i]) {
+                dfsRecursivo(matriz, i, visitado);
+            }
+        }
+    }
+
+    public static boolean eConexo(int matriz[][]) {
+        int n = matriz.length;
+        boolean[] visitados = new boolean[n];
+
+        int verticeInicial = 0;
+
+        dfsRecursivo(matriz, verticeInicial, visitados);
+
+        for (boolean visitado : visitados) {
+            if (!visitado) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean eConexoDirecionado(int matriz[][]) {
+        int n = matriz.length;
+        boolean[] visitadosIda = new boolean[n];
+        boolean[] visitadosVolta = new boolean[n];
+
+        int verticeInicial = 0;
+
+        dfsRecursivo(matriz, verticeInicial, visitadosIda);
+
+        int[][] matrizTransposta = obterMatrizTransposta(matriz);
+        dfsRecursivo(matrizTransposta, verticeInicial, visitadosVolta);
+
+        for (int i = 0; i < n; i++) {
+            if (!visitadosIda[i] || !visitadosVolta[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static int[][] obterMatrizTransposta(int matriz[][]) {
+        int n = matriz.length;
+        int[][] transposta = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                transposta[i][j] = matriz[j][i];
+            }
+        }
+
+        return transposta;
+    }
+
+    public static void temCaminho(int matriz[][], int origem, int destino, char eDirecionado) {
+        int n = matriz.length;
+        boolean[] visitado = new boolean[n];
+        List<Integer> caminho = new ArrayList<>();
+
+        if (verificaExistenciaVertice(origem, n) && verificaExistenciaVertice(destino, n)) {
+            if (dfsParaCaminho(matriz, origem, destino, visitado, caminho, eDirecionado)) {
+                System.out.println("\nExiste um caminho entre os vértices " + origem + " e " + destino + ":");
+                exibirCaminho(caminho);
+            } else {
+                System.out.println("\nNão existe um caminho entre os vértices " + origem + " e " + destino + "\n");
+            }
+        } else {
+            System.out.println("\nVértice de origem ou destino inválido.");
+        }
+    }
+
+    private static boolean dfsParaCaminho(int matriz[][], int vertice, int destino, boolean[] visitado, List<Integer> caminho, char eDirecionado) {
+        visitado[vertice] = true;
+        caminho.add(vertice);
+
+        if (vertice == destino) {
+            return true;
+        }
+
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[vertice][i] != 0 && !visitado[i]) {
+                if (eDirecionado == 's' || eDirecionado == 'S') {
+                    if (dfsParaCaminho(matriz, i, destino, visitado, caminho, eDirecionado)) {
+                        return true;
+                    }
+                } else {
+                    if (dfsParaCaminho(matriz, i, destino, visitado, caminho, eDirecionado) || dfsParaCaminho(matriz, i, vertice, visitado, caminho, eDirecionado)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        caminho.remove(caminho.size() - 1);  
+        return false;
+    }
+
+
+    private static void exibirCaminho(List<Integer> caminho) {
+        for (int i = 0; i < caminho.size(); i++) {
+            System.out.print(caminho.get(i));
+            if (i < caminho.size() - 1) {
+                System.out.print(" -> ");
+            }
+        }
+        System.out.println("\n");
+    }
+
+    public static boolean verificaExistenciaVertice(int vertice, int n) {
+        return vertice >= 0 && vertice < n;
+    }
 };
