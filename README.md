@@ -27,10 +27,6 @@ O projeto consiste em desenvolver uma biblioteca de grafos, em JAVA. Permitindo 
 
 O QUE FALTA IMPLEMENTAR
 
-ECONEXO()
-
-CAMINHO ENTRE VERTICES()
-
 BUSCAPROFUNDIDADE()
 
 BUSCALARGURA()
