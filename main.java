@@ -56,7 +56,7 @@ class Main {
         System.out.print("Qual a sua opção: ");
         op = sc.next().charAt(0);
 
-        if (op == 'a') {
+        if (op == 'a' || op == 'A') {
 
             System.out.print("\n\n\n");
             for (int i = 0; i < matriz.length; i++) {
@@ -70,57 +70,20 @@ class Main {
             menu(matriz, ePonderado, eDirecionado);
         }
 
-        if (op == 'i' || op == 'd') {
+        if (op == 'i' || op == 'd' || op == 'I' || op == 'D') {
             int v1, v2;
 
-            if (op == 'i') {
+            if (op == 'i' || op == 'I') {
                 System.out.print("\nEntre com o primeiro vertice que estara ligado: ");
                 v1 = sc.nextInt();
                 System.out.print("Entre com o segundo vertice que estara ligado: ");
                 v2 = sc.nextInt();
 
-                if (v1 > matriz.length || v2 > matriz.length) {
-                    System.err.printf("\nErro ao cadastrar nova aresta E(%d,%d)\n"
-                            + "Verifique o numero de vertice...\n\n", v1, v2);
-
-                    menu(matriz, ePonderado, backup);
-                } else {
-                    if (ePonderado == 's' || ePonderado == 'S') {
-                        int pond;
-
-                        System.out.printf("Entre com o valor da Aresta E(%d, %d): ", v1, v2);
-                        pond = sc.nextInt();
-
-                        if (eDirecionado == 's' || eDirecionado == 'S') {
-                            matriz[v1][v2] = pond;
-                        } else {
-                            matriz[v1][v2] = pond;
-                            matriz[v2][v1] = pond;
-                        }
-                        ;
-
-                        System.out.printf("\nAresta %d(%d,%d) incluida com sucesso\n\n", pond, v1, v2);
-
-                        menu(matriz, ePonderado, backup);
-                    } else {
-                        if (eDirecionado == 's' || eDirecionado == 'S') {
-                            matriz[v1][v2] = 1;
-                        } else {
-                            matriz[v1][v2] = 1;
-                            matriz[v2][v1] = 1;
-                        }
-                        ;
-
-                        System.out.printf("\nAresta E(%d,%d) incluida com sucesso\n\n", v1, v2);
-
-                        menu(matriz, ePonderado, backup);
-                    }
-                }
-                ;
-
+                inserirAresta(matriz, v1, v2, ePonderado, eDirecionado, sc);
+                menu(matriz, ePonderado, backup);
             }
             ;
-            if (op == 'd') {
+            if (op == 'd' || op == 'D') {
                 int r1, r2;
 
                 System.out.print("\nEntre com o primeiro vertice que estara ligado: ");
@@ -128,30 +91,9 @@ class Main {
                 System.out.print("Entre com o segundo vertice que estara ligado: ");
                 r2 = sc.nextInt();
 
-                if (matriz[r1][r2] != 0) {
-                    if (r1 > matriz.length || r2 > matriz.length) {
-                        System.err.printf("\nErro ao remover aresta E(%d,%d)\n"
-                                + "Verifique o numero de vertice...\n\n", r1, r2);
+                removeAresta(matriz, r1, r2, ePonderado, eDirecionado);
+                menu(matriz, ePonderado, backup);
 
-                        menu(matriz, ePonderado, backup);
-                    } else {
-                        if (eDirecionado == 's' || eDirecionado == 'S') {
-                            matriz[r1][r2] = 0;
-                        } else {
-                            matriz[r1][r2] = 0;
-                            matriz[r2][r1] = 0;
-                        }
-
-                        System.out.printf("\nAresta E(%d,%d) removida com sucesso\n\n", r1, r2);
-
-                        menu(matriz, ePonderado, backup);
-                    }
-                    ;
-                } else {
-                    System.err.printf("\nNão existe arestas nos V(%d) - V(%d)\n\n", r1, r2);
-                    menu(matriz, ePonderado, backup);
-                }
-                ;
             }
             ;
         } else if (op == 'v' || op == 'g') {
@@ -166,7 +108,7 @@ class Main {
 
             menu(matriz, ePonderado, backup);
 
-        } else if (op == 't') {
+        } else if (op == 't' || op == 'T') {
             int no;
 
             if (eDirecionado == 'n') {
@@ -190,7 +132,7 @@ class Main {
             }
 
             menu(matriz, ePonderado, backup);
-        } else if (op == 'r') {
+        } else if (op == 'r' || op == 'R') {
 
             if (eDirecionado == 'n') {
                 eRegular(matriz, ePonderado);
@@ -199,25 +141,29 @@ class Main {
             }
 
             menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'e') {
+        } else if (op == 'e' || op == 'E') {
+
             exportarGrafo(matriz, ePonderado);
 
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'c') {
+
             boolean verificaSe = eCompleto(matriz, ePonderado, eDirecionado);
+
             System.out.printf("\nO Grafo e completo: %b", verificaSe);
             System.out.println("\n");
+
             menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'p') {
-            int origem = 0;
+        } else if (op == 'p' || op == 'P') {
+            // int origem = 0;
 
             if (ePonderado == 'n' || ePonderado == 'N') {
                 System.out.print("\nEntre com o vertice de origem: ");
-                origem = sc.nextInt();
+                // origem = sc.nextInt();
                 // buscaProfundidade(matriz, origem);
             } else if (ePonderado == 's' || ePonderado == 'S') {
                 System.out.print("\nEntre com o vertice de origem: ");
-                origem = sc.nextInt();
+                // origem = sc.nextInt();
                 // buscaProfundidadePonderada(matriz, origem);
             }
 
@@ -246,6 +192,9 @@ class Main {
 
         // else if (op == 'p'){
         // buscaEmProfundidade();
+        // // }
+        // else if (op == 'l'){
+        // buscaEmLargura();
         // // }
     };
 
@@ -365,6 +314,68 @@ class Main {
         }
     };
 
+    public static void inserirAresta(int matriz[][], int v1, int v2, char ePonderado, char eDirecionado, Scanner sc) {
+        if (v1 > matriz.length || v2 > matriz.length) {
+            System.err.printf("\nErro ao cadastrar nova aresta E(%d,%d)\n"
+                    + "Verifique o numero de vertice...\n\n", v1, v2);
+
+        } else {
+            if (ePonderado == 's' || ePonderado == 'S') {
+                int pond;
+
+                System.out.printf("Entre com o valor da Aresta E(%d, %d): ", v1, v2);
+                pond = sc.nextInt();
+
+                if (eDirecionado == 's' || eDirecionado == 'S') {
+                    matriz[v1][v2] = pond;
+                } else {
+                    matriz[v1][v2] = pond;
+                    matriz[v2][v1] = pond;
+                }
+                ;
+
+                System.out.printf("\nAresta %d(%d,%d) incluida com sucesso\n\n", pond, v1, v2);
+
+            } else {
+                if (eDirecionado == 's' || eDirecionado == 'S') {
+                    matriz[v1][v2] = 1;
+                } else {
+                    matriz[v1][v2] = 1;
+                    matriz[v2][v1] = 1;
+                }
+                ;
+
+                System.out.printf("\nAresta E(%d,%d) incluida com sucesso\n\n", v1, v2);
+
+            }
+        }
+        ;
+    }
+
+    public static void removeAresta(int matriz[][], int r1, int r2, char ePonderado, char eDirecionado) {
+        if (matriz[r1][r2] != 0) {
+            if (r1 > matriz.length || r2 > matriz.length) {
+                System.err.printf("\nErro ao remover aresta E(%d,%d)\n"
+                        + "Verifique o numero de vertice...\n\n", r1, r2);
+
+            } else {
+                if (eDirecionado == 's' || eDirecionado == 'S') {
+                    matriz[r1][r2] = 0;
+                } else {
+                    matriz[r1][r2] = 0;
+                    matriz[r2][r1] = 0;
+                }
+
+                System.out.printf("\nAresta E(%d,%d) removida com sucesso\n\n", r1, r2);
+
+            }
+            ;
+        } else {
+            System.err.printf("\nNão existe arestas nos V(%d) - V(%d)\n\n", r1, r2);
+        }
+        ;
+    }
+
     public static void vizinhoVertice(int matriz[][], int no, char eDirecionado) {
 
         if (no >= 0 && no < matriz.length) {
@@ -467,9 +478,9 @@ class Main {
 
     public static void exportarGrafo(int matriz[][], char ePonderado) {
         try {
+            Scanner sc = new Scanner(System.in);
             String nomeArquivo;
 
-            Scanner sc = new Scanner(System.in);
             System.out.print("\nQual o nome do arquivo GEXF: ");
             nomeArquivo = sc.nextLine();
 
@@ -514,6 +525,7 @@ class Main {
             System.err.println("Erro ao exportar o grafo para GEXF: " + e.getMessage());
             System.out.println();
         }
+
     };
 
     public static List<List<Integer>> matrizParaListaSucessores(int[][] matriz) {
@@ -584,12 +596,12 @@ class Main {
         return true;
     };
 
-    private static void dfsRecursivo(int matriz[][], int vertice, boolean[] visitado) {
+    private static void buscaProfundidadeEConexo(int matriz[][], int vertice, boolean[] visitado) {
         visitado[vertice] = true;
 
         for (int i = 0; i < matriz.length; i++) {
             if (matriz[vertice][i] != 0 && !visitado[i]) {
-                dfsRecursivo(matriz, i, visitado);
+                buscaProfundidadeEConexo(matriz, i, visitado);
             }
         }
     }
@@ -600,7 +612,7 @@ class Main {
 
         int verticeInicial = 0;
 
-        dfsRecursivo(matriz, verticeInicial, visitados);
+        buscaProfundidadeEConexo(matriz, verticeInicial, visitados);
 
         for (boolean visitado : visitados) {
             if (!visitado) {
@@ -617,10 +629,10 @@ class Main {
 
         int verticeInicial = 0;
 
-        dfsRecursivo(matriz, verticeInicial, visitadosIda);
+        buscaProfundidadeEConexo(matriz, verticeInicial, visitadosIda);
 
         int[][] matrizTransposta = obterMatrizTransposta(matriz);
-        dfsRecursivo(matrizTransposta, verticeInicial, visitadosVolta);
+        buscaProfundidadeEConexo(matrizTransposta, verticeInicial, visitadosVolta);
 
         for (int i = 0; i < n; i++) {
             if (!visitadosIda[i] || !visitadosVolta[i]) {
@@ -650,7 +662,7 @@ class Main {
         List<Integer> caminho = new ArrayList<>();
 
         if (verificaExistenciaVertice(origem, n) && verificaExistenciaVertice(destino, n)) {
-            if (dfsParaCaminho(matriz, origem, destino, visitado, caminho, eDirecionado)) {
+            if (buscaProfundidadeTemCaminho(matriz, origem, destino, visitado, caminho, eDirecionado)) {
                 System.out.println("\nExiste um caminho entre os vértices " + origem + " e " + destino + ":");
                 exibirCaminho(caminho);
             } else {
@@ -661,7 +673,8 @@ class Main {
         }
     }
 
-    private static boolean dfsParaCaminho(int matriz[][], int vertice, int destino, boolean[] visitado, List<Integer> caminho, char eDirecionado) {
+    private static boolean buscaProfundidadeTemCaminho(int matriz[][], int vertice, int destino, boolean[] visitado,
+        List<Integer> caminho, char eDirecionado) {
         visitado[vertice] = true;
         caminho.add(vertice);
 
@@ -672,21 +685,21 @@ class Main {
         for (int i = 0; i < matriz.length; i++) {
             if (matriz[vertice][i] != 0 && !visitado[i]) {
                 if (eDirecionado == 's' || eDirecionado == 'S') {
-                    if (dfsParaCaminho(matriz, i, destino, visitado, caminho, eDirecionado)) {
+                    if (buscaProfundidadeTemCaminho(matriz, i, destino, visitado, caminho, eDirecionado)) {
                         return true;
                     }
                 } else {
-                    if (dfsParaCaminho(matriz, i, destino, visitado, caminho, eDirecionado) || dfsParaCaminho(matriz, i, vertice, visitado, caminho, eDirecionado)) {
+                    if (buscaProfundidadeTemCaminho(matriz, i, destino, visitado, caminho, eDirecionado)
+                            || buscaProfundidadeTemCaminho(matriz, i, vertice, visitado, caminho, eDirecionado)) {
                         return true;
                     }
                 }
             }
         }
 
-        caminho.remove(caminho.size() - 1);  
+        caminho.remove(caminho.size() - 1);
         return false;
     }
-
 
     private static void exibirCaminho(List<Integer> caminho) {
         for (int i = 0; i < caminho.size(); i++) {
