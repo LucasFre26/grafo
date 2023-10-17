@@ -38,6 +38,15 @@ As funções `eConexo` e `eConexoDirecionado` usam a busca em profundidade para 
 
 A função `temCaminho` verifica se há um caminho entre dois vértices usando busca em profundidade.
 
+### Realiza a busca em profundidade (`buscaProfundidade`)
+
+A função `buscaProfundidade` realiza a busca em profundidade no vértice de origem escolhido.
+
+### Realiza a busca em largura (`buscaLargura`)
+
+A função `buscaLargura` realiza a busca em largura no vértice de origem escolhido.
+
+
 ## Outras Funções Auxiliares
 
 - **`matrizParaListaSucessores` e `exibirListaSucessores`:** Convertem a matriz de adjacência em uma lista de sucessores;
