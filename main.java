@@ -81,7 +81,8 @@ class Main {
 
                 inserirAresta(matriz, v1, v2, ePonderado, eDirecionado, sc);
                 menu(matriz, ePonderado, backup);
-            };
+            }
+            ;
             if (op == 'd' || op == 'D') {
                 int r1, r2;
 
@@ -93,14 +94,16 @@ class Main {
                 removeAresta(matriz, r1, r2, ePonderado, eDirecionado);
                 menu(matriz, ePonderado, backup);
 
-            };
+            }
+            ;
         } else if (op == 'v' || op == 'g') {
             int v = 0;
 
             if (op == 'v') {
                 System.out.print("\nEntre com o vertice que deseja consultar: ");
                 v = sc.nextInt();
-            };
+            }
+            ;
             consultarGrau(matriz, v, op, eDirecionado, ePonderado);
 
             menu(matriz, ePonderado, backup);
@@ -146,7 +149,7 @@ class Main {
         } else if (op == 'c') {
 
             boolean verificaSe = eCompleto(matriz, ePonderado, eDirecionado);
-            
+
             System.out.printf("\nO Grafo e completo: %b", verificaSe);
             System.out.println("\n");
 
@@ -517,12 +520,12 @@ class Main {
 
             writer.close();
             System.out.println("\nGrafo exportado para " + nomeArquivo + ".gexf com sucesso!\n");
-            
-            
+
         } catch (IOException e) {
             System.err.println("Erro ao exportar o grafo para GEXF: " + e.getMessage());
             System.out.println();
         }
+
     };
 
     public static List<List<Integer>> matrizParaListaSucessores(int[][] matriz) {
@@ -593,12 +596,12 @@ class Main {
         return true;
     };
 
-    private static void dfsRecursivo(int matriz[][], int vertice, boolean[] visitado) {
+    private static void buscaProfundidadeEConexo(int matriz[][], int vertice, boolean[] visitado) {
         visitado[vertice] = true;
 
         for (int i = 0; i < matriz.length; i++) {
             if (matriz[vertice][i] != 0 && !visitado[i]) {
-                dfsRecursivo(matriz, i, visitado);
+                buscaProfundidadeEConexo(matriz, i, visitado);
             }
         }
     }
@@ -609,7 +612,7 @@ class Main {
 
         int verticeInicial = 0;
 
-        dfsRecursivo(matriz, verticeInicial, visitados);
+        buscaProfundidadeEConexo(matriz, verticeInicial, visitados);
 
         for (boolean visitado : visitados) {
             if (!visitado) {
@@ -626,10 +629,10 @@ class Main {
 
         int verticeInicial = 0;
 
-        dfsRecursivo(matriz, verticeInicial, visitadosIda);
+        buscaProfundidadeEConexo(matriz, verticeInicial, visitadosIda);
 
         int[][] matrizTransposta = obterMatrizTransposta(matriz);
-        dfsRecursivo(matrizTransposta, verticeInicial, visitadosVolta);
+        buscaProfundidadeEConexo(matrizTransposta, verticeInicial, visitadosVolta);
 
         for (int i = 0; i < n; i++) {
             if (!visitadosIda[i] || !visitadosVolta[i]) {
@@ -659,7 +662,7 @@ class Main {
         List<Integer> caminho = new ArrayList<>();
 
         if (verificaExistenciaVertice(origem, n) && verificaExistenciaVertice(destino, n)) {
-            if (dfsParaCaminho(matriz, origem, destino, visitado, caminho, eDirecionado)) {
+            if (buscaProfundidadeTemCaminho(matriz, origem, destino, visitado, caminho, eDirecionado)) {
                 System.out.println("\nExiste um caminho entre os vértices " + origem + " e " + destino + ":");
                 exibirCaminho(caminho);
             } else {
@@ -670,8 +673,8 @@ class Main {
         }
     }
 
-    private static boolean dfsParaCaminho(int matriz[][], int vertice, int destino, boolean[] visitado,
-            List<Integer> caminho, char eDirecionado) {
+    private static boolean buscaProfundidadeTemCaminho(int matriz[][], int vertice, int destino, boolean[] visitado,
+        List<Integer> caminho, char eDirecionado) {
         visitado[vertice] = true;
         caminho.add(vertice);
 
@@ -682,12 +685,12 @@ class Main {
         for (int i = 0; i < matriz.length; i++) {
             if (matriz[vertice][i] != 0 && !visitado[i]) {
                 if (eDirecionado == 's' || eDirecionado == 'S') {
-                    if (dfsParaCaminho(matriz, i, destino, visitado, caminho, eDirecionado)) {
+                    if (buscaProfundidadeTemCaminho(matriz, i, destino, visitado, caminho, eDirecionado)) {
                         return true;
                     }
                 } else {
-                    if (dfsParaCaminho(matriz, i, destino, visitado, caminho, eDirecionado)
-                            || dfsParaCaminho(matriz, i, vertice, visitado, caminho, eDirecionado)) {
+                    if (buscaProfundidadeTemCaminho(matriz, i, destino, visitado, caminho, eDirecionado)
+                            || buscaProfundidadeTemCaminho(matriz, i, vertice, visitado, caminho, eDirecionado)) {
                         return true;
                     }
                 }
