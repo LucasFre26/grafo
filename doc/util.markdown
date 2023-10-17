@@ -48,7 +48,7 @@ Este código Java oferece uma biblioteca para a manipulação de grafos, fornece
   - Opção 'x' para verificar se o grafo é conexo.
 
 - **Exportar Grafo para GEXF:**
-  - Opção 'e' exporta o grafo para o formato GEXF.
+  - Opção 'e' exporta o grafo para o formato GEXF, exportado para a pasta a qual foi feito o git clone. Permitindo a vizualização do grafo no Gephi.
 
 ### Exemplo de Utilização
 
