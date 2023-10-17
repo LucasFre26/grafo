@@ -2,10 +2,6 @@
 
 O programa consiste em uma série de operações que podem ser realizadas em um grafo. O usuário é solicitado a fornecer detalhes sobre o grafo, como o número de vértices, se é direcionado e se as arestas são ponderadas. Em seguida, o usuário pode escolher entre várias operações, como inserir ou remover arestas, verificar a completude do grafo, consultar o grau de um vértice, realizar buscas em profundidade e largura, verificar a existência de caminhos, exportar o grafo para um formato GEXF, entre outras.
 
-## Função Principal (`main`)
-
-A função principal `main` é responsável por interagir com o usuário, obter informações sobre o grafo e oferecer um menu para realizar várias operações. Ele chama a função `menu` para processar as escolhas do usuário.
-
 ## Função `menu`
 
 A função `menu` implementa um menu de operações que podem ser realizadas no grafo. As opções incluem inserção e remoção de arestas, consultas de grau, verificação de propriedades do grafo (como ser regular, completo ou conexo), exportação do grafo e execução de algoritmos de busca em profundidade e largura.
