@@ -26,10 +26,3 @@
 #   a. Caso exista, exibir o caminho;
 # 12. Permitir a visualização do grafo na ferramenta Gephi.
 ```
-
-O QUE FALTA IMPLEMENTAR
-
-BUSCAPROFUNDIDADE()
-
-BUSCALARGURA()
-
