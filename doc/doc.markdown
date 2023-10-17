@@ -20,6 +20,10 @@ As funções `inserirAresta` e `removeAresta` permitem a inserção e remoção 
 
 A função `consultarGrau` é responsável por calcular e exibir o grau de um vértice ou o grau total do grafo. Ela considera se o grafo é direcionado, não direcionado, ponderado ou não ponderado.
 
+### Consulta de Grau (`vizinhoVertice`)
+
+A função `consultarGrau` é responsável por exibir os respectivos vizinhos de um determinado vértice, usando a busca em Profundidade.
+
 ### Verificação de Propriedades do Grafo
 
 - **É Regular (`eRegular`):** Verifica se o grafo é regular.
@@ -30,7 +34,7 @@ A função `consultarGrau` é responsável por calcular e exibir o grau de um v�
 
 A função `exportarGrafo` exporta o grafo para um arquivo GEXF, um formato de arquivo para representação de grafos.
 
-### Busca em Profundidade e Verificação de Conexidade (`eConexo` e `eConexoDirecionado`)
+### Verificação de Conexidade (`eConexo` e `eConexoDirecionado`)
 
 As funções `eConexo` e `eConexoDirecionado` usam a busca em profundidade para verificar se o grafo é conexo, levando em consideração a direção das arestas.
 
@@ -38,13 +42,9 @@ As funções `eConexo` e `eConexoDirecionado` usam a busca em profundidade para 
 
 A função `temCaminho` verifica se há um caminho entre dois vértices usando busca em profundidade.
 
-## Busca em Profundidade para Verificação de Conexidade (`buscaProfundidadeEConexo`)
-
-A função `buscaProfundidadeEConexo` é uma função auxiliar que implementa a busca em profundidade para verificar a conexidade do grafo.
-
 ## Outras Funções Auxiliares
 
-- **`matrizParaListaSucessores` e `exibirListaSucessores`:** Convertem a matriz de adjacência em uma lista de sucessores e exibem os vizinhos de um vértice.
+- **`matrizParaListaSucessores` e `exibirListaSucessores`:** Convertem a matriz de adjacência em uma lista de sucessores;
 
 - **`verificaExistenciaVertice`:** Verifica se um vértice existe no grafo.
 
