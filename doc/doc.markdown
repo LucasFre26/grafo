@@ -16,9 +16,9 @@ As funções `inserirAresta` e `removeAresta` permitem a inserção e remoção 
 
 A função `consultarGrau` é responsável por calcular e exibir o grau de um vértice ou o grau total do grafo. Ela considera se o grafo é direcionado, não direcionado, ponderado ou não ponderado.
 
-### Consulta de Grau (`vizinhoVertice`)
+### Consulta dos Vizinhos de um vértice (`vizinhoVertice`)
 
-A função `consultarGrau` é responsável por exibir os respectivos vizinhos de um determinado vértice, usando a busca em Profundidade.
+A função `vizinhoVertice` é responsável por exibir os respectivos vizinhos de um determinado vértice, usando a busca em Profundidade. Para grafos direcionados para verificar os vizinhos do vértice, usamos as funções `matrizParaListaSucessores` e `exibirListaSucessores` para construir a lista de sucessores do vértices escolhido.
 
 ### Verificação de Propriedades do Grafo
 
