@@ -6,7 +6,8 @@
 
 🏫Pontifícia Universidade Católica de Minas Gerais
 
-## O projeto consiste em desenvolver uma biblioteca de grafos, em JAVA. Permitindo o usuário 
+## O projeto consiste em desenvolver uma biblioteca de grafos, em JAVA. 
+### Permitindo o usuário 
 
 ```bash
 # 1. Criar o grafo com N vértices;
