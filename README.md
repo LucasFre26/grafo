@@ -4,7 +4,7 @@
 
 📖 Disciplina: Algoritmos em Grafos
 
-🏫 Pontifícia Universidade Católica de Minas Gerais
+🏫 Pontifícia Universidade Católica de Minas Gerais PUC Minas
 
 ## O projeto consiste em desenvolver uma biblioteca de grafos, em JAVA. 
 ### Permitindo o usuário 
