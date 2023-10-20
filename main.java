@@ -55,19 +55,28 @@ class Main {
         char op;
         char backup = eDirecionado;
 
+        List<List<Integer>> listaAdjacencia = matrizParaListaAdjacencia(matriz);
+
         System.out.print("Qual a sua opção: ");
         op = sc.next().charAt(0);
 
         if (op == 'a' || op == 'A') {
 
-            System.out.print("\n\n\n");
+            System.out.print("\nMatriz de adjacencia:\n");
             for (int i = 0; i < matriz.length; i++) {
                 for (int j = 0; j < matriz.length; j++) {
                     System.out.print("  " + matriz[i][j]);
                 }
                 System.out.println();
             }
-            System.out.print("\n\n\n");
+            System.out.print("\n");
+
+            menu(matriz, ePonderado, eDirecionado);
+        }
+
+        if(op == 'b' || op == 'B'){
+
+            exibirListaAdjacencia(listaAdjacencia);
 
             menu(matriz, ePonderado, eDirecionado);
         }
@@ -82,6 +91,8 @@ class Main {
                 v2 = sc.nextInt();
 
                 inserirAresta(matriz, v1, v2, ePonderado, eDirecionado, sc);
+
+                matrizParaListaSucessores(matriz);
                 menu(matriz, ePonderado, backup);
             }
             ;
@@ -94,6 +105,8 @@ class Main {
                 r2 = sc.nextInt();
 
                 removeAresta(matriz, r1, r2, ePonderado, eDirecionado);
+
+                matrizParaListaSucessores(matriz);
                 menu(matriz, ePonderado, backup);
 
             }
@@ -553,6 +566,46 @@ class Main {
 
         System.out.println("}\n");
     };
+
+    public static List<List<Integer>> matrizParaListaAdjacencia(int[][] matriz) {
+        List<List<Integer>> listaAdjacencia = new ArrayList<>();
+
+        int numVertices = matriz.length;
+
+        for (int i = 0; i < numVertices; i++) {
+            listaAdjacencia.add(new ArrayList<>());
+
+            for (int j = 0; j < numVertices; j++) {
+                if (matriz[i][j] != 0) {
+                    listaAdjacencia.get(i).add(j);
+                }
+            }
+        }
+
+        return listaAdjacencia;
+    }
+
+    public static void exibirListaAdjacencia(List<List<Integer>> listaAdjacencia) {
+        System.out.println("\nLista de Adjacência:\n");
+
+        for (int i = 0; i < listaAdjacencia.size(); i++) {
+            System.out.print("V(" + i + ") -> {");
+
+            List<Integer> vizinhos = listaAdjacencia.get(i);
+
+            for (int j = 0; j < vizinhos.size(); j++) {
+                System.out.print(" " + vizinhos.get(j));
+
+                if (j < vizinhos.size() - 1) {
+                    System.out.print(",");
+                }
+            }
+
+            System.out.println("}");
+        }
+
+        System.out.println();
+    }
 
     public static boolean eCompleto(int matriz[][], char ePonderado, char eDirecionado) {
         int n = matriz.length;
