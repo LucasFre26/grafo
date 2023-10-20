@@ -62,19 +62,12 @@ class Main {
 
         if (op == 'a' || op == 'A') {
 
-            System.out.print("\nMatriz de adjacencia:\n");
-            for (int i = 0; i < matriz.length; i++) {
-                for (int j = 0; j < matriz.length; j++) {
-                    System.out.print("  " + matriz[i][j]);
-                }
-                System.out.println();
-            }
-            System.out.print("\n");
+            exibirMatrizAdjacencia(matriz);
 
             menu(matriz, ePonderado, eDirecionado);
         }
 
-        if(op == 'b' || op == 'B'){
+        if (op == 'b' || op == 'B') {
 
             exibirListaAdjacencia(listaAdjacencia);
 
@@ -583,7 +576,7 @@ class Main {
         }
 
         return listaAdjacencia;
-    }
+    };
 
     public static void exibirListaAdjacencia(List<List<Integer>> listaAdjacencia) {
         System.out.println("\nLista de Adjacência:\n");
@@ -605,7 +598,18 @@ class Main {
         }
 
         System.out.println();
-    }
+    };
+
+    public static void exibirMatrizAdjacencia(int matriz[][]) {
+        System.out.print("\nMatriz de adjacencia:\n");
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                System.out.print("  " + matriz[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.print("\n");
+    };
 
     public static boolean eCompleto(int matriz[][], char ePonderado, char eDirecionado) {
         int n = matriz.length;
