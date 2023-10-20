@@ -12,6 +12,10 @@ A função `menu` implementa um menu de operações que podem ser realizadas no 
 
 As funções `inserirAresta` e `removeAresta` permitem a inserção e remoção de arestas no grafo, com suporte para grafos direcionados e não direcionados, bem como arestas ponderadas.
 
+### Exibição (`exibirMatrizAdjacencia` e `exibirListaAdjacencia`)
+
+As funções `exibirMatrizAdjacencia` e `exibirListaAdjacencia` permitem a exibição da Matriz de Adjacência e da Lista de Adjcência do Grafo que está sendo gerado, com o auxílio da `matrizParaListaAdjacencia` a Matriz que está sendo construindo e traduzida para a Lista de Adjacência.
+
 ### Consulta de Grau (`consultarGrau`)
 
 A função `consultarGrau` é responsável por calcular e exibir o grau de um vértice ou o grau total do grafo. Ela considera se o grafo é direcionado, não direcionado, ponderado ou não ponderado.
