@@ -20,6 +20,10 @@ Este código Java oferece uma biblioteca para a manipulação de grafos, fornece
   - Para inserir uma aresta, escolha a opção 'i' e forneça os vértices relacionados.
   - Para remover uma aresta, escolha a opção 'd' e indique os vértices associados.
 
+- **Exibir na Tela a Matriz e ou a Lista de Adjacência:**
+  - Para exibir a matriz de Adjacência, escolha a opção 'a'.
+  - Para exibir a lista de Adjacência, escolha a opção 'b'.
+
 - **Consultar Grau:**
   - Opção 'v' para consultar o grau de um vértice específico.
   - Opção 'g' para consultar o grau do grafo.
