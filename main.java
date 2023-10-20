@@ -43,6 +43,7 @@ class Main {
                 + "Para fazer a busca em largura entre com 'l'\n"
                 + "Para verificar a existencia de caminho entre dois vertices entre com 'w'\n"
                 + "Para exportar o grafo entre com 'e'\n"
+                + "Para exibir a lista de Adjacencia entre com 'b'\n"
                 + "Para exibir a matriz de adjacencia entre com 'a'. ");
 
         menu(matrizAdjacencia, ePonderado, eDirecionado);
