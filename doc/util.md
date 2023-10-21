@@ -12,7 +12,7 @@ Este código Java oferece uma biblioteca para a manipulação de grafos, fornece
   Ao executar o programa, você será solicitado a informar o número de vértices que o seu grafo terá.
 
 - **Tipo de Grafo:**
-  Você deverá indicar se o grafo é direcionado (orientado) e/ou ponderado. Essas informações ajudarão na manipulação adequada do grafo.
+  Você deverá indicar se o grafo é direcionado (dirigido) e/ou contém arestas ponderadas. Essas informações ajudarão na manipulação adequada do grafo.
 
 ### 2. Operações Básicas
 
