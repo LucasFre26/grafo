@@ -1,10 +1,11 @@
 # Biblioteca para Criação de um Grafo
 
-💻 Integrantes: Lucas José de Freitas.
 
-📖 Disciplina: Algoritmos em Grafos
+Pontifícia Universidade Católica de Minas Gerais - PUC Minas
 
-🏫 Pontifícia Universidade Católica de Minas Gerais - PUC Minas
+Disciplina: Algoritmos em Grafos
+
+Grupo: Lucas José de Freitas 
 
 ## O projeto consiste em desenvolver uma biblioteca de grafos, em JAVA. 
 ### Permitindo o usuário 
