@@ -1,8 +1,7 @@
-## Estrutura Geral da Biblioteca 
+## Estrutura Geral da Biblioteca e Decisões de Implementação 
 
-O programa consiste em uma série de operações que podem ser realizadas em um grafo. O usuário é solicitado a fornecer detalhes sobre o grafo, como o número de vértices, se é direcionado e se as arestas são ponderadas. Em seguida, o usuário pode escolher entre várias operações, como inserir ou remover arestas, verificar a completude do grafo, consultar o grau de um vértice, realizar buscas em profundidade e largura, verificar a existência de caminhos, exportar o grafo para um formato GEXF, entre outras.
+O programa consiste em uma série de operações que podem ser realizadas em um grafo. O usuário é solicitado a fornecer detalhes sobre o grafo, como o número de vértices, se é direcionado e se as arestas são ponderadas. Em seguida, o usuário pode escolher entre várias operações, como inserir ou remover arestas, verificar a completude do grafo, consultar o grau de um vértice, realizar buscas em profundidade e largura, verificar a existência de caminhos, exportar o grafo para um formato GEXF, entre outras. A fim de evitar conflitos de corridas, todas as funções que necessitam de outras, foram Implementadas duplicadas, como a busca em profundidade, foi implementada para a busca propriamente, uma outra busca em profundidade para a função que verifica se é conexo o grafo é uma outra para a função que verifica se tem caminho entre dois vértices anteriormente escolhidos. Para que assim, evite conflitos sobre evituais resíduos de outras execuções.
 
-## Decisões de Implementação 
 
 ## Função `menu`
 
