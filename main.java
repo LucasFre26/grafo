@@ -44,7 +44,10 @@ class Main {
                 + "Para verificar a existencia de caminho entre dois vertices entre com 'w'\n"
                 + "Para exportar o grafo entre com 'e'\n"
                 + "Para exibir a lista de Adjacencia entre com 'b'\n"
-                + "Para exibir a matriz de adjacencia entre com 'a'. ");
+                + "Para exibir a matriz de adjacencia entre com 'a'.\n"
+                + "Para exibir o caminho minimo usando o Algoritmo de Dijkstra entre com 'k'\n"
+                + "Para exibir o caminho minimo usando o Algoritmo de Bellman Ford entre com 'm' "
+                + "Para exibir o caminho minimo usando o Algoritmo de Floyd-Warshall entre com 'h' ");
 
         menu(matrizAdjacencia, ePonderado, eDirecionado);
 
@@ -66,16 +69,12 @@ class Main {
             exibirMatrizAdjacencia(matriz);
 
             menu(matriz, ePonderado, eDirecionado);
-        }
-
-        if (op == 'b' || op == 'B') {
+        } else if (op == 'b' || op == 'B') {
 
             exibirListaAdjacencia(listaAdjacencia);
 
             menu(matriz, ePonderado, eDirecionado);
-        }
-
-        if (op == 'i' || op == 'd' || op == 'I' || op == 'D') {
+        } else if (op == 'i' || op == 'd' || op == 'I' || op == 'D') {
             int v1, v2;
 
             if (op == 'i' || op == 'I') {
@@ -93,9 +92,9 @@ class Main {
             if (op == 'd' || op == 'D') {
                 int r1, r2;
 
-                System.out.print("\nEntre com o primeiro vertice que estara ligado: ");
+                System.out.print("\nEntre com o primeiro vertice da aresta que sera removida: ");
                 r1 = sc.nextInt();
-                System.out.print("Entre com o segundo vertice que estara ligado: ");
+                System.out.print("Entre com o segundo vertice da aresta que sera removida: ");
                 r2 = sc.nextInt();
 
                 removeAresta(matriz, r1, r2, ePonderado, eDirecionado);
@@ -199,6 +198,42 @@ class Main {
             buscaLargura(matriz, origem);
 
             menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'k') {
+            int origem;
+
+            System.out.print("\nEntre com o vértice de origem: ");
+            origem = sc.nextInt();
+
+            try {
+                dijkstra(matriz, origem);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Erro: " + e.getMessage());
+            }
+
+            System.out.println();
+
+            menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'm') {
+            int origem;
+
+            System.out.print("\nEntre com o vertice de origem: ");
+            origem = sc.nextInt();
+
+            try {
+                bellmanFord(matriz, origem);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Erro: " + e.getMessage());
+            }
+
+            System.out.println();
+
+            menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'h') {
+            // try {
+            //     floydWarshall(matriz);
+            // } catch (IllegalArgumentException e) {
+            //     System.out.println("Erro: " + e.getMessage());
+            // }
         }
     };
 
@@ -878,6 +913,116 @@ class Main {
             System.out.println();
         }
         System.out.println("\n");
+    }
+
+    public static void dijkstra(int[][] grafo, int origem) {
+        if (temPesoNegativo(grafo)) {
+            throw new IllegalArgumentException("O grafo contém arestas com pesos negativos.");
+        }
+
+        long inicioAlgoritmo = System.currentTimeMillis();
+
+        int numVertices = grafo.length;
+        int[] distancia = new int[numVertices];
+        Integer[] pai = new Integer[numVertices];
+        boolean[] visitado = new boolean[numVertices];
+
+        Arrays.fill(distancia, Integer.MAX_VALUE);
+        Arrays.fill(pai, null);
+        distancia[origem] = 0;
+
+        for (int count = 0; count < numVertices - 1; count++) {
+            int u = obterVerticeMinimo(distancia, visitado);
+            visitado[u] = true;
+
+            for (int v = 0; v < numVertices; v++) {
+                if (!visitado[v] && grafo[u][v] != 0 && distancia[u] != Integer.MAX_VALUE &&
+                        distancia[u] + grafo[u][v] < distancia[v]) {
+                    distancia[v] = distancia[u] + grafo[u][v];
+                    pai[v] = u;
+                }
+            }
+        }
+
+        long fimAlgoritmo = System.currentTimeMillis();
+
+        System.out.println("\nDistâncias mínimas a partir do vértice " + origem + ":\n");
+        for (int i = 0; i < numVertices; i++) {
+            System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
+                    (distancia[i] != Integer.MAX_VALUE ? distancia[i] : "infinito") +
+                    ", Pai = " + (pai[i] != null ? pai[i] : "null"));
+        }
+
+        System.out.printf("\nO algoritmo Dijkstra levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+    }
+
+    private static int obterVerticeMinimo(int[] distancia, boolean[] visitado) {
+        int minimo = Integer.MAX_VALUE;
+        int indiceMinimo = -1;
+
+        for (int v = 0; v < distancia.length; v++) {
+            if (!visitado[v] && distancia[v] <= minimo) {
+                minimo = distancia[v];
+                indiceMinimo = v;
+            }
+        }
+
+        return indiceMinimo;
+    }
+
+    private static boolean temPesoNegativo(int[][] grafo) {
+        for (int i = 0; i < grafo.length; i++) {
+            for (int j = 0; j < grafo[i].length; j++) {
+                if (grafo[i][j] < 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void bellmanFord(int[][] grafo, int origem) {
+        int numVertices = grafo.length;
+        int[] distancia = new int[numVertices];
+        Integer[] pai = new Integer[numVertices];
+
+        long inicioAlgoritmo = System.currentTimeMillis();
+
+        Arrays.fill(distancia, Integer.MAX_VALUE);
+        Arrays.fill(pai, null);
+        distancia[origem] = 0;
+
+        for (int count = 0; count < numVertices - 1; count++) {
+            for (int u = 0; u < numVertices; u++) {
+                for (int v = 0; v < numVertices; v++) {
+                    if (grafo[u][v] != 0 && distancia[u] != Integer.MAX_VALUE &&
+                            distancia[u] + grafo[u][v] < distancia[v]) {
+                        distancia[v] = distancia[u] + grafo[u][v];
+                        pai[v] = u;
+                    }
+                }
+            }
+        }
+
+        for (int u = 0; u < numVertices; u++) {
+            for (int v = 0; v < numVertices; v++) {
+                if (grafo[u][v] != 0 && distancia[u] != Integer.MAX_VALUE &&
+                        distancia[u] + grafo[u][v] < distancia[v]) {
+                    throw new IllegalArgumentException("O grafo contém um ciclo de peso negativo.");
+                }
+            }
+        }
+
+        long fimAlgoritmo = System.currentTimeMillis();
+
+        System.out.println("\nDistâncias mínimas a partir do vértice " + origem + ":\n");
+        for (int i = 0; i < numVertices; i++) {
+            System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
+                    (distancia[i] != Integer.MAX_VALUE ? distancia[i] : "infinito") +
+                    ", Pai = " + (pai[i] != null ? pai[i] : "null"));
+        }
+
+        System.out.printf("\nO algoritmo Bellman Ford levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
     }
 
 };
