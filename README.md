@@ -7,7 +7,7 @@ Disciplina: Algoritmos em Grafos
 
 Grupo: Lucas José de Freitas 
 
-## O projeto do TP1 consiste em desenvolver uma biblioteca de grafos, em JAVA
+## Para o TP1 o projeto consiste em desenvolver uma biblioteca de grafos, em JAVA
 ### Permitindo  
 
 ```bash
@@ -28,8 +28,8 @@ Grupo: Lucas José de Freitas
 # 12. A Visualização do grafo na ferramenta Gephi.
 ```
 
-## Para o projeto do TP2 consiste em deseonvolver uma bibliotece de grafos, em JAVA 
-### Permitindo   
+## Para o TP2 projeto consiste na atualização da bibliotece de grafos, em JAVA 
+### Agora Permitindo   
 
 ```bash
 # 13. O Calculo da menor distância de uma origem para todos os outros vértices.
