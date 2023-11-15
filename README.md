@@ -34,10 +34,10 @@ Grupo: Lucas José de Freitas
 ```bash
 # 13. O Calculo da menor distância de uma origem para todos os outros vértices.
 #     a. Usando os Algoritmo:
-#       Dijkstra
-#       Bellman-Ford    
+#        Dijkstra
+#        Bellman-Ford    
 # 14. O Calculo da menor distância de todos para todos
 #     a. Usando o Algoritmo:
-#       Floyd-Warshall
+#        Floyd-Warshall
 # 15. A Implementação e explicação do Algoritmo A* (A ESTRELA)
 ```
