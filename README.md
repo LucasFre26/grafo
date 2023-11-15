@@ -28,8 +28,7 @@ Grupo: Lucas José de Freitas
 # 12. A Visualização do grafo na ferramenta Gephi.
 ```
 
-## Para o TP2 projeto consiste na atualização da bibliotece de grafos, em 
-## JAVA 
+## Para o TP2 projeto consistirá na atualização da bibliotece de grafos criada 
 ### Agora Permitindo   
 
 ```bash
