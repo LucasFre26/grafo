@@ -29,7 +29,7 @@ Grupo: Lucas José de Freitas
 ```
 
 ## Para o TP2 projeto consiste na atualização da bibliotece de grafos, em 
-JAVA 
+## JAVA 
 ### Agora Permitindo   
 
 ```bash
