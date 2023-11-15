@@ -7,7 +7,7 @@ Disciplina: Algoritmos em Grafos
 
 Grupo: Lucas José de Freitas 
 
-## Para o TP1 o projeto consiste em desenvolver uma biblioteca de grafos, em JAVA
+## Para o TP1 o projeto consiste em desenvolver uma biblioteca de grafos
 ### Permitindo  
 
 ```bash
