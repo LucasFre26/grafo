@@ -41,3 +41,35 @@ Grupo: Lucas José de Freitas
 #        Floyd-Warshall
 # 15. A Implementação e explicação do Algoritmo A* (A ESTRELA)
 ```
+```bash
+funcao pra receber uma matriz completa{
+	receber a matriz 	
+	atualizar a lista de adjacencia
+}
+
+OBS: fazer tratativa pra nao deixar passar grafos que nao sao ponderados
+
+Realizar o teste
+	ALGORITMOS QUE CALCULAM A DISTANCIA DE UMA ORIGEM PARA TODOS
+		Dijksta (feito)
+			matrizes ponderadas (sem pesos negativos)
+			2 Grafos [1 direcionado ponderado, 1 n direcionado ponderado]
+			G1 e G2 [2 => 100 vertice] | G3 e G4 [2 => 1000 vertices] | G5 e G6 [2 => 10.000 vertices]
+
+		Bellman-Ford (feito)
+			matrizes ponderadas (podem ter pesos negativos)
+			2 Grafos [1 direcionado ponderado, 1 n direcionado ponderado]
+			G1 e G2 [2 => 100 vertice] | G3 e G4 [2 => 1000 vertices] | G5 e G6 [2 => 10.000 vertices]
+	
+	ALGORITMOS QUE CALCULAM DISTANCIA DE TODOS PRA TODOS
+		Floyd-Warshall
+			matrizes ponderadas (podem ter pesos negativos)
+			2 Grafos [1 direcionado ponderado, 1 n direcionado ponderado]
+			G1 e G2 [2 => 100 vertice] | G3 e G4 [2 => 1000 vertices] | G5 e G6 [2 => 10.000 vertices]
+
+	ALGORITMO NAO CONHEÇO 	
+		A* (A Estrela)
+	
+	6 grafos {2 de 100, 2 de 1000, 2 de 10.000}
+
+```
