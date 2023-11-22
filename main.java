@@ -205,7 +205,7 @@ class Main {
             origem = sc.nextInt();
 
             try {
-                dijkstra(matriz, origem);
+                dijkstraFonteUnica(matriz, origem);
             } catch (IllegalArgumentException e) {
                 System.out.println("Erro: " + e.getMessage());
             }
@@ -220,7 +220,7 @@ class Main {
             origem = sc.nextInt();
 
             try {
-                bellmanFord(matriz, origem);
+                bellmanFordFonteUnica(matriz, origem);
             } catch (IllegalArgumentException e) {
                 System.out.println("Erro: " + e.getMessage());
             }
@@ -915,7 +915,7 @@ class Main {
         System.out.println("\n");
     }
 
-    public static void dijkstra(int[][] grafo, int origem) {
+    public static void dijkstraFonteUnica(int[][] grafo, int origem) {
         if (temPesoNegativo(grafo)) {
             throw new IllegalArgumentException("O grafo contém arestas com pesos negativos.");
         }
@@ -981,7 +981,7 @@ class Main {
         return false;
     }
 
-    public static void bellmanFord(int[][] grafo, int origem) {
+    public static void bellmanFordFonteUnica(int[][] grafo, int origem) {
         int numVertices = grafo.length;
         int[] distancia = new int[numVertices];
         Integer[] pai = new Integer[numVertices];
