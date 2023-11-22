@@ -54,21 +54,32 @@ class Main {
         sc.close();
     }
 
-    public static void menu(int grafo[][], char ePonderado, char eDirecionado) {
+    public static void menu(int matriz[][], char ePonderado, char eDirecionado) {
         Scanner sc = new Scanner(System.in);
         char op;
         char backup = eDirecionado;
 
-        int[][] matriz = {
+        // teste pra Dijkstra
+       /*  int[][] matriz = {
+            { 0,  5,  10, 6,  0, 0,  0 },
+            { 5,  0,  0,  0,  0, 13, 0 },
+            { 10, 0,  0,  3,  4, 0,  5 },
+            { 6,  0,  3,  0,  6, 11, 0 },
+            { 0,  0,  4,  6,  0, 0,  8 },
+            { 0,  13, 0,  11, 0, 0,  3 },
+            { 0,  0,  5,  0,  8, 3,  0 },
+        }; */
 
-            {0,  5,  10, 6,  0,  0,  0},
-            {5,  0,  0,  0,  0,  13,  0},
-            {10,  0,  0,  3,  4,  0,  5},
-            {6,  0,  3,  0,  6,  11,  0},
-            {0,  0,  4,  6,  0,  0,  8},
-            {0,  13,  0,  11,  0,  0, 3},
-            {0,  0,  5,  0,  8,  3,  0},
-    };
+        // teste Bellman-ford
+        /* int [][] matriz = {
+            {0,   6,  5,   5,   0,   0,  0},
+            {0,   0,  0,   0,  -1,   0,  0},
+            {0,  -2,  0,   0,   1,   0,  0},
+            {0,   0,  -1,  0,   0,  -1,  0},
+            {0,   0,  0,   0,   0,   0,  3},
+            {0,   0,  0,   0,   0,   0,  3},
+            {0,   0,  0,   0,   0,   0,  0},
+        }; */
 
         List<List<Integer>> listaAdjacencia = matrizParaListaAdjacencia(matriz);
 
@@ -211,13 +222,16 @@ class Main {
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'k') {
             if (ePonderado == 'n') {
-                System.err.print("\nNao e possivel realizar o algortimo de Dijkstra para Grafo com arestas nao Ponderadas");
+                System.err.print(
+                        "\nNao e possivel realizar o algortimo de Dijkstra para Grafo com arestas nao Ponderadas");
+
+                menu(matriz, ePonderado, eDirecionado);
             } else {
                 int origem;
-    
+
                 System.out.print("\nEntre com o vértice de origem: ");
                 origem = sc.nextInt();
-    
+
                 // Algoritmo de Dijkstra pra FONTE UNICA
                 try {
                     dijkstraFonteUnica(matriz, origem);
@@ -232,35 +246,37 @@ class Main {
                 } catch (IllegalArgumentException e) {
                     System.out.println("Erro: " + e.getMessage());
                 }
-    
+
                 System.out.println();
-    
+
                 menu(matriz, ePonderado, eDirecionado);
             }
         } else if (op == 'm') {
             if (ePonderado == 'n') {
-                System.err.print("\nNao e possivel realizar o algortimo de Bellman-Ford para Grafo com arestas nao Ponderadas");
+                System.err.print(
+                        "\nNao e possivel realizar o algortimo de Bellman-Ford para Grafo com arestas nao Ponderadas");
             } else {
                 int origem;
-    
+
                 System.out.print("\nEntre com o vertice de origem: ");
                 origem = sc.nextInt();
-    
+
+                // Algoritmo de Bellman-Ford pra Fonte Unica
                 try {
                     bellmanFordFonteUnica(matriz, origem);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Erro: " + e.getMessage());
                 }
-                
+
                 // Algoritmo de Bellman-Ford de TODOS PARA TODOS
-                // try {
-                //     bellmanFordPares(matriz, origem);
-                // } catch (IllegalArgumentException e) {
-                //     System.out.println("Erro: " + e.getMessage());
-                // }
-    
+                try {
+                    bellmanFordPares(matriz);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
+
                 System.out.println();
-    
+
                 menu(matriz, ePonderado, eDirecionado);
             }
         } else if (op == 'h') {
@@ -1108,6 +1124,58 @@ class Main {
         }
 
         System.out.printf("\nO algoritmo Bellman Ford levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+    }
+
+    public static void bellmanFordPares(int[][] grafo) {
+        int numVertices = grafo.length;
+        int[][] distancia = new int[numVertices][numVertices];
+        Integer[][] pai = new Integer[numVertices][numVertices];
+
+        long inicioAlgoritmo = System.currentTimeMillis();
+
+        for (int i = 0; i < numVertices; i++) {
+            Arrays.fill(distancia[i], Integer.MAX_VALUE);
+            Arrays.fill(pai[i], null);
+            distancia[i][i] = 0;
+        }
+
+        for (int count = 0; count < numVertices - 1; count++) {
+            for (int origem = 0; origem < numVertices; origem++) {
+                for (int u = 0; u < numVertices; u++) {
+                    for (int v = 0; v < numVertices; v++) {
+                        if (grafo[u][v] != 0 && distancia[origem][u] != Integer.MAX_VALUE &&
+                                distancia[origem][u] + grafo[u][v] < distancia[origem][v]) {
+                            distancia[origem][v] = distancia[origem][u] + grafo[u][v];
+                            pai[origem][v] = u;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int origem = 0; origem < numVertices; origem++) {
+            for (int u = 0; u < numVertices; u++) {
+                for (int v = 0; v < numVertices; v++) {
+                    if (grafo[u][v] != 0 && distancia[origem][u] != Integer.MAX_VALUE &&
+                            distancia[origem][u] + grafo[u][v] < distancia[origem][v]) {
+                        throw new IllegalArgumentException("O grafo contém um ciclo de peso negativo.");
+                    }
+                }
+            }
+        }
+
+        long fimAlgoritmo = System.currentTimeMillis();
+
+        System.out.println("\nDistâncias mínimas entre todos os pares de vértices:\n");
+        for (int origem = 0; origem < numVertices; origem++) {
+            for (int i = 0; i < numVertices; i++) {
+                System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
+                        (distancia[origem][i] != Integer.MAX_VALUE ? distancia[origem][i] : "infinito") +
+                        ", Pai = " + (pai[origem][i] != null ? pai[origem][i] : "null"));
+            }
+        }
+
+        System.out.printf("\nO algoritmo Bellman-Ford Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
     }
 
 };
