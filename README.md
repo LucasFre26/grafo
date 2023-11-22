@@ -32,62 +32,68 @@ Grupo: Lucas José de Freitas
 ### Agora Permitindo   
 
 ```bash
-# 13. O Calculo da menor distância de uma origem para todos os outros vértices.
+# 13. O Calculo da menor distância de uma origem para todos os outros vértices e de todos vértices para todos vértices.
 #     a. Usando os Algoritmo:
-#        Dijkstra
-#        Bellman-Ford    
-# 14. O Calculo da menor distância de todos para todos
-#     a. Usando o Algoritmo:
-#        Floyd-Warshall
-# 15. A Implementação e explicação do Algoritmo A* (A ESTRELA)
-```
-```bash
-funcao pra receber uma matriz completa{
-	receber a matriz 	
-	atualizar a lista de adjacencia
-}
+#        Dijkstra (ok)
+#        Bellman-Ford (ok)   
+#        Floyd-Warshall (zero)
+# 15. A Implementação e explicação do Algoritmo A* (A ESTRELA) (zero)
+# 16. Implementação de Grafos para testes de desempenhos dos algoritmos de caminho mínimo (zero)
+#	a. Grafo com 100 vértices
+#	b. Grafo com 1.000 vértices
+#	c. Grafo com 10.000 vértices
+#	d. Grafo com 50.000 vértices
+#	e. Grafo com 100.000 vértices
 
-OBS: fazer tratativa pra nao deixar passar grafos que nao sao ponderados (Feito)
+## Resultados
+### 1. Dijkstra com caminho de uma origem para todos os vértices
+####   a. Grafo com 100 vértices
 
-ALGORITMOS
+####   b. Grafo com 1.000 vértices
 
-DIJKSTRA FONTE UNICA (FEITO)
+####   c. Grafo com 10.000 vértices
 
-DIJKSTRA TODOS PARA TODOS (FEITO)
+####   d. Grafo com 50.000 vértices
 
-BELLMAN-FORD FONTE UNICA (FEITO)
+####   e. Grafo com 100.000 vértices
 
-BELLMAN-FORD TODOS PARA TODOS (FEITO)
+### 2. Dijkstra com caminho de todos para todos os vértices
+####   a. Grafo com 100 vértices
 
-FLOYD-WARSHALL FONTE UNICA 
+####   b. Grafo com 1.000 vértices
 
-FLOYD-WARSHALL TODOS PARA TODOS
+####   c. Grafo com 10.000 vértices
 
-A* FONTE UNICA 
+####   d. Grafo com 50.000 vértices
 
-A* TODOS PARA TODOS
+####   e. Grafo com 100.000 vértices
 
-Realizar o teste
-	ALGORITMOS QUE CALCULAM A DISTANCIA DE UMA ORIGEM PARA TODOS
-		Dijksta (feito)
-			matrizes ponderadas (sem pesos negativos)
-			2 Grafos [1 direcionado ponderado, 1 n direcionado ponderado]
-			G1 e G2 [2 => 100 vertice] | G3 e G4 [2 => 1000 vertices] | G5 e G6 [2 => 10.000 vertices]
+### 2. Bellman-Ford com caminho de uma origem para todos os vértices
+####   a. Grafo com 100 vértices
 
-		Bellman-Ford (feito)
-			matrizes ponderadas (podem ter pesos negativos)
-			2 Grafos [1 direcionado ponderado, 1 n direcionado ponderado]
-			G1 e G2 [2 => 100 vertice] | G3 e G4 [2 => 1000 vertices] | G5 e G6 [2 => 10.000 vertices]
-	
-	ALGORITMOS QUE CALCULAM DISTANCIA DE TODOS PRA TODOS
-		Floyd-Warshall
-			matrizes ponderadas (podem ter pesos negativos)
-			2 Grafos [1 direcionado ponderado, 1 n direcionado ponderado]
-			G1 e G2 [2 => 100 vertice] | G3 e G4 [2 => 1000 vertices] | G5 e G6 [2 => 10.000 vertices]
+####   b. Grafo com 1.000 vértices
 
-	ALGORITMO NAO CONHEÇO 	
-		A* (A Estrela)
-	
-	6 grafos {2 de 100, 2 de 1000, 2 de 10.000}
+####   c. Grafo com 10.000 vértices
 
-```
+####   d. Grafo com 50.000 vértices
+
+####   e. Grafo com 100.000 vértices
+
+### 3. Bellman-Ford com caminho de todos para todos os vértices
+####   a. Grafo com 100 vértices
+
+####   b. Grafo com 1.000 vértices
+
+####   c. Grafo com 10.000 vértices
+
+####   d. Grafo com 50.000 vértices
+
+####   e. Grafo com 100.000 vértices
+
+### 4. Floyd-Warshal com caminho de uma origem para todos os vértices
+
+### 5. Floyd-Warshal com caminho de todos para todos os vértices
+
+### 6. A* com caminho de uma origem para todos os vértices
+
+### 7. A* com caminho de todos para todos os vértices
