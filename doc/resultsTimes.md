@@ -1,3 +1,10 @@
+# Explicação Algoritmo A* (A ESTRELA)
+
+```bash
+
+
+```
+
 # Resultados
 ## 1. Dijkstra com caminho de uma origem para todos os vértices
   -   a. Grafo com 100 vértices
