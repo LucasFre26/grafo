@@ -47,7 +47,25 @@ funcao pra receber uma matriz completa{
 	atualizar a lista de adjacencia
 }
 
-OBS: fazer tratativa pra nao deixar passar grafos que nao sao ponderados
+OBS: fazer tratativa pra nao deixar passar grafos que nao sao ponderados (Feito)
+
+ALGORITMOS
+
+DIJKSTRA FONTE UNICA (FEITO)
+
+DIJKSTRA TODOS PARA TODOS (FEITO)
+
+BELLMAN-FORD FONTE UNICA (FEITO)
+
+BELLMAN-FORD TODOS PARA TODOS (FEITO)
+
+FLOYD-WARSHALL FONTE UNICA 
+
+FLOYD-WARSHALL TODOS PARA TODOS
+
+A* FONTE UNICA 
+
+A* TODOS PARA TODOS
 
 Realizar o teste
 	ALGORITMOS QUE CALCULAM A DISTANCIA DE UMA ORIGEM PARA TODOS
