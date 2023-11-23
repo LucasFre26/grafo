@@ -20,7 +20,7 @@
             {0,   0,  0,   0,   0,   0,  0},
         };
 
-      // teste Bellman-ford
+      // teste Ford-Warshall
       int [][] matriz = {
           {0,   3,   8,   0,   -4},
           {0,   0,   0,   1,   7},
