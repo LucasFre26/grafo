@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.List;
 
 class Main {
 
@@ -51,7 +52,7 @@ class Main {
         sc.close();
     }
 
-    public static void menu(int matriz[][], char ePonderado, char eDirecionado) {
+    public static void menu(int matriz1[][], char ePonderado, char eDirecionado) {
         Scanner sc = new Scanner(System.in);
         char op;
         char backup = eDirecionado;
@@ -77,6 +78,15 @@ class Main {
             {0,   0,  0,   0,   0,   0,  3},
             {0,   0,  0,   0,   0,   0,  0},
         }; */
+
+      // teste Bellman-ford
+      int [][] matriz = {
+          {0,   3,   8,   0,   -4},
+          {0,   0,   0,   1,   7},
+          {0,   4,   0,   0,   0},
+          {2,   0,  -5,   0,   0},
+          {0,   0,   0,   6,   0},
+      };
 
         List<List<Integer>> listaAdjacencia = VerticeOp.matrizParaListaAdjacencia(matriz);
 
@@ -230,7 +240,7 @@ class Main {
 
                 // Algoritmo de Dijkstra pra FONTE UNICA
                 try {
-                    algCaminhoMinimo.dijkstraFonteUnica(matriz, origem);
+                    AlgCaminhoMinimo.dijkstraFonteUnica(matriz, origem);
                     // dijkstraFonteUnica(matriz, origem);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Erro: " + e.getMessage());
@@ -244,7 +254,7 @@ class Main {
 
               if(per == 's' || per == 'S'){
                 try {
-                  algCaminhoMinimo.dijkstraPares(matriz);
+                  AlgCaminhoMinimo.dijkstraPares(matriz);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Erro: " + e.getMessage());
                 }
@@ -266,7 +276,7 @@ class Main {
 
                 // Algoritmo de Bellman-Ford pra Fonte Unica
                 try {
-                  algCaminhoMinimo.bellmanFordFonteUnica(matriz, origem);
+                  AlgCaminhoMinimo.bellmanFordFonteUnica(matriz, origem);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Erro: " + e.getMessage());
                 }
@@ -277,7 +287,7 @@ class Main {
               
               if(per1 == 's' || per1 == 'S'){
                 try {
-                  algCaminhoMinimo.bellmanFordPares(matriz);
+                  AlgCaminhoMinimo.bellmanFordPares(matriz);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Erro: " + e.getMessage());
                 }
@@ -287,11 +297,30 @@ class Main {
               menu(matriz, ePonderado, eDirecionado);
             }
         } else if (op == 'h') {
-            // try {
-            // floydWarshall(matriz);
-            // } catch (IllegalArgumentException e) {
-            // System.out.println("Erro: " + e.getMessage());
-            // }
+          
+          System.out.print("\nEntre com o vertice de origem: ");
+          int origem1 = sc.nextInt();
+
+          try {
+            AlgCaminhoMinimo.floydWarshallFonteUnica(matriz, origem1);
+          } catch (IllegalArgumentException e) {
+              System.out.println("Erro: " + e.getMessage());
+          }
+          
+          System.out.print("\nDeseja rodar o algoritmo de Todos para Todos: ");
+          char per2 = sc.next().charAt(0);
+          
+            try {
+              if(per2 == 's' || per2 == 'S'){
+                  AlgCaminhoMinimo.floydWarshallPares(matriz);
+              } 
+            } catch (IllegalArgumentException e) {
+              System.out.println("Erro: " + e.getMessage());
+            }
+
+          System.out.println("");
+          menu(matriz, ePonderado, eDirecionado);
         }
     };
+
 };
