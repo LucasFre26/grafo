@@ -1,9 +1,6 @@
 import java.util.*;
-import java.io.FileWriter;
-import java.io.IOException;
 
 class Main {
-    private static int tempo;
 
     public static void main(String[] args) {
 
@@ -59,19 +56,41 @@ class Main {
         char op;
         char backup = eDirecionado;
 
-        List<List<Integer>> listaAdjacencia = matrizParaListaAdjacencia(matriz);
+        // teste pra Dijkstra
+        /* int[][] matriz = {
+            { 0,  5,  10, 6,  0, 0,  0 },
+            { 5,  0,  0,  0,  0, 13, 0 },
+            { 10, 0,  0,  3,  4, 0,  5 },
+            { 6,  0,  3,  0,  6, 11, 0 },
+            { 0,  0,  4,  6,  0, 0,  8 },
+            { 0,  13, 0,  11, 0, 0,  3 },
+            { 0,  0,  5,  0,  8, 3,  0 },
+        }; */
+
+        // teste Bellman-ford
+        /* int [][] matriz = {
+            {0,   6,  5,   5,   0,   0,  0},
+            {0,   0,  0,   0,  -1,   0,  0},
+            {0,  -2,  0,   0,   1,   0,  0},
+            {0,   0,  -1,  0,   0,  -1,  0},
+            {0,   0,  0,   0,   0,   0,  3},
+            {0,   0,  0,   0,   0,   0,  3},
+            {0,   0,  0,   0,   0,   0,  0},
+        }; */
+
+        List<List<Integer>> listaAdjacencia = VerticeOp.matrizParaListaAdjacencia(matriz);
 
         System.out.print("Qual a sua opção: ");
         op = sc.next().charAt(0);
 
         if (op == 'a' || op == 'A') {
 
-            exibirMatrizAdjacencia(matriz);
+            Exibir.matrizAdjacencia(matriz);
 
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'b' || op == 'B') {
 
-            exibirListaAdjacencia(listaAdjacencia);
+            Exibir.listaAdjacencia(listaAdjacencia);
 
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'i' || op == 'd' || op == 'I' || op == 'D') {
@@ -83,9 +102,9 @@ class Main {
                 System.out.print("Entre com o segundo vertice que estara ligado: ");
                 v2 = sc.nextInt();
 
-                inserirAresta(matriz, v1, v2, ePonderado, eDirecionado, sc);
+                Aresta.inserirAresta(matriz, v1, v2, ePonderado, eDirecionado, sc);
 
-                matrizParaListaSucessores(matriz);
+                Exibir.matrizParaListaSucessores(matriz);
                 menu(matriz, ePonderado, backup);
             }
             ;
@@ -97,9 +116,9 @@ class Main {
                 System.out.print("Entre com o segundo vertice da aresta que sera removida: ");
                 r2 = sc.nextInt();
 
-                removeAresta(matriz, r1, r2, ePonderado, eDirecionado);
+                Aresta.removeAresta(matriz, r1, r2, ePonderado, eDirecionado);
 
-                matrizParaListaSucessores(matriz);
+                Exibir.matrizParaListaSucessores(matriz);
                 menu(matriz, ePonderado, backup);
 
             }
@@ -110,9 +129,8 @@ class Main {
             if (op == 'v') {
                 System.out.print("\nEntre com o vertice que deseja consultar: ");
                 v = sc.nextInt();
-            }
-            ;
-            consultarGrau(matriz, v, op, eDirecionado, ePonderado);
+            };
+            VerticeOp.consultarGrau(matriz, v, op, eDirecionado, ePonderado);
 
             menu(matriz, ePonderado, backup);
 
@@ -123,15 +141,15 @@ class Main {
                 System.out.print("\nEntre com o no que queria verificar os seus vizinhos: ");
                 no = sc.nextInt();
 
-                vizinhoVertice(matriz, no, backup);
+                VerticeOp.vizinhoVertice(matriz, no, backup);
             } else if (eDirecionado == 's') {
-                List<List<Integer>> listaSucessores = matrizParaListaSucessores(matriz);
+                List<List<Integer>> listaSucessores = Exibir.matrizParaListaSucessores(matriz);
 
                 System.out.print("Entre com o índice do vértice (de 0 a " + (matriz.length - 1) + "): ");
                 int indiceVertice = sc.nextInt();
 
                 if (indiceVertice >= 0 && indiceVertice < matriz.length) {
-                    exibirListaSucessores(listaSucessores, indiceVertice);
+                    VerticeOp.exibirListaSucessores(listaSucessores, indiceVertice);
                 } else {
                     System.out.println(
                             "Índice inválido. Certifique-se de que está entre 0 e " + (matriz.length - 1));
@@ -143,20 +161,20 @@ class Main {
         } else if (op == 'r' || op == 'R') {
 
             if (eDirecionado == 'n') {
-                eRegular(matriz, ePonderado);
+                GrafoOp.eRegular(matriz, ePonderado);
             } else if (eDirecionado == 's') {
-                eRegularDirecionado(matriz, ePonderado);
+                GrafoOp.eRegularDirecionado(matriz, ePonderado);
             }
 
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'e' || op == 'E') {
 
-            exportarGrafo(matriz, ePonderado);
+            Exportar.grafo(matriz, ePonderado);
 
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'c') {
 
-            boolean verificaSe = eCompleto(matriz, ePonderado, eDirecionado);
+            boolean verificaSe = GrafoOp.eCompleto(matriz, ePonderado, eDirecionado);
 
             System.out.printf("\nO Grafo e completo: %b", verificaSe);
             System.out.println("\n");
@@ -164,9 +182,9 @@ class Main {
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'x') {
             if (eDirecionado == 'n') {
-                System.out.println("\nO Grafo e conexo: " + eConexo(matriz));
+                System.out.println("\nO Grafo e conexo: " + GrafoOp.eConexo(matriz));
             } else if (eDirecionado == 's') {
-                System.out.println("\nO Grafo e conexo: " + eConexoDirecionado(matriz));
+                System.out.println("\nO Grafo e conexo: " + GrafoOp.eConexoDirecionado(matriz));
             }
             System.out.println();
 
@@ -179,7 +197,7 @@ class Main {
             System.out.print("Entre com o vértice de destino: ");
             destino = sc.nextInt();
 
-            temCaminho(matriz, origem, destino, eDirecionado);
+            VerticeOp.temCaminho(matriz, origem, destino, eDirecionado);
 
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'p' || op == 'P') {
@@ -187,7 +205,7 @@ class Main {
 
             System.out.print("\nEntre com o vertice de origem: ");
             origem = sc.nextInt();
-            buscaProfundidade(matriz, origem);
+            Buscas.buscaProfundidade(matriz, origem);
 
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'l') {
@@ -195,834 +213,85 @@ class Main {
 
             System.out.print("\nEntre com o vertice de origem: ");
             origem = sc.nextInt();
-            buscaLargura(matriz, origem);
+            Buscas.buscaLargura(matriz, origem);
 
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'k') {
-            int origem;
+            if (ePonderado == 'n') {
+                System.err.print(
+                        "\nNao e possivel realizar o algortimo de Dijkstra para Grafo com arestas nao Ponderadas");
 
-            System.out.print("\nEntre com o vértice de origem: ");
-            origem = sc.nextInt();
+                menu(matriz, ePonderado, eDirecionado);
+            } else {
+                int origem;
 
-            try {
-                dijkstra(matriz, origem);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Erro: " + e.getMessage());
+                System.out.print("\nEntre com o vértice de origem: ");
+                origem = sc.nextInt();
+
+                // Algoritmo de Dijkstra pra FONTE UNICA
+                try {
+                    algCaminhoMinimo.dijkstraFonteUnica(matriz, origem);
+                    // dijkstraFonteUnica(matriz, origem);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
+
+                System.out.println("\n");
+
+                // Algoritmo Dijkstra pra TODOS PARA TODOS
+              System.out.print("Deseja executar o Algoritmo de Todos para Todos? (Entre com s[sim] e n[nao]): ");
+              char per = sc.next().charAt(0);
+
+              if(per == 's' || per == 'S'){
+                try {
+                  algCaminhoMinimo.dijkstraPares(matriz);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
+              } else {
+              }
+                System.out.println();
+
+                menu(matriz, ePonderado, eDirecionado);
             }
-
-            System.out.println();
-
-            menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'm') {
-            int origem;
+            if (ePonderado == 'n') {
+                System.err.print(
+                        "\nNao e possivel realizar o algortimo de Bellman-Ford para Grafo com arestas nao Ponderadas");
+            } else {
+                int origem;
 
-            System.out.print("\nEntre com o vertice de origem: ");
-            origem = sc.nextInt();
+                System.out.print("\nEntre com o vertice de origem: ");
+                origem = sc.nextInt();
 
-            try {
-                bellmanFord(matriz, origem);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Erro: " + e.getMessage());
+                // Algoritmo de Bellman-Ford pra Fonte Unica
+                try {
+                  algCaminhoMinimo.bellmanFordFonteUnica(matriz, origem);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
+
+                // Algoritmo de Bellman-Ford de TODOS PARA TODOS
+              System.out.print("Deseja executar o Algoritmo de Todos para Todos? (Entre com s[sim] e n[nao]): ");
+              char per1 = sc.next().charAt(0);
+              
+              if(per1 == 's' || per1 == 'S'){
+                try {
+                  algCaminhoMinimo.bellmanFordPares(matriz);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
+              } 
+              System.out.println();
+
+              menu(matriz, ePonderado, eDirecionado);
             }
-
-            System.out.println();
-
-            menu(matriz, ePonderado, eDirecionado);
         } else if (op == 'h') {
             // try {
-            //     floydWarshall(matriz);
+            // floydWarshall(matriz);
             // } catch (IllegalArgumentException e) {
-            //     System.out.println("Erro: " + e.getMessage());
+            // System.out.println("Erro: " + e.getMessage());
             // }
         }
     };
-
-    public static void consultarGrau(int matriz[][], int v, char op, char eDirecionado, char ePonderado) {
-        int count = 0, gIn = 0, gOut = 0;
-
-        if (op == 'v') {
-            if (eDirecionado == 's' || eDirecionado == 'S') {
-                if (ePonderado == 'n') {
-                    for (int i = 0; i < matriz.length; i++) {
-                        if (matriz[i][v] != 0) {
-                            gIn++;
-                        }
-                        if (matriz[v][i] != 0) {
-                            gOut++;
-                        }
-                    }
-                    ;
-                } else if (ePonderado == 's') {
-                    for (int i = 0; i < matriz.length; i++) {
-                        if (matriz[i][v] != 0) {
-                            gIn += matriz[i][v];
-                        }
-                        if (matriz[v][i] != 0) {
-                            gOut += matriz[v][i];
-                        }
-                    }
-                    ;
-                }
-                ;
-                System.out.printf("\nO vertice V(%d) tem grau de entrada igual a %d\n\n", v, gIn);
-                System.out.printf("\nO vertice V(%d) tem grau de saida igual a %d\n\n\n", v, gOut);
-            } else {
-                if (ePonderado == 'n') {
-                    for (int i = 0; i < matriz.length; i++) {
-                        if (matriz[i][v] != 0) {
-                            count++;
-                        }
-                        ;
-                    }
-                    ;
-                } else if (ePonderado == 's') {
-                    for (int i = 0; i < matriz.length; i++) {
-                        if (matriz[i][v] != 0) {
-                            count += matriz[i][v];
-                        }
-                        ;
-                    }
-                    ;
-                }
-                ;
-
-                System.out.printf("\nO vertice V(%d) tem grau %d\n\n", v, count);
-            }
-        } else if (op == 'g') {
-            gIn = 0;
-            gOut = 0;
-
-            if (eDirecionado == 's' || eDirecionado == 'S') {
-                if (ePonderado == 'n') {
-                    for (int i = 0; i < matriz.length; i++) {
-                        for (int j = 0; j < matriz.length; j++) {
-                            if (matriz[i][j] != 0) {
-                                gOut++;
-                            }
-                        }
-                    }
-
-                    for (int i = 0; i < matriz.length; i++) {
-                        for (int j = 0; j < matriz.length; j++) {
-                            if (matriz[j][i] != 0) {
-                                gIn++;
-                            }
-                        }
-                    }
-                } else if (ePonderado == 's') {
-                    for (int i = 0; i < matriz.length; i++) {
-                        for (int j = 0; j < matriz.length; j++) {
-                            if (matriz[i][j] != 0) {
-                                gOut += matriz[i][j];
-                            }
-                        }
-                    }
-
-                    for (int i = 0; i < matriz.length; i++) {
-                        for (int j = 0; j < matriz.length; j++) {
-                            if (matriz[j][i] != 0) {
-                                gIn += matriz[j][i];
-                            }
-                        }
-                    }
-                }
-
-                System.out.printf("\nO Grafo tem grau de saída igual a %d\n", gOut);
-                System.out.printf("O Grafo tem grau de entrada igual a %d\n\n", gIn);
-
-            } else {
-                count = 0;
-
-                for (int i = 0; i < matriz.length; i++) {
-                    for (int j = 0; j < matriz.length; j++) {
-                        if (matriz[i][j] != 0) {
-                            if (ePonderado == 'n') {
-                                count++;
-                            } else if (ePonderado == 's') {
-                                count += matriz[i][j];
-                            }
-                        }
-                        ;
-                    }
-                    ;
-                }
-                ;
-
-                System.out.printf("\nO Grafo tem grau %d\n\n", count * 2);
-            }
-        }
-    };
-
-    public static void inserirAresta(int matriz[][], int v1, int v2, char ePonderado, char eDirecionado, Scanner sc) {
-        if (v1 > matriz.length || v2 > matriz.length) {
-            System.err.printf("\nErro ao cadastrar nova aresta E(%d,%d)\n"
-                    + "Verifique o numero de vertice...\n\n", v1, v2);
-
-        } else {
-            if (ePonderado == 's' || ePonderado == 'S') {
-                int pond;
-
-                System.out.printf("Entre com o valor da Aresta E(%d, %d): ", v1, v2);
-                pond = sc.nextInt();
-
-                if (eDirecionado == 's' || eDirecionado == 'S') {
-                    matriz[v1][v2] = pond;
-                } else {
-                    matriz[v1][v2] = pond;
-                    matriz[v2][v1] = pond;
-                }
-                ;
-
-                System.out.printf("\nAresta %d(%d,%d) incluida com sucesso\n\n", pond, v1, v2);
-
-            } else {
-                if (eDirecionado == 's' || eDirecionado == 'S') {
-                    matriz[v1][v2] = 1;
-                } else {
-                    matriz[v1][v2] = 1;
-                    matriz[v2][v1] = 1;
-                }
-                ;
-
-                System.out.printf("\nAresta E(%d,%d) incluida com sucesso\n\n", v1, v2);
-
-            }
-        }
-        ;
-    }
-
-    public static void removeAresta(int matriz[][], int r1, int r2, char ePonderado, char eDirecionado) {
-        if (matriz[r1][r2] != 0) {
-            if (r1 > matriz.length || r2 > matriz.length) {
-                System.err.printf("\nErro ao remover aresta E(%d,%d)\n"
-                        + "Verifique o numero de vertice...\n\n", r1, r2);
-
-            } else {
-                if (eDirecionado == 's' || eDirecionado == 'S') {
-                    matriz[r1][r2] = 0;
-                } else {
-                    matriz[r1][r2] = 0;
-                    matriz[r2][r1] = 0;
-                }
-
-                System.out.printf("\nAresta E(%d,%d) removida com sucesso\n\n", r1, r2);
-
-            }
-            ;
-        } else {
-            System.err.printf("\nNão existe arestas nos V(%d) - V(%d)\n\n", r1, r2);
-        }
-        ;
-    }
-
-    public static void vizinhoVertice(int matriz[][], int no, char eDirecionado) {
-
-        if (no >= 0 && no < matriz.length) {
-            System.out.printf("\nV(%d) -> {", no);
-
-            for (int i = 0; i < matriz.length; i++) {
-                if (matriz[no][i] != 0) {
-                    System.out.printf("- %d -", i);
-                }
-            }
-            ;
-
-            System.out.print("}\n\n");
-        } else {
-            System.out.print("No inexistente");
-        }
-        ;
-    };
-
-    public static void eRegular(int matriz[][], char ePonderado) {
-        boolean reg = true;
-        int count = 0;
-        int grau[] = new int[matriz.length + 1];
-
-        for (int i = 0; i < matriz.length; i++) {
-            count = 0;
-
-            for (int j = 0; j < matriz.length; j++) {
-                if (matriz[i][j] != 0) {
-                    if (ePonderado == 'n') {
-                        count++;
-                    } else if (ePonderado == 's') {
-                        count += matriz[i][j];
-                    }
-                    ;
-                }
-                ;
-            }
-            ;
-
-            grau[i] = count;
-        }
-
-        for (int i = 0; i < matriz.length; i++) {
-            if (grau[1] != grau[i]) {
-                reg = false;
-                break;
-            }
-        }
-        ;
-
-        System.out.print("\nO Grafo é regular: " + reg);
-        System.out.println("\n");
-    };
-
-    public static void eRegularDirecionado(int matriz[][], int ePonderado) {
-        boolean reg = true;
-        int countIn, countOut;
-        int gIn[] = new int[matriz.length];
-        int gOut[] = new int[matriz.length];
-
-        for (int i = 0; i < matriz.length; i++) {
-            countIn = 0;
-            countOut = 0;
-
-            for (int j = 0; j < matriz.length; j++) {
-                if (matriz[i][j] != 0) {
-                    if (ePonderado == 'n') {
-                        countOut++;
-                    } else if (ePonderado == 's') {
-                        countOut += matriz[i][j];
-                    }
-                    ;
-                }
-
-                if (matriz[j][i] != 0) {
-                    if (ePonderado == 'n') {
-                        countIn++;
-                    } else if (ePonderado == 's') {
-                        countIn += matriz[i][j];
-                    }
-                    ;
-                }
-            }
-
-            gOut[i] = countOut;
-            gIn[i] = countIn;
-        }
-
-        for (int i = 1; i < matriz.length; i++) {
-            if (gIn[0] != gIn[i] || gOut[0] != gOut[i]) {
-                reg = false;
-                break;
-            }
-        }
-
-        System.out.println("\n\nO Grafo é regular: " + reg);
-        System.out.println();
-    };
-
-    public static void exportarGrafo(int matriz[][], char ePonderado) {
-        try {
-            Scanner sc = new Scanner(System.in);
-            String nomeArquivo;
-
-            System.out.print("\nQual o nome do arquivo GEXF: ");
-            nomeArquivo = sc.nextLine();
-
-            FileWriter writer = new FileWriter(nomeArquivo + ".gexf");
-
-            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            writer.write("<gexf xmlns=\"http://www.gexf.net/1.3draft\" version=\"1.3\">\n");
-            writer.write("  <meta lastmodifieddate=\"2023-10-14\">\n");
-            writer.write("    <creator>YourAppName</creator>\n");
-            writer.write("    <description>A graph exported from your application</description>\n");
-            writer.write("  </meta>\n");
-            writer.write("  <graph defaultedgetype=\"directed\">\n");
-
-            writer.write("    <nodes>\n");
-            for (int i = 0; i < matriz.length; i++) {
-                writer.write("      <node id=\"" + i + "\" label=\"" + (char) ('A' + i) + "\" />\n");
-            }
-            writer.write("    </nodes>\n");
-
-            writer.write("    <edges>\n");
-            for (int i = 0; i < matriz.length; i++) {
-                for (int j = 0; j < matriz[i].length; j++) {
-                    if (matriz[i][j] != 0) {
-                        String weightAttribute = (ePonderado == 's' || ePonderado == 'S')
-                                ? " weight=\"" + matriz[i][j] + "\""
-                                : "";
-
-                        writer.write("      <edge id=\"" + i + "_" + j + "\" source=\"" + i + "\" target=\"" + j +
-                                "\"" + weightAttribute + " />\n");
-                    }
-                }
-            }
-            writer.write("    </edges>\n");
-
-            writer.write("  </graph>\n");
-            writer.write("</gexf>");
-
-            writer.close();
-            System.out.println("\nGrafo exportado para " + nomeArquivo + ".gexf com sucesso!\n");
-
-        } catch (IOException e) {
-            System.err.println("Erro ao exportar o grafo para GEXF: " + e.getMessage());
-            System.out.println();
-        }
-
-    };
-
-    public static List<List<Integer>> matrizParaListaSucessores(int[][] matriz) {
-        List<List<Integer>> listaSucessores = new ArrayList<>();
-
-        int numVertices = matriz.length;
-
-        for (int i = 0; i < numVertices; i++) {
-            listaSucessores.add(new ArrayList<>());
-
-            for (int j = 0; j < numVertices; j++) {
-                if (matriz[i][j] != 0) {
-                    listaSucessores.get(i).add(j);
-                }
-            }
-        }
-
-        return listaSucessores;
-    };
-
-    public static void exibirListaSucessores(List<List<Integer>> listaSucessores, int indiceVertice) {
-        System.out.print("\nV(" + indiceVertice + ") -> {");
-        List<Integer> sucessores = listaSucessores.get(indiceVertice);
-
-        for (int j = 0; j < sucessores.size(); j++) {
-            System.out.print(" - " + sucessores.get(j) + " -");
-        }
-
-        System.out.println("}\n");
-    };
-
-    public static List<List<Integer>> matrizParaListaAdjacencia(int[][] matriz) {
-        List<List<Integer>> listaAdjacencia = new ArrayList<>();
-
-        int numVertices = matriz.length;
-
-        for (int i = 0; i < numVertices; i++) {
-            listaAdjacencia.add(new ArrayList<>());
-
-            for (int j = 0; j < numVertices; j++) {
-                if (matriz[i][j] != 0) {
-                    listaAdjacencia.get(i).add(j);
-                }
-            }
-        }
-
-        return listaAdjacencia;
-    };
-
-    public static void exibirListaAdjacencia(List<List<Integer>> listaAdjacencia) {
-        System.out.println("\nLista de Adjacência:\n");
-
-        for (int i = 0; i < listaAdjacencia.size(); i++) {
-            System.out.print("V(" + i + ") -> {");
-
-            List<Integer> vizinhos = listaAdjacencia.get(i);
-
-            for (int j = 0; j < vizinhos.size(); j++) {
-                System.out.print(" " + vizinhos.get(j));
-
-                if (j < vizinhos.size() - 1) {
-                    System.out.print(",");
-                }
-            }
-
-            System.out.println("}");
-        }
-
-        System.out.println();
-    };
-
-    public static void exibirMatrizAdjacencia(int matriz[][]) {
-        System.out.print("\nMatriz de adjacencia:\n");
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz.length; j++) {
-                System.out.print("  " + matriz[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.print("\n");
-    };
-
-    public static boolean eCompleto(int matriz[][], char ePonderado, char eDirecionado) {
-        int n = matriz.length;
-
-        if (eDirecionado == 'n') {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (i != j) {
-                        if (ePonderado == 'n') {
-                            if (matriz[i][j] == 0) {
-                                return false;
-                            }
-                        } else if (ePonderado == 's') {
-                            if (matriz[i][j] == 0) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        } else if (eDirecionado == 's') {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (i != j) {
-                        if (ePonderado == 'n') {
-                            if (matriz[i][j] == 0 && matriz[j][i] == 0) {
-                                return false;
-                            }
-                        } else if (ePonderado == 's') {
-                            if (matriz[i][j] == 0 && matriz[j][i] == 0) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    };
-
-    private static void buscaProfundidadeEConexo(int matriz[][], int vertice, boolean[] visitado) {
-        visitado[vertice] = true;
-
-        for (int i = 0; i < matriz.length; i++) {
-            if (matriz[vertice][i] != 0 && !visitado[i]) {
-                buscaProfundidadeEConexo(matriz, i, visitado);
-            }
-        }
-    }
-
-    public static boolean eConexo(int matriz[][]) {
-        int n = matriz.length;
-        boolean[] visitados = new boolean[n];
-
-        int verticeInicial = 0;
-
-        buscaProfundidadeEConexo(matriz, verticeInicial, visitados);
-
-        for (boolean visitado : visitados) {
-            if (!visitado) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static boolean eConexoDirecionado(int matriz[][]) {
-        int n = matriz.length;
-        boolean[] visitadosIda = new boolean[n];
-        boolean[] visitadosVolta = new boolean[n];
-
-        int verticeInicial = 0;
-
-        buscaProfundidadeEConexo(matriz, verticeInicial, visitadosIda);
-
-        int[][] matrizTransposta = obterMatrizTransposta(matriz);
-        buscaProfundidadeEConexo(matrizTransposta, verticeInicial, visitadosVolta);
-
-        for (int i = 0; i < n; i++) {
-            if (!visitadosIda[i] || !visitadosVolta[i]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static int[][] obterMatrizTransposta(int matriz[][]) {
-        int n = matriz.length;
-        int[][] transposta = new int[n][n];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                transposta[i][j] = matriz[j][i];
-            }
-        }
-
-        return transposta;
-    }
-
-    public static void temCaminho(int matriz[][], int origem, int destino, char eDirecionado) {
-        int n = matriz.length;
-        boolean[] visitado = new boolean[n];
-        List<Integer> caminho = new ArrayList<>();
-
-        if (verificaExistenciaVertice(origem, n) && verificaExistenciaVertice(destino, n)) {
-            if (buscaProfundidadeTemCaminho(matriz, origem, destino, visitado, caminho, eDirecionado)) {
-                System.out.println("\nExiste um caminho entre os vértices " + origem + " e " + destino + ":");
-                exibirCaminho(caminho);
-            } else {
-                System.out.println("\nNão existe um caminho entre os vértices " + origem + " e " + destino + "\n");
-            }
-        } else {
-            System.out.println("\nVértice de origem ou destino inválido.");
-        }
-    }
-
-    private static boolean buscaProfundidadeTemCaminho(int matriz[][], int vertice, int destino, boolean[] visitado,
-            List<Integer> caminho, char eDirecionado) {
-        visitado[vertice] = true;
-        caminho.add(vertice);
-
-        if (vertice == destino) {
-            return true;
-        }
-
-        for (int i = 0; i < matriz.length; i++) {
-            if (matriz[vertice][i] != 0 && !visitado[i]) {
-                if (eDirecionado == 's' || eDirecionado == 'S') {
-                    if (buscaProfundidadeTemCaminho(matriz, i, destino, visitado, caminho, eDirecionado)) {
-                        return true;
-                    }
-                } else {
-                    if (buscaProfundidadeTemCaminho(matriz, i, destino, visitado, caminho, eDirecionado)
-                            || buscaProfundidadeTemCaminho(matriz, i, vertice, visitado, caminho, eDirecionado)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        caminho.remove(caminho.size() - 1);
-        return false;
-    }
-
-    private static void exibirCaminho(List<Integer> caminho) {
-        for (int i = 0; i < caminho.size(); i++) {
-            System.out.print(caminho.get(i));
-            if (i < caminho.size() - 1) {
-                System.out.print(" -> ");
-            }
-        }
-        System.out.println("\n");
-    }
-
-    public static boolean verificaExistenciaVertice(int vertice, int n) {
-        return vertice >= 0 && vertice < n;
-    }
-
-    public static void buscaProfundidade(int matriz[][], int origem) {
-        int n = matriz.length;
-        boolean[] visitado = new boolean[n];
-        int[] tempoDescobrimento = new int[n];
-        int[] tempoTermino = new int[n];
-        int[] pai = new int[n];
-
-        tempo = 0;
-
-        for (int i = 0; i < n; i++) {
-            if (!visitado[i]) {
-                pai[i] = -1;
-                buscaProfundidadeVisit(matriz, i, visitado, tempoDescobrimento, tempoTermino, pai);
-            }
-        }
-
-        exibirBuscaProfundidade(origem, tempoDescobrimento, tempoTermino, pai);
-    }
-
-    private static void buscaProfundidadeVisit(int matriz[][], int vertice, boolean[] visitado,
-            int[] tempoDescobrimento, int[] tempoTermino, int[] pai) {
-        visitado[vertice] = true;
-        tempoDescobrimento[vertice] = ++tempo;
-
-        for (int i = 0; i < matriz.length; i++) {
-            if (matriz[vertice][i] != 0 && !visitado[i]) {
-                pai[i] = vertice;
-                buscaProfundidadeVisit(matriz, i, visitado, tempoDescobrimento, tempoTermino, pai);
-            }
-        }
-
-        tempoTermino[vertice] = ++tempo;
-    }
-
-    private static void exibirBuscaProfundidade(int origem, int[] tempoDescobrimento, int[] tempoTermino, int[] pai) {
-        System.out.println("\n");
-        System.out.println("Vertice | TD | TT | Pai");
-        for (int i = 0; i < tempoDescobrimento.length; i++) {
-            System.out.printf("   %d    | %d  | %d  |  ", i, tempoDescobrimento[i], tempoTermino[i]);
-            if (pai[i] == -1) {
-                System.out.print("null");
-            } else {
-                System.out.print(pai[i]);
-            }
-            System.out.println();
-        }
-        System.out.println("\n");
-    }
-
-    public static void buscaLargura(int matriz[][], int origem) {
-        int n = matriz.length;
-        int[] distancia = new int[n];
-        int[] pai = new int[n];
-        boolean[] visitado = new boolean[n];
-
-        for (int i = 0; i < n; i++) {
-            distancia[i] = Integer.MAX_VALUE;
-            pai[i] = -1;
-            visitado[i] = false;
-        }
-
-        distancia[origem] = 0;
-
-        Queue<Integer> fila = new LinkedList<>();
-        fila.add(origem);
-
-        while (!fila.isEmpty()) {
-            int u = fila.poll();
-
-            for (int v = 0; v < n; v++) {
-                if (matriz[u][v] != 0 && !visitado[v]) {
-                    fila.add(v);
-                    visitado[v] = true;
-
-                    if (distancia[u] + matriz[u][v] < distancia[v]) {
-                        distancia[v] = distancia[u] + matriz[u][v];
-                        pai[v] = u;
-                    }
-                }
-            }
-        }
-
-        exibirBuscaLargura(origem, distancia, pai);
-    }
-
-    private static void exibirBuscaLargura(int origem, int[] distancia, int[] pai) {
-        System.out.println("\n");
-        System.out.println("Vertice | Distancia | Pai");
-        for (int i = 0; i < distancia.length; i++) {
-            System.out.printf("   %d    | ", i);
-
-            if (distancia[i] == Integer.MAX_VALUE) {
-                System.out.print("Infinito");
-            } else {
-                System.out.print(distancia[i] + "       ");
-            }
-
-            System.out.printf("  |  ");
-
-            if (pai[i] == -1) {
-                System.out.print("null");
-            } else {
-                System.out.print(pai[i]);
-            }
-
-            System.out.println();
-        }
-        System.out.println("\n");
-    }
-
-    public static void dijkstra(int[][] grafo, int origem) {
-        if (temPesoNegativo(grafo)) {
-            throw new IllegalArgumentException("O grafo contém arestas com pesos negativos.");
-        }
-
-        long inicioAlgoritmo = System.currentTimeMillis();
-
-        int numVertices = grafo.length;
-        int[] distancia = new int[numVertices];
-        Integer[] pai = new Integer[numVertices];
-        boolean[] visitado = new boolean[numVertices];
-
-        Arrays.fill(distancia, Integer.MAX_VALUE);
-        Arrays.fill(pai, null);
-        distancia[origem] = 0;
-
-        for (int count = 0; count < numVertices - 1; count++) {
-            int u = obterVerticeMinimo(distancia, visitado);
-            visitado[u] = true;
-
-            for (int v = 0; v < numVertices; v++) {
-                if (!visitado[v] && grafo[u][v] != 0 && distancia[u] != Integer.MAX_VALUE &&
-                        distancia[u] + grafo[u][v] < distancia[v]) {
-                    distancia[v] = distancia[u] + grafo[u][v];
-                    pai[v] = u;
-                }
-            }
-        }
-
-        long fimAlgoritmo = System.currentTimeMillis();
-
-        System.out.println("\nDistâncias mínimas a partir do vértice " + origem + ":\n");
-        for (int i = 0; i < numVertices; i++) {
-            System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
-                    (distancia[i] != Integer.MAX_VALUE ? distancia[i] : "infinito") +
-                    ", Pai = " + (pai[i] != null ? pai[i] : "null"));
-        }
-
-        System.out.printf("\nO algoritmo Dijkstra levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
-    }
-
-    private static int obterVerticeMinimo(int[] distancia, boolean[] visitado) {
-        int minimo = Integer.MAX_VALUE;
-        int indiceMinimo = -1;
-
-        for (int v = 0; v < distancia.length; v++) {
-            if (!visitado[v] && distancia[v] <= minimo) {
-                minimo = distancia[v];
-                indiceMinimo = v;
-            }
-        }
-
-        return indiceMinimo;
-    }
-
-    private static boolean temPesoNegativo(int[][] grafo) {
-        for (int i = 0; i < grafo.length; i++) {
-            for (int j = 0; j < grafo[i].length; j++) {
-                if (grafo[i][j] < 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static void bellmanFord(int[][] grafo, int origem) {
-        int numVertices = grafo.length;
-        int[] distancia = new int[numVertices];
-        Integer[] pai = new Integer[numVertices];
-
-        long inicioAlgoritmo = System.currentTimeMillis();
-
-        Arrays.fill(distancia, Integer.MAX_VALUE);
-        Arrays.fill(pai, null);
-        distancia[origem] = 0;
-
-        for (int count = 0; count < numVertices - 1; count++) {
-            for (int u = 0; u < numVertices; u++) {
-                for (int v = 0; v < numVertices; v++) {
-                    if (grafo[u][v] != 0 && distancia[u] != Integer.MAX_VALUE &&
-                            distancia[u] + grafo[u][v] < distancia[v]) {
-                        distancia[v] = distancia[u] + grafo[u][v];
-                        pai[v] = u;
-                    }
-                }
-            }
-        }
-
-        for (int u = 0; u < numVertices; u++) {
-            for (int v = 0; v < numVertices; v++) {
-                if (grafo[u][v] != 0 && distancia[u] != Integer.MAX_VALUE &&
-                        distancia[u] + grafo[u][v] < distancia[v]) {
-                    throw new IllegalArgumentException("O grafo contém um ciclo de peso negativo.");
-                }
-            }
-        }
-
-        long fimAlgoritmo = System.currentTimeMillis();
-
-        System.out.println("\nDistâncias mínimas a partir do vértice " + origem + ":\n");
-        for (int i = 0; i < numVertices; i++) {
-            System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
-                    (distancia[i] != Integer.MAX_VALUE ? distancia[i] : "infinito") +
-                    ", Pai = " + (pai[i] != null ? pai[i] : "null"));
-        }
-
-        System.out.printf("\nO algoritmo Bellman Ford levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
-    }
-
 };
