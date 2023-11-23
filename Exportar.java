@@ -1,115 +1,57 @@
 import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
-class Buscas {
-  private static int tempo;
-  
-  public static void buscaProfundidade(int matriz[][], int origem) {
-      int n = matriz.length;
-      boolean[] visitado = new boolean[n];
-      int[] tempoDescobrimento = new int[n];
-      int[] tempoTermino = new int[n];
-      int[] pai = new int[n];
+class Exportar {
+  public static void grafo(int matriz[][], char ePonderado) {
+      try {
+          Scanner sc = new Scanner(System.in);
+          String nomeArquivo;
 
-      tempo = 0;
+          System.out.print("\nQual o nome do arquivo GEXF: ");
+          nomeArquivo = sc.nextLine();
 
-      for (int i = 0; i < n; i++) {
-          if (!visitado[i]) {
-              pai[i] = -1;
-              buscaProfundidadeVisit(matriz, i, visitado, tempoDescobrimento, tempoTermino, pai);
+          FileWriter writer = new FileWriter(nomeArquivo + ".gexf");
+
+          writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+          writer.write("<gexf xmlns=\"http://www.gexf.net/1.3draft\" version=\"1.3\">\n");
+          writer.write("  <meta lastmodifieddate=\"2023-10-14\">\n");
+          writer.write("    <creator>YourAppName</creator>\n");
+          writer.write("    <description>A graph exported from your application</description>\n");
+          writer.write("  </meta>\n");
+          writer.write("  <graph defaultedgetype=\"directed\">\n");
+
+          writer.write("    <nodes>\n");
+          for (int i = 0; i < matriz.length; i++) {
+              writer.write("      <node id=\"" + i + "\" label=\"" + (char) ('A' + i) + "\" />\n");
           }
-      }
+          writer.write("    </nodes>\n");
 
-      exibirBuscaProfundidade(origem, tempoDescobrimento, tempoTermino, pai);
-  }
+          writer.write("    <edges>\n");
+          for (int i = 0; i < matriz.length; i++) {
+              for (int j = 0; j < matriz[i].length; j++) {
+                  if (matriz[i][j] != 0) {
+                      String weightAttribute = (ePonderado == 's' || ePonderado == 'S')
+                              ? " weight=\"" + matriz[i][j] + "\""
+                              : "";
 
-  private static void buscaProfundidadeVisit(int matriz[][], int vertice, boolean[] visitado,
-          int[] tempoDescobrimento, int[] tempoTermino, int[] pai) {
-      visitado[vertice] = true;
-      tempoDescobrimento[vertice] = ++tempo;
-
-      for (int i = 0; i < matriz.length; i++) {
-          if (matriz[vertice][i] != 0 && !visitado[i]) {
-              pai[i] = vertice;
-              buscaProfundidadeVisit(matriz, i, visitado, tempoDescobrimento, tempoTermino, pai);
-          }
-      }
-
-      tempoTermino[vertice] = ++tempo;
-  }
-
-  private static void exibirBuscaProfundidade(int origem, int[] tempoDescobrimento, int[] tempoTermino, int[] pai) {
-      System.out.println("\n");
-      System.out.println("Vertice | TD | TT | Pai");
-      for (int i = 0; i < tempoDescobrimento.length; i++) {
-          System.out.printf("   %d    | %d  | %d  |  ", i, tempoDescobrimento[i], tempoTermino[i]);
-          if (pai[i] == -1) {
-              System.out.print("null");
-          } else {
-              System.out.print(pai[i]);
-          }
-          System.out.println();
-      }
-      System.out.println("\n");
-  }
-
-  public static void buscaLargura(int matriz[][], int origem) {
-      int n = matriz.length;
-      int[] distancia = new int[n];
-      int[] pai = new int[n];
-      boolean[] visitado = new boolean[n];
-
-      for (int i = 0; i < n; i++) {
-          distancia[i] = Integer.MAX_VALUE;
-          pai[i] = -1;
-          visitado[i] = false;
-      }
-
-      distancia[origem] = 0;
-
-      Queue<Integer> fila = new LinkedList<>();
-      fila.add(origem);
-
-      while (!fila.isEmpty()) {
-          int u = fila.poll();
-
-          for (int v = 0; v < n; v++) {
-              if (matriz[u][v] != 0 && !visitado[v]) {
-                  fila.add(v);
-                  visitado[v] = true;
-
-                  if (distancia[u] + matriz[u][v] < distancia[v]) {
-                      distancia[v] = distancia[u] + matriz[u][v];
-                      pai[v] = u;
+                      writer.write("      <edge id=\"" + i + "_" + j + "\" source=\"" + i + "\" target=\"" + j +
+                              "\"" + weightAttribute + " />\n");
                   }
               }
           }
-      }
+          writer.write("    </edges>\n");
 
-      exibirBuscaLargura(origem, distancia, pai);
-  }
+          writer.write("  </graph>\n");
+          writer.write("</gexf>");
 
-  private static void exibirBuscaLargura(int origem, int[] distancia, int[] pai) {
-      System.out.println("\n");
-      System.out.println("Vertice | Distancia | Pai");
-      for (int i = 0; i < distancia.length; i++) {
-          System.out.printf("   %d    | ", i);
+          writer.close();
+          System.out.println("\nGrafo exportado para " + nomeArquivo + ".gexf com sucesso!\n");
 
-          if (distancia[i] == Integer.MAX_VALUE) {
-              System.out.print("Infinito");
-          } else {
-              System.out.print(distancia[i] + "       ");
-          }
-
-          System.out.printf("  |  ");
-
-          if (pai[i] == -1) {
-              System.out.print("null");
-          } else {
-              System.out.print(pai[i]);
-          }
-
+      } catch (IOException e) {
+          System.err.println("Erro ao exportar o grafo para GEXF: " + e.getMessage());
           System.out.println();
       }
-      System.out.println("\n");
-  }
+
+  };
 }
