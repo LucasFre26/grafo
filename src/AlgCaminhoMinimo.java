@@ -1,6 +1,7 @@
 import java.util.*;
 
-class algCaminhoMinimo{
+class AlgCaminhoMinimo{
+
   public static void dijkstraFonteUnica(int[][] grafo, int origem) {
       if (temPesoNegativo(grafo)) {
           throw new IllegalArgumentException("O grafo contém arestas com pesos negativos.");
@@ -212,4 +213,81 @@ class algCaminhoMinimo{
 
       System.out.printf("\nO algoritmo Bellman-Ford Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
   }
+  public static void floydWarshallPares(int[][] grafo) {
+      int numVertices = grafo.length;
+      int[][] distancia = new int[numVertices][numVertices];
+      Integer[][] pai = new Integer[numVertices][numVertices];
+
+      for (int i = 0; i < numVertices; i++) {
+          for (int j = 0; j < numVertices; j++) {
+              if (grafo[i][j] == 0 && i != j) {
+                  distancia[i][j] = Integer.MAX_VALUE;
+              } else {
+                  distancia[i][j] = grafo[i][j];
+                  pai[i][j] = (i != j && grafo[i][j] != 0) ? i : null;
+              }
+          }
+      }
+
+      for (int k = 0; k < numVertices; k++) {
+          for (int i = 0; i < numVertices; i++) {
+              for (int j = 0; j < numVertices; j++) {
+                  if (distancia[i][k] != Integer.MAX_VALUE && distancia[k][j] != Integer.MAX_VALUE &&
+                          distancia[i][k] + distancia[k][j] < distancia[i][j]) {
+                      distancia[i][j] = distancia[i][k] + distancia[k][j];
+                      pai[i][j] = pai[k][j];
+                  }
+              }
+          }
+      }
+
+      System.out.println("\nDistâncias mínimas entre todos os pares de vértices usando Floyd-Warshall:\n");
+      for (int i = 0; i < numVertices; i++) {
+          for (int j = 0; j < numVertices; j++) {
+              System.out.println("Do vértice " + i + " para o vértice " + j + ": Distância = " +
+                      (distancia[i][j] != Integer.MAX_VALUE ? distancia[i][j] : "infinito") +
+                      ", Pai = " + (pai[i][j] != null ? pai[i][j] : "null"));
+          }
+      }
+  }
+
+
+  public static void floydWarshallFonteUnica(int[][] grafo, int origem) {
+      int numVertices = grafo.length;
+      int[][] distancia = new int[numVertices][numVertices];
+      Integer[][] pai = new Integer[numVertices][numVertices];
+
+      for (int i = 0; i < numVertices; i++) {
+          for (int j = 0; j < numVertices; j++) {
+              if (grafo[i][j] == 0 && i != j) {
+                  distancia[i][j] = Integer.MAX_VALUE;
+              } else {
+                  distancia[i][j] = grafo[i][j];
+                  pai[i][j] = (i != j && grafo[i][j] != 0) ? i : null;
+              }
+          }
+      }
+
+      for (int k = 0; k < numVertices; k++) {
+          for (int i = 0; i < numVertices; i++) {
+              for (int j = 0; j < numVertices; j++) {
+                  if (distancia[i][k] != Integer.MAX_VALUE && distancia[k][j] != Integer.MAX_VALUE &&
+                          distancia[i][k] + distancia[k][j] < distancia[i][j]) {
+                      distancia[i][j] = distancia[i][k] + distancia[k][j];
+                      pai[i][j] = pai[k][j];
+                  }
+              }
+          }
+      }
+
+      System.out.println("\nDistâncias mínimas a partir do vértice " + origem + " usando Floyd-Warshall:\n");
+      for (int j = 0; j < numVertices; j++) {
+          if (origem != j) {
+              System.out.println("Do vértice " + origem + " para o vértice " + j + ": Distância = " +
+                      (distancia[origem][j] != Integer.MAX_VALUE ? distancia[origem][j] : "infinito") +
+                      ", Pai = " + (pai[origem][j] != null ? pai[origem][j] : "null"));
+          }
+      }
+  }
+
 }
