@@ -1,326 +1,306 @@
 import java.util.*;
-import java.util.List;
 
-class Main {
+class AlgCaminhoMinimo {
 
-    public static void main(String[] args) {
+    public static void dijkstraFonteUnica(int[][] grafo, int origem) {
+        if (temPesoNegativo(grafo)) {
+            throw new IllegalArgumentException("O grafo contém arestas com pesos negativos.");
+        }
 
-        Scanner sc = new Scanner(System.in);
-        int n = 0;
-        char ePonderado, eDirecionado;
+        long inicioAlgoritmo = System.currentTimeMillis();
 
-        System.out.print("Quantos vertices seu grafo vai ter: ");
-        n = sc.nextInt();
+        int numVertices = grafo.length;
+        int[] distancia = new int[numVertices];
+        Integer[] pai = new Integer[numVertices];
+        boolean[] visitado = new boolean[numVertices];
 
-        System.out.printf("\n...Criando um grafo com %d vertices...\n\n", n);
+        Arrays.fill(distancia, Integer.MAX_VALUE);
+        Arrays.fill(pai, null);
+        distancia[origem] = 0;
 
-        int matrizAdjacencia[][] = new int[n][n];
+        for (int count = 0; count < numVertices - 1; count++) {
+            int u = obterVerticeMinimo(distancia, visitado);
+            visitado[u] = true;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                matrizAdjacencia[i][j] = 0;
+            for (int v = 0; v < numVertices; v++) {
+                if (!visitado[v] && grafo[u][v] != 0 && distancia[u] != Integer.MAX_VALUE &&
+                        distancia[u] + grafo[u][v] < distancia[v]) {
+                    distancia[v] = distancia[u] + grafo[u][v];
+                    pai[v] = u;
+                }
             }
         }
 
-        System.out.print("Esse grafo e um grafo direcionado (Sim = 's' | Nao = 'n'): ");
-        eDirecionado = sc.next().charAt(0);
+        long fimAlgoritmo = System.currentTimeMillis();
 
-        System.out.print("\nEsse grafo tem arestas ponderadas (Sim = 's' | Nao = 'n'): ");
-        ePonderado = sc.next().charAt(0);
+        System.out.println("\nDistâncias mínimas a partir do vértice " + origem + ":\n");
+        for (int i = 0; i < numVertices; i++) {
+            System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
+                    (distancia[i] != Integer.MAX_VALUE ? distancia[i] : "infinito") +
+                    ", Pai = " + (pai[i] != null ? pai[i] : "null"));
+        }
 
-        System.out.print("\nO que deseja fazer, entre com sua opção\n"
-                + "Para inserir arestas entre os vertice entre com 'i'\n"
-                + "Para remover arestas entre com 'd'\n"
-                + "Para verificar se o grafo e completo entre com 'c'\n"
-                + "Para consultar o grau de um vertice entre com 'v'\n"
-                + "Para consultar o grau do Grafo entre com 'g'\n"
-                + "Para os vizinhos de um vertice entre com 't'\n"
-                + "Para verificar se o grafo e conexo entre com 'x'\n"
-                + "Para verificar se o grafo é regular entre com 'r'\n"
-                + "Para fazer a busca em profundidade entre com 'p'\n"
-                + "Para fazer a busca em largura entre com 'l'\n"
-                + "Para verificar a existencia de caminho entre dois vertices entre com 'w'\n"
-                + "Para exportar o grafo entre com 'e'\n"
-                + "Para exibir a lista de Adjacencia entre com 'b'\n"
-                + "Para exibir a matriz de adjacencia entre com 'a'.\n"
-                + "Para exibir o caminho minimo usando o Algoritmo de Dijkstra entre com 'k'\n"
-                + "Para exibir o caminho minimo usando o Algoritmo de Bellman Ford entre com 'm' "
-                + "Para exibir o caminho minimo usando o Algoritmo de Floyd-Warshall entre com 'h' ");
-
-        menu(matrizAdjacencia, ePonderado, eDirecionado);
-
-        sc.close();
+        System.out.printf("\nO algoritmo Dijkstra levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
     }
 
-    public static void menu(int matriz[][], char ePonderado, char eDirecionado) {
-        Scanner sc = new Scanner(System.in);
-        char op;
-        char backup = eDirecionado;
+    private static int obterVerticeMinimo(int[] distancia, boolean[] visitado) {
+        int minimo = Integer.MAX_VALUE;
+        int indiceMinimo = -1;
 
-        // teste pra Dijkstra
-        /* int[][] matriz = {
-            { 0,  5,  10, 6,  0, 0,  0 },
-            { 5,  0,  0,  0,  0, 13, 0 },
-            { 10, 0,  0,  3,  4, 0,  5 },
-            { 6,  0,  3,  0,  6, 11, 0 },
-            { 0,  0,  4,  6,  0, 0,  8 },
-            { 0,  13, 0,  11, 0, 0,  3 },
-            { 0,  0,  5,  0,  8, 3,  0 },
-        }; */
-
-        // teste Bellman-ford
-        /* int [][] matriz = {
-            {0,   6,  5,   5,   0,   0,  0},
-            {0,   0,  0,   0,  -1,   0,  0},
-            {0,  -2,  0,   0,   1,   0,  0},
-            {0,   0,  -1,  0,   0,  -1,  0},
-            {0,   0,  0,   0,   0,   0,  3},
-            {0,   0,  0,   0,   0,   0,  3},
-            {0,   0,  0,   0,   0,   0,  0},
-        }; */
-
-      // teste Bellman-ford
-      /* int [][] matriz = {
-          {0,   3,   8,   0,   -4},
-          {0,   0,   0,   1,   7},
-          {0,   4,   0,   0,   0},
-          {2,   0,  -5,   0,   0},
-          {0,   0,   0,   6,   0},
-      }; */
-
-        List<List<Integer>> listaAdjacencia = VerticeOp.matrizParaListaAdjacencia(matriz);
-
-        System.out.print("Qual a sua opção: ");
-        op = sc.next().charAt(0);
-
-        if (op == 'a' || op == 'A') {
-
-            Exibir.matrizAdjacencia(matriz);
-
-            menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'b' || op == 'B') {
-
-            Exibir.listaAdjacencia(listaAdjacencia);
-
-            menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'i' || op == 'd' || op == 'I' || op == 'D') {
-            int v1, v2;
-
-            if (op == 'i' || op == 'I') {
-                System.out.print("\nEntre com o primeiro vertice que estara ligado: ");
-                v1 = sc.nextInt();
-                System.out.print("Entre com o segundo vertice que estara ligado: ");
-                v2 = sc.nextInt();
-
-                Aresta.inserirAresta(matriz, v1, v2, ePonderado, eDirecionado, sc);
-
-                Exibir.matrizParaListaSucessores(matriz);
-                menu(matriz, ePonderado, backup);
+        for (int v = 0; v < distancia.length; v++) {
+            if (!visitado[v] && distancia[v] <= minimo) {
+                minimo = distancia[v];
+                indiceMinimo = v;
             }
-            ;
-            if (op == 'd' || op == 'D') {
-                int r1, r2;
-
-                System.out.print("\nEntre com o primeiro vertice da aresta que sera removida: ");
-                r1 = sc.nextInt();
-                System.out.print("Entre com o segundo vertice da aresta que sera removida: ");
-                r2 = sc.nextInt();
-
-                Aresta.removeAresta(matriz, r1, r2, ePonderado, eDirecionado);
-
-                Exibir.matrizParaListaSucessores(matriz);
-                menu(matriz, ePonderado, backup);
-
-            }
-            ;
-        } else if (op == 'v' || op == 'g') {
-            int v = 0;
-
-            if (op == 'v') {
-                System.out.print("\nEntre com o vertice que deseja consultar: ");
-                v = sc.nextInt();
-            };
-            VerticeOp.consultarGrau(matriz, v, op, eDirecionado, ePonderado);
-
-            menu(matriz, ePonderado, backup);
-
-        } else if (op == 't' || op == 'T') {
-            int no;
-
-            if (eDirecionado == 'n') {
-                System.out.print("\nEntre com o no que queria verificar os seus vizinhos: ");
-                no = sc.nextInt();
-
-                VerticeOp.vizinhoVertice(matriz, no, backup);
-            } else if (eDirecionado == 's') {
-                List<List<Integer>> listaSucessores = Exibir.matrizParaListaSucessores(matriz);
-
-                System.out.print("Entre com o índice do vértice (de 0 a " + (matriz.length - 1) + "): ");
-                int indiceVertice = sc.nextInt();
-
-                if (indiceVertice >= 0 && indiceVertice < matriz.length) {
-                    VerticeOp.exibirListaSucessores(listaSucessores, indiceVertice);
-                } else {
-                    System.out.println(
-                            "Índice inválido. Certifique-se de que está entre 0 e " + (matriz.length - 1));
-                }
-
-            }
-
-            menu(matriz, ePonderado, backup);
-        } else if (op == 'r' || op == 'R') {
-
-            if (eDirecionado == 'n') {
-                GrafoOp.eRegular(matriz, ePonderado);
-            } else if (eDirecionado == 's') {
-                GrafoOp.eRegularDirecionado(matriz, ePonderado);
-            }
-
-            menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'e' || op == 'E') {
-
-            Exportar.grafo(matriz, ePonderado);
-
-            menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'c') {
-
-            boolean verificaSe = GrafoOp.eCompleto(matriz, ePonderado, eDirecionado);
-
-            System.out.printf("\nO Grafo e completo: %b", verificaSe);
-            System.out.println("\n");
-
-            menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'x') {
-            if (eDirecionado == 'n') {
-                System.out.println("\nO Grafo e conexo: " + GrafoOp.eConexo(matriz));
-            } else if (eDirecionado == 's') {
-                System.out.println("\nO Grafo e conexo: " + GrafoOp.eConexoDirecionado(matriz));
-            }
-            System.out.println();
-
-            menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'w') {
-            int origem, destino;
-
-            System.out.print("\nEntre com o vértice de origem: ");
-            origem = sc.nextInt();
-            System.out.print("Entre com o vértice de destino: ");
-            destino = sc.nextInt();
-
-            VerticeOp.temCaminho(matriz, origem, destino, eDirecionado);
-
-            menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'p' || op == 'P') {
-            int origem = 0;
-
-            System.out.print("\nEntre com o vertice de origem: ");
-            origem = sc.nextInt();
-            Buscas.buscaProfundidade(matriz, origem);
-
-            menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'l') {
-            int origem = 0;
-
-            System.out.print("\nEntre com o vertice de origem: ");
-            origem = sc.nextInt();
-            Buscas.buscaLargura(matriz, origem);
-
-            menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'k') {
-            if (ePonderado == 'n') {
-                System.err.print(
-                        "\nNao e possivel realizar o algortimo de Dijkstra para Grafo com arestas nao Ponderadas");
-
-                menu(matriz, ePonderado, eDirecionado);
-            } else {
-                int origem;
-
-                System.out.print("\nEntre com o vértice de origem: ");
-                origem = sc.nextInt();
-
-                // Algoritmo de Dijkstra pra FONTE UNICA
-                try {
-                    AlgCaminhoMinimo.dijkstraFonteUnica(matriz, origem);
-                    // dijkstraFonteUnica(matriz, origem);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Erro: " + e.getMessage());
-                }
-
-                System.out.println("\n");
-
-                // Algoritmo Dijkstra pra TODOS PARA TODOS
-              System.out.print("Deseja executar o Algoritmo de Todos para Todos? (Entre com s[sim] e n[nao]): ");
-              char per = sc.next().charAt(0);
-
-              if(per == 's' || per == 'S'){
-                try {
-                  AlgCaminhoMinimo.dijkstraPares(matriz);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Erro: " + e.getMessage());
-                }
-              } else {
-              }
-                System.out.println();
-
-                menu(matriz, ePonderado, eDirecionado);
-            }
-        } else if (op == 'm') {
-            if (ePonderado == 'n') {
-                System.err.print(
-                        "\nNao e possivel realizar o algortimo de Bellman-Ford para Grafo com arestas nao Ponderadas");
-            } else {
-                int origem;
-
-                System.out.print("\nEntre com o vertice de origem: ");
-                origem = sc.nextInt();
-
-                // Algoritmo de Bellman-Ford pra Fonte Unica
-                try {
-                  AlgCaminhoMinimo.bellmanFordFonteUnica(matriz, origem);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Erro: " + e.getMessage());
-                }
-
-                // Algoritmo de Bellman-Ford de TODOS PARA TODOS
-              System.out.print("Deseja executar o Algoritmo de Todos para Todos? (Entre com s[sim] e n[nao]): ");
-              char per1 = sc.next().charAt(0);
-              
-              if(per1 == 's' || per1 == 'S'){
-                try {
-                  AlgCaminhoMinimo.bellmanFordPares(matriz);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Erro: " + e.getMessage());
-                }
-              } 
-              System.out.println();
-
-              menu(matriz, ePonderado, eDirecionado);
-            }
-        } else if (op == 'h') {
-          
-          System.out.print("\nEntre com o vertice de origem: ");
-          int origem1 = sc.nextInt();
-
-          try {
-            AlgCaminhoMinimo.floydWarshallFonteUnica(matriz, origem1);
-          } catch (IllegalArgumentException e) {
-              System.out.println("Erro: " + e.getMessage());
-          }
-          
-          System.out.print("\nDeseja rodar o algoritmo de Todos para Todos: ");
-          char per2 = sc.next().charAt(0);
-          
-            try {
-              if(per2 == 's' || per2 == 'S'){
-                  AlgCaminhoMinimo.floydWarshallPares(matriz);
-              } 
-            } catch (IllegalArgumentException e) {
-              System.out.println("Erro: " + e.getMessage());
-            }
-
-          System.out.println("");
-          menu(matriz, ePonderado, eDirecionado);
         }
-    };
 
-};
+        return indiceMinimo;
+    }
+
+    private static boolean temPesoNegativo(int[][] grafo) {
+        for (int i = 0; i < grafo.length; i++) {
+            for (int j = 0; j < grafo[i].length; j++) {
+                if (grafo[i][j] < 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void dijkstraPares(int[][] grafo) {
+        if (temPesoNegativo(grafo)) {
+            throw new IllegalArgumentException("O grafo contém arestas com pesos negativos.");
+        }
+
+        long inicioAlgoritmo = System.currentTimeMillis();
+
+        int numVertices = grafo.length;
+        int[][] distancia = new int[numVertices][numVertices];
+        Integer[][] pai = new Integer[numVertices][numVertices];
+
+        for (int i = 0; i < numVertices; i++) {
+            Arrays.fill(distancia[i], Integer.MAX_VALUE);
+            Arrays.fill(pai[i], null);
+            distancia[i][i] = 0;
+        }
+
+        for (int origem = 0; origem < numVertices; origem++) {
+            boolean[] visitado = new boolean[numVertices];
+            distancia[origem][origem] = 0;
+
+            for (int count = 0; count < numVertices - 1; count++) {
+                int u = obterVerticeMinimo(distancia[origem], visitado);
+                visitado[u] = true;
+
+                for (int v = 0; v < numVertices; v++) {
+                    if (!visitado[v] && grafo[u][v] != 0 &&
+                            distancia[origem][u] != Integer.MAX_VALUE &&
+                            distancia[origem][u] + grafo[u][v] < distancia[origem][v]) {
+                        distancia[origem][v] = distancia[origem][u] + grafo[u][v];
+                        pai[origem][v] = u;
+                    }
+                }
+            }
+        }
+
+        long fimAlgoritmo = System.currentTimeMillis();
+
+        System.out.println("\nDistâncias mínimas entre todos os pares de vértices:\n");
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                System.out.println("Do vértice " + i + " para o vértice " + j + ": Distância = " +
+                        (distancia[i][j] != Integer.MAX_VALUE ? distancia[i][j] : "infinito") +
+                        ", Pai = " + (pai[i][j] != null ? pai[i][j] : "null"));
+            }
+        }
+
+        System.out.printf("\nO algoritmo Dijkstra Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+    }
+
+    public static void bellmanFordFonteUnica(int[][] grafo, int origem) {
+        int numVertices = grafo.length;
+        int[] distancia = new int[numVertices];
+        Integer[] pai = new Integer[numVertices];
+
+        long inicioAlgoritmo = System.currentTimeMillis();
+
+        Arrays.fill(distancia, Integer.MAX_VALUE);
+        Arrays.fill(pai, null);
+        distancia[origem] = 0;
+
+        for (int count = 0; count < numVertices - 1; count++) {
+            for (int u = 0; u < numVertices; u++) {
+                for (int v = 0; v < numVertices; v++) {
+                    if (grafo[u][v] != 0 && distancia[u] != Integer.MAX_VALUE &&
+                            distancia[u] + grafo[u][v] < distancia[v]) {
+                        distancia[v] = distancia[u] + grafo[u][v];
+                        pai[v] = u;
+                    }
+                }
+            }
+        }
+
+        for (int u = 0; u < numVertices; u++) {
+            for (int v = 0; v < numVertices; v++) {
+                if (grafo[u][v] != 0 && distancia[u] != Integer.MAX_VALUE &&
+                        distancia[u] + grafo[u][v] < distancia[v]) {
+                    throw new IllegalArgumentException("O grafo contém um ciclo de peso negativo.");
+                }
+            }
+        }
+
+        long fimAlgoritmo = System.currentTimeMillis();
+
+        System.out.println("\nDistâncias mínimas a partir do vértice " + origem + ":\n");
+        for (int i = 0; i < numVertices; i++) {
+            System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
+                    (distancia[i] != Integer.MAX_VALUE ? distancia[i] : "infinito") +
+                    ", Pai = " + (pai[i] != null ? pai[i] : "null"));
+        }
+
+        System.out.printf("\nO algoritmo Bellman Ford levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+    }
+
+    public static void bellmanFordPares(int[][] grafo) {
+        int numVertices = grafo.length;
+        int[][] distancia = new int[numVertices][numVertices];
+        Integer[][] pai = new Integer[numVertices][numVertices];
+
+        long inicioAlgoritmo = System.currentTimeMillis();
+
+        for (int i = 0; i < numVertices; i++) {
+            Arrays.fill(distancia[i], Integer.MAX_VALUE);
+            Arrays.fill(pai[i], null);
+            distancia[i][i] = 0;
+        }
+
+        for (int count = 0; count < numVertices - 1; count++) {
+            for (int origem = 0; origem < numVertices; origem++) {
+                for (int u = 0; u < numVertices; u++) {
+                    for (int v = 0; v < numVertices; v++) {
+                        if (grafo[u][v] != 0 && distancia[origem][u] != Integer.MAX_VALUE &&
+                                distancia[origem][u] + grafo[u][v] < distancia[origem][v]) {
+                            distancia[origem][v] = distancia[origem][u] + grafo[u][v];
+                            pai[origem][v] = u;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int origem = 0; origem < numVertices; origem++) {
+            for (int u = 0; u < numVertices; u++) {
+                for (int v = 0; v < numVertices; v++) {
+                    if (grafo[u][v] != 0 && distancia[origem][u] != Integer.MAX_VALUE &&
+                            distancia[origem][u] + grafo[u][v] < distancia[origem][v]) {
+                        throw new IllegalArgumentException("O grafo contém um ciclo de peso negativo.");
+                    }
+                }
+            }
+        }
+
+        long fimAlgoritmo = System.currentTimeMillis();
+
+        System.out.println("\nDistâncias mínimas entre todos os pares de vértices:\n");
+        for (int origem = 0; origem < numVertices; origem++) {
+            for (int i = 0; i < numVertices; i++) {
+                System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
+                        (distancia[origem][i] != Integer.MAX_VALUE ? distancia[origem][i] : "infinito") +
+                        ", Pai = " + (pai[origem][i] != null ? pai[origem][i] : "null"));
+            }
+        }
+
+        System.out.printf("\nO algoritmo Bellman-Ford Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+    }
+
+    public static void floydWarshallPares(int[][] grafo) {
+        int numVertices = grafo.length;
+        int[][] distancia = new int[numVertices][numVertices];
+        Integer[][] pai = new Integer[numVertices][numVertices];
+
+        long inicioAlgoritmo = System.currentTimeMillis();
+
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                if (grafo[i][j] == 0 && i != j) {
+                    distancia[i][j] = Integer.MAX_VALUE;
+                } else {
+                    distancia[i][j] = grafo[i][j];
+                    pai[i][j] = (i != j && grafo[i][j] != 0) ? i : null;
+                }
+            }
+        }
+
+        for (int k = 0; k < numVertices; k++) {
+            for (int i = 0; i < numVertices; i++) {
+                for (int j = 0; j < numVertices; j++) {
+                    if (distancia[i][k] != Integer.MAX_VALUE && distancia[k][j] != Integer.MAX_VALUE &&
+                            distancia[i][k] + distancia[k][j] < distancia[i][j]) {
+                        distancia[i][j] = distancia[i][k] + distancia[k][j];
+                        pai[i][j] = pai[k][j];
+                    }
+                }
+            }
+        }
+
+        long fimAlgoritmo = System.currentTimeMillis();
+
+        System.out.println("\nDistâncias mínimas entre todos os pares de vértices usando Floyd-Warshall:\n");
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                System.out.println("Do vértice " + i + " para o vértice " + j + ": Distância = " +
+                        (distancia[i][j] != Integer.MAX_VALUE ? distancia[i][j] : "infinito") +
+                        ", Pai = " + (pai[i][j] != null ? pai[i][j] : "null"));
+            }
+        }
+
+        System.out.printf("\nO algoritmo Floyd-Warshall Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+
+    }
+
+    public static void floydWarshallFonteUnica(int[][] grafo, int origem) {
+        int numVertices = grafo.length;
+        int[][] distancia = new int[numVertices][numVertices];
+        Integer[][] pai = new Integer[numVertices][numVertices];
+
+        long inicioAlgoritmo = System.currentTimeMillis();
+
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                if (grafo[i][j] == 0 && i != j) {
+                    distancia[i][j] = Integer.MAX_VALUE;
+                } else {
+                    distancia[i][j] = grafo[i][j];
+                    pai[i][j] = (i != j && grafo[i][j] != 0) ? i : null;
+                }
+            }
+        }
+
+        for (int k = 0; k < numVertices; k++) {
+            for (int i = 0; i < numVertices; i++) {
+                for (int j = 0; j < numVertices; j++) {
+                    if (distancia[i][k] != Integer.MAX_VALUE && distancia[k][j] != Integer.MAX_VALUE &&
+                            distancia[i][k] + distancia[k][j] < distancia[i][j]) {
+                        distancia[i][j] = distancia[i][k] + distancia[k][j];
+                        pai[i][j] = pai[k][j];
+                    }
+                }
+            }
+        }
+
+        long fimAlgoritmo = System.currentTimeMillis();
+
+        System.out.println("\nDistâncias mínimas a partir do vértice " + origem + " usando Floyd-Warshall:\n");
+        for (int j = 0; j < numVertices; j++) {
+            if (origem != j) {
+                System.out.println("Do vértice " + origem + " para o vértice " + j + ": Distância = " +
+                        (distancia[origem][j] != Integer.MAX_VALUE ? distancia[origem][j] : "infinito") +
+                        ", Pai = " + (pai[origem][j] != null ? pai[origem][j] : "null"));
+            }
+        }
+
+        System.out.printf("\nO algoritmo Bellman-Ford Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+    }
+
+}

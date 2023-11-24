@@ -1,5 +1,3 @@
-import java.util.*;
-
 class GrafoOp{
   public static void eRegular(int matriz[][], char ePonderado) {
       boolean reg = true;
@@ -180,4 +178,38 @@ class GrafoOp{
       }
       return true;
   };
+
+  public static char verificarDirecionado(int[][] matriz) {
+    boolean direcionado = false;
+
+    for (int i = 0; i < matriz.length; i++) {
+        for (int j = 0; j < matriz[i].length; j++) {
+            if (matriz[i][j] != 0 && matriz[j][i] == 0) {
+                direcionado = true;
+                break;
+            }
+        }
+        if (direcionado) {
+            break;
+        }
+    }
+    return direcionado ? 's' : 'n';
+}
+
+public static char verificarPonderado(int[][] matriz) {
+    boolean ponderado = false;
+
+    for (int i = 0; i < matriz.length; i++) {
+        for (int j = 0; j < matriz[i].length; j++) {
+            if (matriz[i][j] != 0) {
+                ponderado = true;
+                break;
+            }
+        }
+        if (ponderado) {
+            break;
+        }
+    }
+    return ponderado ? 's' : 'n';
+}
 }
