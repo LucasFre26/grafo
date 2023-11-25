@@ -52,12 +52,17 @@ class Main {
                 int[][] grafoAleatorio = Importar.gerarGrafoAleatorio(numVertices, direcionado, ponderado,
                         ponderacoesNegativas);
 
-                // System.out.print("Nome do arquivo para salvar a matriz: ");
-                // String nomeArquivo = sc.next();
+                System.out.print("Deseja salvar o grafo (Entre com s[sim] e n[nao]): ");
+                char salvar = sc.next().charAt(0);
 
-                // Importar.salvarMatrizEmArquivo(grafoAleatorio, nomeArquivo + ".txt");
-
-                // System.out.println("Matriz salva em " + nomeArquivo + ".txt com sucesso.");
+                if(salvar == 's' || salvar == 'S'){
+                    System.out.print("Nome do arquivo para salvar a matriz: ");
+                    String nomeArquivo = sc.next();
+    
+                    Importar.salvarMatrizEmArquivo(grafoAleatorio, nomeArquivo);
+    
+                    System.out.println("Matriz salva em " + nomeArquivo + ".txt com sucesso.");
+                }
 
                 imprimeMenu();
 
@@ -375,6 +380,13 @@ class Main {
             Importar.salvarMatrizEmArquivo(matriz, arq);
 
             menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'q' || op == 'Q'){
+            System.out.print("\nEntre com o nome do arquivo do Grafo desejado: ");
+            String nomeArq = sc.next();
+
+            int matrizAdjacencia [][] = Importar.lerMatrizDeArquivo(nomeArq);
+
+            menu(matrizAdjacencia, ePonderado, eDirecionado);
         }
     };
 
@@ -383,6 +395,7 @@ class Main {
                 + "Para inserir arestas entre os vertice entre com 'i'\n"
                 + "Para remover arestas entre com 'd'\n"
                 + "Para salvar Matriz de Adjacencia entre com 's'\n"
+                + "Para ler Matriz de Adjacencia entre com 'q'\n"
                 + "Para verificar se o grafo e completo entre com 'c'\n"
                 + "Para consultar o grau de um vertice entre com 'v'\n"
                 + "Para consultar o grau do Grafo entre com 'g'\n"

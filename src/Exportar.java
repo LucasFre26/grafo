@@ -14,7 +14,7 @@ class Exportar {
             System.out.print("\nQual o nome do arquivo GEXF: ");
             nomeArquivo = sc.nextLine();
 
-            // Cria o diretório "graphs" se não existir
+            // olhar o caminho ta exportanto errado
             File directory = new File("graphs");
             if (!directory.exists()) {
                 directory.mkdir();
