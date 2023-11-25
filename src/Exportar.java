@@ -4,10 +4,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 class Exportar {
+    static Scanner sc = new Scanner(System.in);
 
     public static void grafo(int matriz[][], char ePonderado) {
         try {
-            Scanner sc = new Scanner(System.in);
 
             String nomeArquivo;
 
