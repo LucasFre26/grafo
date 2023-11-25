@@ -25,13 +25,12 @@ class Importar {
     }
 
     public static void salvarMatrizEmArquivo(int[][] matriz, String nomeArquivo) {
-        // Cria o diretório "graphs" se não existir
         File directory = new File("MatrizesAdjacencia");
         if (!directory.exists()) {
             directory.mkdir();
         }
         
-        try (PrintWriter writer = new PrintWriter(new FileWriter("MatrizesAdjacencia/" + nomeArquivo))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("MatrizesAdjacencia/" + nomeArquivo + ".txt"))) {
             int numVertices = matriz.length;
 
             for (int i = 0; i < numVertices; i++) {
