@@ -12,8 +12,8 @@ Grupo: Lucas José de Freitas
 
 - A Criação de um grafo com N vértices;
 - Inserção e Remoção arestas;
-      - Permitindo arestas ser direcionadas ou não;
-      - Permitindo arestas serem ponderadas ou não;
+  - Permitindo arestas ser direcionadas ou não;
+  - Permitindo arestas serem ponderadas ou não;
 - A Consulta o grau de um vértice;
 - A Consulta o grau do grafo;
 - A Consulta os vizinhos de um vértice;
@@ -23,7 +23,7 @@ Grupo: Lucas José de Freitas
 - A Realização da busca em profundidade;
 - A Realização da busca em largura;
 - A Verificação da existência de caminho entre dois vértices;
-      - Caso exista, exibir o caminho;
+  - Caso exista, exibir o caminho;
 - A Visualização do grafo na ferramenta Gephi
   
 ## Para o TP2 projeto consistirá na atualização da bibliotece de grafos acima 
