@@ -33,10 +33,10 @@ Grupo: Lucas José de Freitas
   -  Usando os Algoritmo:
     -       Dijkstra (ok)
     -       Bellman-Ford (ok)   
-    -       Floyd-Warshall (zero)
+    -       Floyd-Warshall (ok)
     -       A* (A ESTRELA) [Implementação e explicação]   
 
-- 14. Implementação de Grafos para testes de desempenhos dos algoritmos de caminho mínimo (zero)
+- 14. Implementação de Grafos para testes de desempenhos dos algoritmos de caminho mínimo (ok)
   -	   Grafo com 100 vértices
   -	   Grafo com 1.000 vértices
   -	   Grafo com 10.000 vértices
