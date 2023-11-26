@@ -13,9 +13,15 @@
 
   -   b. Grafo com 100 vértices Não Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/924ed83a-69ea-4447-a0a4-735ed45c7f24)
+
   -   c. Grafo com 1.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/9a2a3106-2c54-4e98-a20c-fc89e37c146c)
+
   -   d. Grafo com 1.000 vértices Não Direcionado
+
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/c1669bac-519b-4585-8834-242470d67ac4)
 
   -   d. Grafo com 10.000 vértices Direcionado
 
@@ -34,13 +40,21 @@
     
   -   b. Grafo com 100 vértices Não Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/fcb6ab7d-53b3-4a5f-939c-be3365e5826c)
+
   -   c. Grafo com 1.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/40768c64-e2e9-4203-9e98-fd69e9a38c5a)
+
   -   d. Grafo com 1.000 vértices Não Direcionado
+
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/f8f052bf-a6f8-4772-a7f8-7761be8db4b8)
 
   -   d. Grafo com 10.000 vértices Direcionado
 
   -   e. Grafo com 10.000 vértices Não Direcionado
+
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/71f59a75-7d26-4516-a0b6-5ae0a273f2c5)
 
   -   f. Grafo com 15.000 vértices Direcionado
 
@@ -53,9 +67,15 @@
     
   -   b. Grafo com 100 vértices Não Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/c2d43dde-5761-4993-9ffb-68f796bad3d6)
+
   -   c. Grafo com 1.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/4f8dfdcf-8bf4-4bc0-b5a1-08d07b8da48a)
+
   -   d. Grafo com 1.000 vértices Não Direcionado
+
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/0ae91d6e-46f5-4c81-ac18-29f746d88149)
 
   -   d. Grafo com 10.000 vértices Direcionado
 
@@ -74,9 +94,15 @@
     
   -   b. Grafo com 100 vértices Não Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/0efe2786-2194-4e69-8b20-8bc57fb6f7fe)
+
   -   c. Grafo com 1.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/8118f210-1033-4471-95a5-467e3f731454)
+
   -   d. Grafo com 1.000 vértices Não Direcionado
+
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/bee9b302-e9a9-4448-b459-542ebe6a0b63)
 
   -   d. Grafo com 10.000 vértices Direcionado
 
@@ -93,9 +119,15 @@
     
   -   b. Grafo com 100 vértices Não Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/770b9c1f-fe46-4e5c-b64e-f15a82741c80)
+
   -   c. Grafo com 1.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/ca5c2c72-57e6-477b-984b-be8944623bee)
+
   -   d. Grafo com 1.000 vértices Não Direcionado
+
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/204c34a6-a208-4efe-8f69-d2e71001abbd)
 
   -   d. Grafo com 10.000 vértices Direcionado
 
@@ -114,13 +146,21 @@
     
   -   b. Grafo com 100 vértices Não Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/79188b2d-5072-49ec-a3a0-dc194fbc6528)
+
   -   c. Grafo com 1.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/a9204df4-2536-4a51-91fe-9b6f65911fd1)
+
   -   d. Grafo com 1.000 vértices Não Direcionado
+
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/22463767-0bda-47f0-a958-76e0aa53cd0d)
 
   -   d. Grafo com 10.000 vértices Direcionado
 
   -   e. Grafo com 10.000 vértices Não Direcionado
+
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/b111b255-f982-4e84-9b51-ef56d1750a29)
 
   -   f. Grafo com 15.000 vértices Direcionado
 
