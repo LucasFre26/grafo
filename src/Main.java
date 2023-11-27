@@ -47,15 +47,22 @@ class Main {
                     ponderacoesNegativas = sc.next().charAt(0) == 's';
                 }
 
+                System.out.printf("\n\n...Gerando Grafo com %d vertices...\n\n", numVertices);
+
                 int[][] grafoAleatorio = Importar.gerarGrafoAleatorio(numVertices, direcionado, ponderado,
                         ponderacoesNegativas);
 
-                System.out.print("Nome do arquivo para salvar a matriz: ");
-                String nomeArquivo = sc.next();
+                System.out.print("Deseja salvar o grafo (Entre com s[sim] e n[nao]): ");
+                char salvar = sc.next().charAt(0);
 
-                Importar.salvarMatrizEmArquivo(grafoAleatorio, nomeArquivo + ".txt");
-
-                System.out.println("Matriz salva em " + nomeArquivo + ".txt com sucesso.");
+                if(salvar == 's' || salvar == 'S'){
+                    System.out.print("Nome do arquivo para salvar a matriz: ");
+                    String nomeArquivo = sc.next();
+    
+                    Importar.salvarMatrizEmArquivo(grafoAleatorio, nomeArquivo);
+    
+                    System.out.println("Matriz salva em " + nomeArquivo + ".txt com sucesso.");
+                }
 
                 imprimeMenu();
 
@@ -135,7 +142,7 @@ class Main {
 
         List<List<Integer>> listaAdjacencia = VerticeOp.matrizParaListaAdjacencia(matriz);
 
-        System.out.print(". Qual a sua opçao: ");
+        System.out.print("Qual a sua opçao: ");
         op = sc.next().charAt(0);
 
         if (op == 'a' || op == 'A') {
@@ -311,37 +318,37 @@ class Main {
                 menu(matriz, ePonderado, eDirecionado);
             }
         } else if (op == 'm') {
-            if (ePonderado == 'n') {
-                System.err.print(
-                        "\nNao e possivel realizar o algortimo de Bellman-Ford para Grafo com arestas nao Ponderadas");
-            } else {
-                int origem;
+            int origem;
 
-                System.out.print("\nEntre com o vertice de origem: ");
-                origem = sc.nextInt();
+            System.out.print("\nEntre com o vertice de origem: ");
+            origem = sc.nextInt();
 
-                // Algoritmo de Bellman-Ford pra Fonte Unica
-                try {
-                    AlgCaminhoMinimo.bellmanFordFonteUnica(matriz, origem);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Erro: " + e.getMessage());
-                }
-
-                // Algoritmo de Bellman-Ford de TODOS PARA TODOS
-                System.out.print("Deseja executar o Algoritmo de Todos para Todos? (Entre com s[sim] e n[nao]): ");
-                char per1 = sc.next().charAt(0);
-
-                if (per1 == 's' || per1 == 'S') {
-                    try {
-                        AlgCaminhoMinimo.bellmanFordPares(matriz);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Erro: " + e.getMessage());
-                    }
-                }
-                System.out.println();
+            // Algoritmo de Bellman-Ford pra Fonte Unica
+            try {
+                AlgCaminhoMinimo.bellmanFordFonteUnica(matriz, origem);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Erro: " + e.getMessage());
 
                 menu(matriz, ePonderado, eDirecionado);
             }
+
+            // Algoritmo de Bellman-Ford de TODOS PARA TODOS
+            System.out.print("Deseja executar o Algoritmo de Todos para Todos? (Entre com s[sim] e n[nao]): ");
+            char per1 = sc.next().charAt(0);
+
+            if (per1 == 's' || per1 == 'S') {
+                try {
+                    AlgCaminhoMinimo.bellmanFordPares(matriz);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage());
+
+                    menu(matriz, ePonderado, eDirecionado);
+                }
+            }
+            System.out.println();
+
+            menu(matriz, ePonderado, eDirecionado);
+
         } else if (op == 'h') {
 
             System.out.print("\nEntre com o vertice de origem: ");
@@ -353,7 +360,7 @@ class Main {
                 System.out.println("Erro: " + e.getMessage());
             }
 
-            System.out.print("\nDeseja rodar o algoritmo de Todos para Todos: ");
+            System.out.print("\nDeseja executar o Algoritmo de Todos para Todos? (Entre com s[sim] e n[nao]): ");
             char per2 = sc.next().charAt(0);
 
             try {
@@ -373,6 +380,13 @@ class Main {
             Importar.salvarMatrizEmArquivo(matriz, arq);
 
             menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'q' || op == 'Q'){
+            System.out.print("\nEntre com o nome do arquivo do Grafo desejado: ");
+            String nomeArq = sc.next();
+
+            int matrizAdjacencia [][] = Importar.lerMatrizDeArquivo(nomeArq);
+
+            menu(matrizAdjacencia, ePonderado, eDirecionado);
         }
     };
 
@@ -381,6 +395,7 @@ class Main {
                 + "Para inserir arestas entre os vertice entre com 'i'\n"
                 + "Para remover arestas entre com 'd'\n"
                 + "Para salvar Matriz de Adjacencia entre com 's'\n"
+                + "Para ler Matriz de Adjacencia entre com 'q'\n"
                 + "Para verificar se o grafo e completo entre com 'c'\n"
                 + "Para consultar o grau de um vertice entre com 'v'\n"
                 + "Para consultar o grau do Grafo entre com 'g'\n"
@@ -394,8 +409,8 @@ class Main {
                 + "Para exibir a lista de Adjacencia entre com 'b'\n"
                 + "Para exibir a matriz de adjacencia entre com 'a'.\n"
                 + "Para exibir o caminho minimo usando o Algoritmo de Dijkstra entre com 'k'\n"
-                + "Para exibir o caminho minimo usando o Algoritmo de Bellman Ford entre com 'm' "
-                + "Para exibir o caminho minimo usando o Algoritmo de Floyd-Warshall entre com 'h' ");
+                + "Para exibir o caminho minimo usando o Algoritmo de Bellman Ford entre com 'm'\n"
+                + "Para exibir o caminho minimo usando o Algoritmo de Floyd-Warshall entre com 'h'. ");
     }
 
 };
