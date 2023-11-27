@@ -35,8 +35,8 @@ Grupo: Lucas José de Freitas
     -       Bellman-Ford 
     -       Floyd-Warshall 
     
--  A* (A ESTRELA)
-  -      [Implementação e explicação]   
+-  Algoritmo A* (A ESTRELA)
+    -      [Implementação e explicação]   
 
 - Implementação de Grafos para testes de desempenhos dos algoritmos de caminho mínimo 
   -	     Grafo com 100 vértices
