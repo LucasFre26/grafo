@@ -387,6 +387,10 @@ class Main {
             int matrizAdjacencia [][] = Importar.lerMatrizDeArquivo(nomeArq);
 
             menu(matrizAdjacencia, ePonderado, eDirecionado);
+        } else if (op == 'y' || op == 'Y'){
+            AEstrela.iniciaAEstrela(matriz);
+
+            menu(matriz, ePonderado, eDirecionado);
         }
     };
 
@@ -410,6 +414,7 @@ class Main {
                 + "Para exibir a matriz de adjacencia entre com 'a'.\n"
                 + "Para exibir o caminho minimo usando o Algoritmo de Dijkstra entre com 'k'\n"
                 + "Para exibir o caminho minimo usando o Algoritmo de Bellman Ford entre com 'm'\n"
+                + "Para exibir o caminho minimo usando o Algoritmo de A* (A Estrla) entre com 'y'\n"
                 + "Para exibir o caminho minimo usando o Algoritmo de Floyd-Warshall entre com 'h'. ");
     }
 
