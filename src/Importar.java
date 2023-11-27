@@ -6,12 +6,12 @@ class Importar {
     public static int[][] gerarGrafoAleatorio(int numVertices, boolean direcionado, boolean ponderado, boolean ponderacoesNegativas) {
         Random random = new Random();
         int[][] grafo = new int[numVertices][numVertices];
-
+    
         for (int i = 0; i < numVertices; i++) {
             for (int j = 0; j < numVertices; j++) {
                 if (i != j) {
-                    if (direcionado || (i < j)) { 
-                        int peso = ponderado ? (ponderacoesNegativas ? random.nextInt(201) - 100 : random.nextInt(101)) : 1;
+                    if (direcionado || (i < j)) {
+                        int peso = ponderado ? (ponderacoesNegativas ? random.nextInt(201) - 100 : random.nextInt(101)) : random.nextInt(2);
                         grafo[i][j] = peso;
                         if (!direcionado) {
                             grafo[j][i] = peso;
@@ -20,18 +20,18 @@ class Importar {
                 }
             }
         }
-
+    
         return grafo;
     }
+    
 
     public static void salvarMatrizEmArquivo(int[][] matriz, String nomeArquivo) {
-        // Cria o diretório "graphs" se não existir
         File directory = new File("MatrizesAdjacencia");
         if (!directory.exists()) {
             directory.mkdir();
         }
         
-        try (PrintWriter writer = new PrintWriter(new FileWriter("MatrizesAdjacencia/" + nomeArquivo))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("MatrizesAdjacencia/" + nomeArquivo + ".txt"))) {
             int numVertices = matriz.length;
 
             for (int i = 0; i < numVertices; i++) {

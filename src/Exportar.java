@@ -4,17 +4,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 class Exportar {
+    static Scanner sc = new Scanner(System.in);
 
     public static void grafo(int matriz[][], char ePonderado) {
         try {
-            Scanner sc = new Scanner(System.in);
 
             String nomeArquivo;
 
             System.out.print("\nQual o nome do arquivo GEXF: ");
             nomeArquivo = sc.nextLine();
 
-            // Cria o diretório "graphs" se não existir
+            // olhar o caminho ta exportanto errado
             File directory = new File("graphs");
             if (!directory.exists()) {
                 directory.mkdir();
