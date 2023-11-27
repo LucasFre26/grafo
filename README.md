@@ -7,6 +7,10 @@ Disciplina: Algoritmos em Grafos
 
 Grupo: Lucas José de Freitas 
 
+`Importante: Para usar com grandes Grafos, recomenda-se que aumente o HeapSpace do Java`
+  - Para isso cole esse codigo no lauch.json do seu JDK nátivo, modificando o final do código para o tamanho desejado para a alocação de memória para a biblioteca 
+    -       -Xms256m 
+
 ## Para o TP1 o projeto consiste em desenvolver uma biblioteca de grafos
 ### Permitindo  
 
