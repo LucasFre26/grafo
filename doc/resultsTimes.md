@@ -1,4 +1,4 @@
-n# Explicação Algoritmo A* (A ESTRELA)
+#Explicação Algoritmo A* (A ESTRELA)
 O algoritmo A* é um algoritmo de busca que encontra o caminho mais curto entre dois pontos em um grafo, usando uma heurística para otimizar a busca. Aqui está uma explicação passo a passo do código:
 
 ### Estrutura do Nó
