@@ -186,36 +186,3 @@ O algoritmo A* é um algoritmo de busca que encontra o caminho mais curto entre 
 
       ![image](https://github.com/LucasFre26/grafo/assets/99023129/b111b255-f982-4e84-9b51-ef56d1750a29)
       
-## 6. A* com caminho de uma origem para todos os vértices
-  -   a. Grafo com 100 vértices Direcionado
-    
-  -   b. Grafo com 100 vértices Não Direcionado
-
-  -   c. Grafo com 1.000 vértices Direcionado
-
-  -   d. Grafo com 1.000 vértices Não Direcionado
-
-  -   d. Grafo com 10.000 vértices Direcionado
-
-  -   e. Grafo com 10.000 vértices Não Direcionado
-
-  -   f. Grafo com 15.000 vértices Direcionado
-
-  -   g. Grafo com 15.000 vértices Não Direcionado
-  
-## 7. A* com caminho de todos para todos os vértices
-  -   a. Grafo com 100 vértices Direcionado
-    
-  -   b. Grafo com 100 vértices Não Direcionado
-
-  -   c. Grafo com 1.000 vértices Direcionado
-
-  -   d. Grafo com 1.000 vértices Não Direcionado
-
-  -   d. Grafo com 10.000 vértices Direcionado
-
-  -   e. Grafo com 10.000 vértices Não Direcionado
-
-  -   f. Grafo com 15.000 vértices Direcionado
-
-  -   g. Grafo com 15.000 vértices Não Direcionado
