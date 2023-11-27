@@ -31,9 +31,9 @@ Grupo: Lucas José de Freitas
 
 - Calculo da menor distância de uma origem para todos os outros vértices e de todos vértices para todos vértices.
   -  Usando os Algoritmo:
-    -       Dijkstra (ok)
-    -       Bellman-Ford (ok)   
-    -       Floyd-Warshall (ok)
+    -       Dijkstra 
+    -       Bellman-Ford 
+    -       Floyd-Warshall 
     -       A* (A ESTRELA) [Implementação e explicação]   
 
 - Implementação de Grafos para testes de desempenhos dos algoritmos de caminho mínimo (ok)
