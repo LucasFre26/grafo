@@ -52,6 +52,6 @@ Grupo: Lucas José de Freitas
 
   - Para isso cole esse codigo no lauch.json do seu JDK nátivo, modificando o final do código para o tamanho desejado para a alocação de memória para a biblioteca
 
-    ´´´bash
-            -Xms2g 
-    ´´´ 
+  ```c
+    "vmArgs": "-Xmx2g"
+  ```
