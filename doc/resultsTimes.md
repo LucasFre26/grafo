@@ -1,9 +1,43 @@
 n# Explicação Algoritmo A* (A ESTRELA)
+O algoritmo A* é um algoritmo de busca que encontra o caminho mais curto entre dois pontos em um grafo, usando uma heurística para otimizar a busca. Aqui está uma explicação passo a passo do código:
 
-```bash
+### Estrutura do Nó
 
+- A classe `Node` representa um nó no grafo, com coordenadas `(x, y)` e informações necessárias para o A* como `g`, `h`, `f` (custos).
 
-```
+### Função de Heurística
+
+- `heuristica(a, b)`: Calcula a distância Manhattan entre dois nós `a` e `b`. A distância Manhattan é a soma das diferenças absolutas das coordenadas.
+
+### Algoritmo A*
+
+1. **Inicialização**:
+   - Conjuntos `conjuntoAberto` e `conjuntoFechado`.
+   - Mapas `custoG` e `custoF` para rastrear os custos.
+
+2. **Adição do Nó Inicial**:
+   - O nó inicial é adicionado ao `conjuntoAberto`.
+
+3. **Loop Principal**:
+   - Enquanto o `conjuntoAberto` não estiver vazio:
+     - Seleciona o nó atual com o menor custo `f`.
+     - Se o nó atual é o objetivo, reconstrói o caminho e retorna.
+
+4. **Exploração dos Vizinhos**:
+   - Para cada vizinho do nó atual:
+     - Calcula o custo tentativo `g`.
+     - Atualiza se o custo tentativo é menor ou se o vizinho não está no `conjuntoAberto`.
+     - Adiciona o vizinho ao `conjuntoAberto`.
+
+5. **Reconstrução do Caminho**:
+   - Retorna o caminho reconstruído do nó inicial ao objetivo.
+
+### Função Principal `iniciaAEstrela`
+
+- Solicita ao usuário as coordenadas de origem e destino.
+- Chama a função A* (`aEstrela`) para encontrar o caminho mínimo no grafo.
+
+- ---
 
 # Resultados
 ## 1. Dijkstra com caminho de uma origem para todos os vértices
