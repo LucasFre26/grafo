@@ -1,4 +1,4 @@
-# Explicação Algoritmo A* (A ESTRELA)
+n# Explicação Algoritmo A* (A ESTRELA)
 
 ```bash
 
@@ -25,13 +25,11 @@
 
   -   d. Grafo com 10.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/77e966f7-a1fb-48e4-ae7d-c21c4ca36713)
+
   -   e. Grafo com 10.000 vértices Não Direcionado
   
       ![image](https://github.com/LucasFre26/grafo/assets/99023129/dc007af3-841f-4af6-9e69-ac9bb7a59d45)
-
-  -   f. Grafo com 15.000 vértices Direcionado
-
-  -   g. Grafo com 15.000 vértices Não Direcionado
 
 ## 2. Dijkstra com caminho de todos para todos os vértices
   -   a. Grafo com 100 vértices Direcionado
@@ -52,13 +50,11 @@
 
   -   d. Grafo com 10.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/6fc12fd3-40a1-4b93-8a30-c971c96b76b6)
+
   -   e. Grafo com 10.000 vértices Não Direcionado
 
       ![image](https://github.com/LucasFre26/grafo/assets/99023129/71f59a75-7d26-4516-a0b6-5ae0a273f2c5)
-
-  -   f. Grafo com 15.000 vértices Direcionado
-
-  -   g. Grafo com 15.000 vértices Não Direcionado
 
 ## 2. Bellman-Ford com caminho de uma origem para todos os vértices
   -   a. Grafo com 100 vértices Direcionado
@@ -79,13 +75,11 @@
 
   -   d. Grafo com 10.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/d63a6944-dff1-4d05-8b63-251272801879)
+
   -   e. Grafo com 10.000 vértices Não Direcionado
 
       ![image](https://github.com/LucasFre26/grafo/assets/99023129/a5428707-7af0-4bde-8422-a2e0b76968f6)
-
-  -   f. Grafo com 15.000 vértices Direcionado
-
-  -   g. Grafo com 15.000 vértices Não Direcionado
 
 ## 3. Bellman-Ford com caminho de todos para todos os vértices
   -   a. Grafo com 100 vértices Direcionado
@@ -107,10 +101,6 @@
   -   d. Grafo com 10.000 vértices Direcionado
 
   -   e. Grafo com 10.000 vértices Não Direcionado
-
-  -   f. Grafo com 15.000 vértices Direcionado
-
-  -   g. Grafo com 15.000 vértices Não Direcionado
     
 ## 4. Floyd-Warshal com caminho de uma origem para todos os vértices
   -   a. Grafo com 100 vértices Direcionado
@@ -131,13 +121,11 @@
 
   -   d. Grafo com 10.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/7fd0ed9a-d983-4583-884d-fd6b9ca1e304)
+
   -   e. Grafo com 10.000 vértices Não Direcionado
 
       ![image](https://github.com/LucasFre26/grafo/assets/99023129/2968100c-a1a8-4c99-bb13-e89fac0a264f)
-
-  -   f. Grafo com 15.000 vértices Direcionado
-
-  -   g. Grafo com 15.000 vértices Não Direcionado
     
 ## 5. Floyd-Warshal com caminho de todos para todos os vértices
   -   a. Grafo com 100 vértices Direcionado
@@ -158,14 +146,12 @@
 
   -   d. Grafo com 10.000 vértices Direcionado
 
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/70013a13-7f09-4753-983d-02e4bf6da127)
+
   -   e. Grafo com 10.000 vértices Não Direcionado
 
       ![image](https://github.com/LucasFre26/grafo/assets/99023129/b111b255-f982-4e84-9b51-ef56d1750a29)
-
-  -   f. Grafo com 15.000 vértices Direcionado
-
-  -   g. Grafo com 15.000 vértices Não Direcionado
-  
+      
 ## 6. A* com caminho de uma origem para todos os vértices
   -   a. Grafo com 100 vértices Direcionado
     
