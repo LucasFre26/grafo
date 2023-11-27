@@ -391,6 +391,13 @@ class Main {
             AEstrela.iniciaAEstrela(matriz);
 
             menu(matriz, ePonderado, eDirecionado);
+        } else if (op == 'q' || op == 'Q'){
+            System.out.print("\nEntre com o nome do arquivo do Grafo desejado: ");
+            String nomeArq = sc.next();
+
+            int matrizAdjacencia [][] = Importar.lerMatrizDeArquivo(nomeArq);
+
+            menu(matrizAdjacencia, ePonderado, eDirecionado);
         }
     };
 
@@ -413,9 +420,8 @@ class Main {
                 + "Para exibir a lista de Adjacencia entre com 'b'\n"
                 + "Para exibir a matriz de adjacencia entre com 'a'.\n"
                 + "Para exibir o caminho minimo usando o Algoritmo de Dijkstra entre com 'k'\n"
-                + "Para exibir o caminho minimo usando o Algoritmo de Bellman Ford entre com 'm'\n"
-                + "Para exibir o caminho minimo usando o Algoritmo de A* (A Estrla) entre com 'y'\n"
-                + "Para exibir o caminho minimo usando o Algoritmo de Floyd-Warshall entre com 'h'. ");
+                + "Para exibir o caminho minimo usando o Algoritmo de Bellman Ford entre com 'm' "
+                + "Para exibir o caminho minimo usando o Algoritmo de Floyd-Warshall entre com 'h' ");
     }
 
 };

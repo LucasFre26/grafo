@@ -234,12 +234,6 @@ class AlgCaminhoMinimo {
                     }
                 }
             }
-
-            double progresso = ((double) count / (numVertices - 1)) * 100;
-            System.out.printf("\rProgresso Bellman-Ford: %.2f%%  ", progresso);
-            if (numVertices < 300 && progresso >= 95.9 || numVertices >= 300 && progresso >= 99) {
-                System.out.print("\r                                      \r");
-            }
         }
 
         for (int origem = 0; origem < numVertices; origem++) {
