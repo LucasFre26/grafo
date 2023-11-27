@@ -1,8 +1,10 @@
 import java.util.*;
 
 class AlgCaminhoMinimo {
+    static Scanner sc = new Scanner(System.in);
 
     public static void dijkstraFonteUnica(int[][] grafo, int origem) {
+
         if (temPesoNegativo(grafo)) {
             throw new IllegalArgumentException("O grafo contém arestas com pesos negativos.");
         }
@@ -29,18 +31,34 @@ class AlgCaminhoMinimo {
                     pai[v] = u;
                 }
             }
+
+            double progresso = ((double) count / (numVertices - 1)) * 100;
+            System.out.printf("\rProgresso Dijkstra: %.2f%%  ", progresso);
+            if (numVertices < 300 && progresso >= 95.9 || numVertices >= 300 && progresso >= 99) {
+                System.out.print("\r                          \r");
+            }
         }
 
         long fimAlgoritmo = System.currentTimeMillis();
 
-        System.out.println("\nDistâncias mínimas a partir do vértice " + origem + ":\n");
+        System.out.printf("\nO algoritmo Dijkstra levou %dms", fimAlgoritmo - inicioAlgoritmo);
+
+        System.out.print("\nDeseja imprimir os caminhos minimo (Entre com s[sim] e n[nao]): ");
+        char excecao = sc.next().charAt(0);
+
+        if (excecao == 's' || excecao == 'S') {
+            imprimeDijkstra(numVertices, origem, distancia, pai);
+        }
+    }
+
+    public static void imprimeDijkstra(int numVertices, int origem, int distancia[], Integer pai[]) {
+        System.out.println("\nDistâncias mínimas a partir do vértice " + origem +
+                ":\n");
         for (int i = 0; i < numVertices; i++) {
-            System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
+            System.out.println("Do vértice " + origem + " para o vértice " + i + ":Distância = " +
                     (distancia[i] != Integer.MAX_VALUE ? distancia[i] : "infinito") +
                     ", Pai = " + (pai[i] != null ? pai[i] : "null"));
         }
-
-        System.out.printf("\nO algoritmo Dijkstra levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
     }
 
     private static int obterVerticeMinimo(int[] distancia, boolean[] visitado) {
@@ -102,20 +120,35 @@ class AlgCaminhoMinimo {
                     }
                 }
             }
+
+            double progresso = ((double) origem / (numVertices - 1)) * 100;
+            System.out.printf("\rProgresso Dijkstra: %.2f%%  ", progresso);
+            if (numVertices < 300 && progresso >= 95.9 || numVertices >= 300 && progresso >= 99) {
+                System.out.print("\r                           \r");
+            }
         }
 
         long fimAlgoritmo = System.currentTimeMillis();
 
+        System.out.printf("\nO algoritmo Dijkstra Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+
+        System.out.print("\nDeseja imprimir os caminhos minimo (Entre com s[sim] e n[nao]): ");
+        char excecao = sc.next().charAt(0);
+
+        if (excecao == 's' || excecao == 'S') {
+            imprimeDijkstraPares(numVertices, distancia, pai);
+        }
+    }
+
+    public static void imprimeDijkstraPares(int numVertices, int distancia[][], Integer pai[][]) {
         System.out.println("\nDistâncias mínimas entre todos os pares de vértices:\n");
         for (int i = 0; i < numVertices; i++) {
             for (int j = 0; j < numVertices; j++) {
-                System.out.println("Do vértice " + i + " para o vértice " + j + ": Distância = " +
+                System.out.println("Do vértice " + i + " para o vértice " + j + ": Distância= " +
                         (distancia[i][j] != Integer.MAX_VALUE ? distancia[i][j] : "infinito") +
                         ", Pai = " + (pai[i][j] != null ? pai[i][j] : "null"));
             }
         }
-
-        System.out.printf("\nO algoritmo Dijkstra Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
     }
 
     public static void bellmanFordFonteUnica(int[][] grafo, int origem) {
@@ -139,6 +172,11 @@ class AlgCaminhoMinimo {
                     }
                 }
             }
+            double progresso = ((double) count / (numVertices - 1)) * 100;
+            System.out.printf("\rProgresso Bellman-Ford: %.2f%%  ", progresso);
+            if (numVertices < 300 && progresso >= 95.9 || numVertices >= 300 && progresso >= 99) {
+                System.out.print("\r                                               \r");
+            }
         }
 
         for (int u = 0; u < numVertices; u++) {
@@ -152,14 +190,23 @@ class AlgCaminhoMinimo {
 
         long fimAlgoritmo = System.currentTimeMillis();
 
+        System.out.printf("\nO algoritmo Bellman Ford levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+
+        System.out.print("\nDeseja imprimir os caminhos minimo (Entre com s[sim] e n[nao]): ");
+        char excecao = sc.next().charAt(0);
+
+        if (excecao == 's' || excecao == 'S') {
+            imprimeBellman(numVertices, distancia, origem, pai);
+        }
+    }
+
+    public static void imprimeBellman(int numVertices, int distancia[], int origem, Integer pai[]) {
         System.out.println("\nDistâncias mínimas a partir do vértice " + origem + ":\n");
         for (int i = 0; i < numVertices; i++) {
             System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
                     (distancia[i] != Integer.MAX_VALUE ? distancia[i] : "infinito") +
                     ", Pai = " + (pai[i] != null ? pai[i] : "null"));
         }
-
-        System.out.printf("\nO algoritmo Bellman Ford levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
     }
 
     public static void bellmanFordPares(int[][] grafo) {
@@ -187,6 +234,12 @@ class AlgCaminhoMinimo {
                     }
                 }
             }
+
+            double progresso = ((double) count / (numVertices - 1)) * 100;
+            System.out.printf("\rProgresso Bellman-Ford: %.2f%%  ", progresso);
+            if (numVertices < 300 && progresso >= 95.9 || numVertices >= 300 && progresso >= 99) {
+                System.out.print("\r                                               \r");
+            }
         }
 
         for (int origem = 0; origem < numVertices; origem++) {
@@ -202,6 +255,17 @@ class AlgCaminhoMinimo {
 
         long fimAlgoritmo = System.currentTimeMillis();
 
+        System.out.printf("\nO algoritmo Bellman-Ford Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+
+        System.out.print("\nDeseja imprimir os caminhos minimo (Entre com s[sim] e n[nao]): ");
+        char excecao = sc.next().charAt(0);
+
+        if (excecao == 's' || excecao == 'S') {
+            imprimeBellmanPares(numVertices, distancia, pai);
+        }
+    }
+
+    public static void imprimeBellmanPares(int numVertices, int distancia[][], Integer pai[][]) {
         System.out.println("\nDistâncias mínimas entre todos os pares de vértices:\n");
         for (int origem = 0; origem < numVertices; origem++) {
             for (int i = 0; i < numVertices; i++) {
@@ -210,8 +274,6 @@ class AlgCaminhoMinimo {
                         ", Pai = " + (pai[origem][i] != null ? pai[origem][i] : "null"));
             }
         }
-
-        System.out.printf("\nO algoritmo Bellman-Ford Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
     }
 
     public static void floydWarshallPares(int[][] grafo) {
@@ -242,10 +304,27 @@ class AlgCaminhoMinimo {
                     }
                 }
             }
+
+            double progresso = ((double) k / (numVertices - 1)) * 100;
+            System.out.printf("\rProgresso Floyd-Warshall: %.2f%%  ", progresso);
+            if (numVertices < 300 && progresso >= 95.9 || numVertices >= 300 && progresso >= 99) {
+                System.out.print("\r                                       \r");
+            }
         }
 
         long fimAlgoritmo = System.currentTimeMillis();
 
+        System.out.printf("\nO algoritmo Floyd-Warshall Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+
+        System.out.print("\nDeseja imprimir os caminhos minimo (Entre com s[sim] e n[nao]): ");
+        char excecao = sc.next().charAt(0);
+
+        if (excecao == 's' || excecao == 'S') {
+            imprimeFloydWarshallPares(numVertices, distancia, pai);
+        }
+    }
+
+    public static void imprimeFloydWarshallPares(int numVertices, int distancia[][], Integer pai[][]) {
         System.out.println("\nDistâncias mínimas entre todos os pares de vértices usando Floyd-Warshall:\n");
         for (int i = 0; i < numVertices; i++) {
             for (int j = 0; j < numVertices; j++) {
@@ -254,9 +333,6 @@ class AlgCaminhoMinimo {
                         ", Pai = " + (pai[i][j] != null ? pai[i][j] : "null"));
             }
         }
-
-        System.out.printf("\nO algoritmo Floyd-Warshall Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
-
     }
 
     public static void floydWarshallFonteUnica(int[][] grafo, int origem) {
@@ -287,20 +363,34 @@ class AlgCaminhoMinimo {
                     }
                 }
             }
+
+            double progresso = ((double) k / (numVertices - 1)) * 100;
+            System.out.printf("\rProgresso Floyd-Warshall: %.2f%%  ", progresso);
+            if (numVertices < 300 && progresso >= 95.9 || numVertices >= 300 && progresso >= 99) {
+                System.out.print("\r                                        \r");
+            }
         }
 
         long fimAlgoritmo = System.currentTimeMillis();
 
+        System.out.printf("\nO algoritmo Floyd-Warshall Fonte Unica levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+
+        System.out.print("\nDeseja imprimir os caminhos minimo (Entre com s[sim] e n[nao]): ");
+        char excecao = sc.next().charAt(0);
+
+        if (excecao == 's' || excecao == 'S') {
+            imprimeFloydWarshall(numVertices, distancia, origem, pai);
+        }
+    }
+
+    public static void imprimeFloydWarshall(int numVertices, int distancia[][], int origem, Integer pai[][]) {
         System.out.println("\nDistâncias mínimas a partir do vértice " + origem + " usando Floyd-Warshall:\n");
         for (int j = 0; j < numVertices; j++) {
             if (origem != j) {
                 System.out.println("Do vértice " + origem + " para o vértice " + j + ": Distância = " +
-                        (distancia[origem][j] != Integer.MAX_VALUE ? distancia[origem][j] : "infinito") +
-                        ", Pai = " + (pai[origem][j] != null ? pai[origem][j] : "null"));
+                (distancia[origem][j] != Integer.MAX_VALUE ? distancia[origem][j] : "infinito") +
+                ", Pai = " + (pai[origem][j] != null ? pai[origem][j] : "null"));
             }
         }
-
-        System.out.printf("\nO algoritmo Bellman-Ford Todos-para-Todos levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
     }
-
 }
