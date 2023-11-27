@@ -45,6 +45,8 @@ Grupo: Lucas José de Freitas
   -	     Grafo com 10.000 vértices
   -	     Grafo com 50.000 vértices
   -	     Grafo com 100.000 vértices
+ 
+  -	 ---
 
 `Importante: Para usar com grandes Grafos, recomenda-se que aumente o HeapSpace do Java`
 
