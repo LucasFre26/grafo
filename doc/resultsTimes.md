@@ -134,8 +134,12 @@ O algoritmo A* é um algoritmo de busca que encontra o caminho mais curto entre 
 
   -   d. Grafo com 10.000 vértices Direcionado
 
+       ![image](https://github.com/LucasFre26/grafo/assets/99023129/625d9125-f23f-473b-9897-502f6630bb6b)
+
   -   e. Grafo com 10.000 vértices Não Direcionado
-    
+
+      ![image](https://github.com/LucasFre26/grafo/assets/99023129/025fef76-e8ce-4f16-94e2-50a16e585f13)
+
 ## 4. Floyd-Warshal com caminho de uma origem para todos os vértices
   -   a. Grafo com 100 vértices Direcionado
 
