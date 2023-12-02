@@ -123,12 +123,13 @@ public class AEstrela {
         if(op){
             // Imprimindo o resultado
             if (caminho != null) {
-                System.out.println("Caminho mínimo encontrado:");
+                System.out.println("\nCaminho mínimo encontrado:");
                 for (int[] ponto : caminho) {
                     System.out.println("(" + ponto[0] + ", " + ponto[1] + ")");
                 }
+                System.out.println();
             } else {
-                System.out.println("Caminho não encontrado.");
+                System.out.println("\nCaminho não encontrado.");
             }
         }
     }
