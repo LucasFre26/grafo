@@ -47,12 +47,13 @@ class Main {
                     ponderacoesNegativas = sc.next().charAt(0) == 's';
                 }
 
-                int[][] grafoAleatorio = Importar.gerarGrafoAleatorio(numVertices, direcionado, ponderado, ponderacoesNegativas);
+                int[][] grafoAleatorio = Importar.gerarGrafoAleatorio(numVertices, direcionado, ponderado,
+                        ponderacoesNegativas);
 
                 System.out.print("\nDeseja salvar a matriz gerada (Sim = 's' | Nao = 'n'): ");
                 char excecao = sc.next().charAt(0);
 
-                if(excecao == 's' || excecao == 'S'){
+                if (excecao == 's' || excecao == 'S') {
                     System.out.print("Nome do arquivo para salvar a matriz: ");
                     String nomeArquivo = sc.next();
 
@@ -340,8 +341,23 @@ class Main {
             Importar.salvarMatrizEmArquivo(matriz, arq);
 
             menu(matriz, ePonderado, eDirecionado);
-        } else if (op == 'y' || op == 'Y'){
-            AEstrela.iniciaAEstrela(matriz);
+        } else if (op == 'y' || op == 'Y') {
+            int inicio [] = {0, 0}, fim [] = {0, 0};
+
+            System.out.print("Informe a coordenada x do nó de origem: ");
+            inicio [0] = sc.nextInt();
+
+            System.out.print("Informe a coordenada y do nó de origem: ");
+            inicio [1] = sc.nextInt();
+
+            // Obtenção das coordenadas do nó de destino
+            System.out.print("Informe a coordenada x do nó de destino: ");
+            fim [0] = sc.nextInt();
+
+            System.out.print("Informe a coordenada y do nó de destino: ");
+            fim [1] = sc.nextInt();
+
+            AEstrela.iniciaAEstrela(matriz, inicio, fim);
 
             menu(matriz, ePonderado, eDirecionado);
         }
