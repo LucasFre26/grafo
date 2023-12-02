@@ -1,140 +1,135 @@
 import java.util.*;
 
 public class AEstrela {
-
+    
     static Scanner sc = new Scanner(System.in);
 
-    static class Node {
-        int x, y;
-        int g, h, f;
-        Node pai;
+    public static List<int[]> buscar(int[][] matriz, int[] inicio, int[] fim) {
+        // Cria a lista de abertos, que contém os nós que ainda não foram explorados.
+        PriorityQueue<No> abertos = new PriorityQueue<>(Comparator.comparingInt(No::getCusto));
 
-        public Node(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
+        // Cria a lista de fechados, que contém os nós que já foram explorados.
+        List<No> fechados = new ArrayList<>();
 
-    // Função de heurística para estimar o custo do caminho restante
-    static int heuristica(Node a, Node b) {
-        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
-    }
+        // Adiciona o nó inicial à lista de abertos.
+        abertos.add(new No(inicio, 0, 0, null));
 
-    // Algoritmo A*
-    static List<Node> aEstrela(int[][] grade, Node inicio, Node objetivo) {
-        Set<Node> conjuntoAberto = new HashSet<>();
-        Set<Node> conjuntoFechado = new HashSet<>();
+        while (!abertos.isEmpty()) {
+            // Remove o nó com o menor custo da lista de abertos.
+            No atual = abertos.poll();
 
-        Map<Node, Integer> custoG = new HashMap<>();
-        custoG.put(inicio, 0);
-
-        Map<Node, Integer> custoF = new HashMap<>();
-        custoF.put(inicio, heuristica(inicio, objetivo));
-
-        conjuntoAberto.add(inicio);
-
-        while (!conjuntoAberto.isEmpty()) {
-            // Seleciona o nó com menor custo total (f)
-            Node atual = conjuntoAberto.stream().min(Comparator.comparingInt(custoF::get)).get();
-
-            // Verifica se o nó atual é o objetivo
-            if (atual.equals(objetivo)) {
-                return reconstruirCaminho(atual);
+            // Se o nó atual for o objetivo, retorna o caminho.
+            if (Arrays.equals(atual.posicao, fim)) {
+                return atual.caminho;
             }
 
-            conjuntoAberto.remove(atual);
-            conjuntoFechado.add(atual);
+            // Adiciona o nó atual à lista de fechados.
+            fechados.add(atual);
 
-            // Gera vizinhos do nó atual
-            for (Node vizinho : obterVizinhos(grade, atual)) {
-                if (conjuntoFechado.contains(vizinho)) {
-                    continue;
-                }
+            // Para cada vizinho do nó atual:
+            for (int[] vizinho : getVizinhos(matriz, atual.posicao)) {
+                // Se o vizinho não estiver na lista de fechados:
+                if (!fechados.contains(vizinho)) {
+                    // Calcula o custo estimado do vizinho.
+                    int custoEstimativo = atual.custo + getCustoMovimentacao(atual.posicao, vizinho);
 
-                // Calcula o custo G tentativo
-                int custoGTentativo = custoG.get(atual) + 1;
-
-                // Verifica se o vizinho não está no conjunto aberto ou o novo custo G é menor
-                if (!conjuntoAberto.contains(vizinho) || custoGTentativo < custoG.get(vizinho)) {
-                    custoG.put(vizinho, custoGTentativo);
-                    custoF.put(vizinho, custoGTentativo + heuristica(vizinho, objetivo));
-                    vizinho.pai = atual;
-
-                    if (!conjuntoAberto.contains(vizinho)) {
-                        conjuntoAberto.add(vizinho);
+                    // Se o vizinho não estiver na lista de abertos ou se seu custo for menor que o custo atual:
+                    if (!abertos.contains(vizinho) || custoEstimativo < abertos.peek().custo) {
+                        // Atualiza o custo do vizinho.
+                        abertos.add(new No(vizinho, custoEstimativo, getCustoHeuristica(vizinho, fim), atual));
                     }
                 }
             }
         }
 
-        return null; // Se o conjunto aberto ficar vazio e o objetivo não for alcançado, retorna null
+        // Se o objetivo não for encontrado, retorna null.
+        return null;
     }
 
-    // Gera a lista de vizinhos válidos para um nó
-    static List<Node> obterVizinhos(int[][] grade, Node no) {
-        List<Node> vizinhos = new ArrayList<>();
-        int linhas = grade.length;
-        int colunas = grade[0].length;
+    private static List<int[]> getVizinhos(int[][] matriz, int[] posicao) {
+        List<int[]> vizinhos = new ArrayList<>();
 
-        int[][] movimentos = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        int altura = matriz.length;
+        int largura = matriz[0].length;
 
-        for (int[] movimento : movimentos) {
-            int novoX = no.x + movimento[0];
-            int novoY = no.y + movimento[1];
+        // Para cada direção possível:
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                // Calcula a posição do vizinho.
+                int novoX = posicao[0] + i;
+                int novoY = posicao[1] + j;
 
-            // Verifica se as coordenadas estão dentro dos limites e a célula é válida (0)
-            if (novoX >= 0 && novoX < linhas && novoY >= 0 && novoY < colunas && grade[novoX][novoY] == 0) {
-                vizinhos.add(new Node(novoX, novoY));
+                // Se a posição for válida e não for um obstáculo:
+                if (novoX >= 0 && novoX < altura && novoY >= 0 && novoY < largura && matriz[novoX][novoY] != 1) {
+                    // Adiciona o vizinho à lista.
+                    vizinhos.add(new int[]{novoX, novoY});
+                }
             }
         }
 
         return vizinhos;
     }
 
-    // Reconstrói o caminho a partir do nó final até o início
-    static List<Node> reconstruirCaminho(Node atual) {
-        List<Node> caminho = new ArrayList<>();
-        while (atual != null) {
-            caminho.add(atual);
-            atual = atual.pai;
-        }
-        Collections.reverse(caminho);
-        return caminho;
+    private static int getCustoMovimentacao(int[] origem, int[] destino) {
+        return Math.abs(origem[0] - destino[0]) + Math.abs(origem[1] - destino[1]);
     }
 
-    // Função principal para iniciar o algoritmo A*
-    public static void iniciaAEstrela(int matriz[][]) {
+    private static int getCustoHeuristica(int[] posicao, int[] fim) {
+        return Math.abs(posicao[0] - fim[0]) + Math.abs(posicao[1] - fim[1]);
+    }
 
-        // Obtenção das coordenadas do nó de origem
-        System.out.print("Informe a coordenada x do nó de origem: ");
-        int inicioX = sc.nextInt();
+    private static class No {
 
-        System.out.print("Informe a coordenada y do nó de origem: ");
-        int inicioY = sc.nextInt();
+        public int[] posicao;
+        public int custo;
+        public int custoHeuristica;
+        public No pai;
+        public List<int[]> caminho;
 
-        Node inicio = new Node(inicioX, inicioY);
+        public No(int[] posicao, int custo, int custoHeuristica, No pai) {
+            this.posicao = posicao;
+            this.custo = custo;
+            this.custoHeuristica = custoHeuristica;
+            this.pai = pai;
 
-        // Obtenção das coordenadas do nó de destino
-        System.out.print("Informe a coordenada x do nó de destino: ");
-        int objetivoX = sc.nextInt();
-
-        System.out.print("Informe a coordenada y do nó de destino: ");
-        int objetivoY = sc.nextInt();
-
-        Node objetivo = new Node(objetivoX, objetivoY);
-
-        // Chamada da função A* e obtenção do caminho mínimo
-        List<Node> caminho = aEstrela(matriz, inicio, objetivo);
-
-        // Impressão do caminho mínimo
-        System.out.println("Caminho mínimo de (" + inicio.x + ", " + inicio.y + ") para (" + objetivo.x + ", " + objetivo.y + "):");
-
-        if (caminho != null) {
-            for (Node no : caminho) {
-                System.out.println("(" + no.x + ", " + no.y + ")");
+            // Atualiza o caminho com base no pai
+            if (pai != null) {
+                this.caminho = new ArrayList<>(pai.caminho);
+                this.caminho.add(posicao);
+            } else {
+                this.caminho = new ArrayList<>();
+                this.caminho.add(posicao);
             }
-        } else {
-            System.out.println("Caminho não encontrado.");
+        }
+
+        public int getCusto() {
+            return custo + custoHeuristica;
+        }
+    }
+
+    public static void iniciaAEstrela(int matriz[][], int inicio[], int fim[]) {
+        // Chamando o algoritmo A* para encontrar o caminho mínimo
+        long inicioAlgoritmo = System.currentTimeMillis();
+
+        List<int[]> caminho = AEstrela.buscar(matriz, inicio, fim);
+
+        long fimAlgoritmo = System.currentTimeMillis();
+
+        System.out.printf("\nO algoritmo A* (A Estrela) levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
+
+        System.out.print("\nDeseja imprimir os caminhos minimos (Entre com s[sim] e n[nao]): ");
+        boolean op = sc.next().charAt(0) == 's' || sc.next().charAt(0) == 'S';
+
+        if(op){
+            // Imprimindo o resultado
+            if (caminho != null) {
+                System.out.println("Caminho mínimo encontrado:");
+                for (int[] ponto : caminho) {
+                    System.out.println("(" + ponto[0] + ", " + ponto[1] + ")");
+                }
+            } else {
+                System.out.println("Caminho não encontrado.");
+            }
         }
     }
 }
