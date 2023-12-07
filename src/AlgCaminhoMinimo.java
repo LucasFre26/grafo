@@ -34,7 +34,7 @@ class AlgCaminhoMinimo {
 
             double progresso = ((double) count / (numVertices - 1)) * 100;
             System.out.printf("\rProgresso Dijkstra: %.2f%%  ", progresso);
-            if (numVertices < 300 && progresso >= 95.9 || numVertices >= 300 && progresso >= 99) {
+            if (numVertices < 300 && progresso >= 80 || numVertices >= 300 && progresso >= 99) {
                 System.out.print("\r                          \r");
             }
         }
@@ -55,7 +55,7 @@ class AlgCaminhoMinimo {
         System.out.println("\nDistâncias mínimas a partir do vértice " + origem +
                 ":\n");
         for (int i = 0; i < numVertices; i++) {
-            System.out.println("Do vértice " + origem + " para o vértice " + i + ":Distância = " +
+            System.out.println("Do vértice " + origem + " para o vértice " + i + ": Distância = " +
                     (distancia[i] != Integer.MAX_VALUE ? distancia[i] : "infinito") +
                     ", Pai = " + (pai[i] != null ? pai[i] : "null"));
         }
@@ -174,7 +174,7 @@ class AlgCaminhoMinimo {
             }
             double progresso = ((double) count / (numVertices - 1)) * 100;
             System.out.printf("\rProgresso Bellman-Ford: %.2f%%  ", progresso);
-            if (numVertices < 300 && progresso >= 95.9 || numVertices >= 300 && progresso >= 99) {
+            if (numVertices < 300 && progresso >= 80 || numVertices >= 300 && progresso >= 99) {
                 System.out.print("\r                                               \r");
             }
         }
@@ -233,6 +233,11 @@ class AlgCaminhoMinimo {
                         }
                     }
                 }
+            }
+            double progresso = ((double) count / (numVertices - 1)) * 100;
+            System.out.printf("\rProgresso Bellman-Ford: %.2f%%  ", progresso);
+            if (numVertices < 300 && progresso >= 80 || numVertices >= 300 && progresso >= 99) {
+                System.out.print("\r                                               \r");
             }
         }
 

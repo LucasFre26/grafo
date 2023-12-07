@@ -308,31 +308,38 @@ class Main {
                 }
                 System.out.println();
 
-                menu(matriz, ePonderado, eDirecionado);
             }
+            
+            menu(matriz, ePonderado, eDirecionado);
+
         } else if (op == 'h') {
-
-            System.out.print("\nEntre com o vertice de origem: ");
-            int origem1 = sc.nextInt();
-
-            try {
-                AlgCaminhoMinimo.floydWarshallFonteUnica(matriz, origem1);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Erro: " + e.getMessage());
-            }
-
-            System.out.print("\nDeseja rodar o algoritmo de Todos para Todos: ");
-            char per2 = sc.next().charAt(0);
-
-            try {
-                if (per2 == 's' || per2 == 'S') {
-                    AlgCaminhoMinimo.floydWarshallPares(matriz);
+            if(ePonderado == 's'){
+                System.out.print("\nEntre com o vertice de origem: ");
+                int origem1 = sc.nextInt();
+    
+                try {
+                    AlgCaminhoMinimo.floydWarshallFonteUnica(matriz, origem1);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage());
                 }
-            } catch (IllegalArgumentException e) {
-                System.out.println("Erro: " + e.getMessage());
+    
+                System.out.print("\nDeseja rodar o algoritmo de Todos para Todos: ");
+                char per2 = sc.next().charAt(0);
+    
+                try {
+                    if (per2 == 's' || per2 == 'S') {
+                        AlgCaminhoMinimo.floydWarshallPares(matriz);
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
+    
+                System.out.println("");
+            } else {
+                System.err.print(
+                        "\nNao e possivel realizar o algortimo de Bellman-Ford para Grafo com arestas nao Ponderadas");
             }
 
-            System.out.println("");
             menu(matriz, ePonderado, eDirecionado);
         } else if (op == 's' || op == 'S') {
             System.out.print("\nEntre com o nome do arquivo: ");
@@ -385,5 +392,7 @@ class Main {
                 + "Para exibir o caminho minimo usando o Algoritmo de Floyd-Warshall entre com 'h'\n"
                 + "Para exibir o caminho minimo usando o Algoritmo A* entre com 'y'. ");
     }
+
+    // Exemplo pra usar no A* => busca do no (2,3) pro (3,4)
 
 };

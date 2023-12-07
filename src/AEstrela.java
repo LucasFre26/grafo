@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class AEstrela {
-    
+
     static Scanner sc = new Scanner(System.in);
 
     public static List<int[]> buscar(int[][] matriz, int[] inicio, int[] fim) {
@@ -20,7 +20,7 @@ public class AEstrela {
 
             // Se o nó atual for o objetivo, retorna o caminho.
             if (Arrays.equals(atual.posicao, fim)) {
-                return atual.caminho;
+                return atual.getCaminho();
             }
 
             // Adiciona o nó atual à lista de fechados.
@@ -29,12 +29,12 @@ public class AEstrela {
             // Para cada vizinho do nó atual:
             for (int[] vizinho : getVizinhos(matriz, atual.posicao)) {
                 // Se o vizinho não estiver na lista de fechados:
-                if (!fechados.contains(vizinho)) {
+                if (!fechados.contains(new No(vizinho, 0, 0, null))) {
                     // Calcula o custo estimado do vizinho.
                     int custoEstimativo = atual.custo + getCustoMovimentacao(atual.posicao, vizinho);
 
                     // Se o vizinho não estiver na lista de abertos ou se seu custo for menor que o custo atual:
-                    if (!abertos.contains(vizinho) || custoEstimativo < abertos.peek().custo) {
+                    if (!abertos.contains(new No(vizinho, 0, 0, null)) || custoEstimativo < abertos.peek().custo) {
                         // Atualiza o custo do vizinho.
                         abertos.add(new No(vizinho, custoEstimativo, getCustoHeuristica(vizinho, fim), atual));
                     }
@@ -74,6 +74,7 @@ public class AEstrela {
         return Math.abs(origem[0] - destino[0]) + Math.abs(origem[1] - destino[1]);
     }
 
+    // Calculo de Manhanthan
     private static int getCustoHeuristica(int[] posicao, int[] fim) {
         return Math.abs(posicao[0] - fim[0]) + Math.abs(posicao[1] - fim[1]);
     }
@@ -85,13 +86,13 @@ public class AEstrela {
         public int custoHeuristica;
         public No pai;
         public List<int[]> caminho;
-
+    
         public No(int[] posicao, int custo, int custoHeuristica, No pai) {
             this.posicao = posicao;
             this.custo = custo;
             this.custoHeuristica = custoHeuristica;
             this.pai = pai;
-
+    
             // Atualiza o caminho com base no pai
             if (pai != null) {
                 this.caminho = new ArrayList<>(pai.caminho);
@@ -101,36 +102,43 @@ public class AEstrela {
                 this.caminho.add(posicao);
             }
         }
-
+    
         public int getCusto() {
             return custo + custoHeuristica;
         }
+    
+        public List<int[]> getCaminho() {
+            return caminho;
+        }
     }
-
     public static void iniciaAEstrela(int matriz[][], int inicio[], int fim[]) {
         // Chamando o algoritmo A* para encontrar o caminho mínimo
         long inicioAlgoritmo = System.currentTimeMillis();
-
+    
         List<int[]> caminho = AEstrela.buscar(matriz, inicio, fim);
-
+    
         long fimAlgoritmo = System.currentTimeMillis();
-
+    
         System.out.printf("\nO algoritmo A* (A Estrela) levou %dms\n", fimAlgoritmo - inicioAlgoritmo);
-
-        System.out.print("\nDeseja imprimir os caminhos minimos (Entre com s[sim] e n[nao]): ");
-        boolean op = sc.next().charAt(0) == 's' || sc.next().charAt(0) == 'S';
-
-        if(op){
+    
+        System.out.print("\nDeseja imprimir os caminhos mínimos (Entre com s[sim] e n[nao]): ");
+        char op = sc.next().charAt(0);
+    
+        if (op == 's' || op == 'S') {
             // Imprimindo o resultado
             if (caminho != null) {
                 System.out.println("\nCaminho mínimo encontrado:");
-                for (int[] ponto : caminho) {
-                    System.out.println("(" + ponto[0] + ", " + ponto[1] + ")");
-                }
+                exibirCaminho(caminho);
                 System.out.println();
             } else {
                 System.out.println("\nCaminho não encontrado.");
             }
+        }
+    }
+    
+    private static void exibirCaminho(List<int[]> caminho) {
+        for (int[] ponto : caminho) {
+            System.out.println("(" + ponto[0] + ", " + ponto[1] + ")");
         }
     }
 }
